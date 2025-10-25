@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Учитель</title>
+</head>
+<body>
+  <h2>Учитель: добавить коины</h2>
+
+  <a href="./main-page.html">stu</a>
+
+  <input id="coinInput" type="number" placeholder="Введите количество коинов" />
+  <button id="sendCoins">Отправить коины</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getDatabase, ref, set, runTransaction, push } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+
+    const firebaseConfig = {
+    apiKey: "AIzaSyCvPqWuVmL3x7lGfkUV-ma1UHmz7rx__Rs",
+    authDomain: "marsspace-48b62.firebaseapp.com",
+    databaseURL: "https://marsspace-48b62-default-rtdb.firebaseio.com",
+    projectId: "marsspace-48b62",
+    storageBucket: "marsspace-48b62.firebasestorage.app",
+    messagingSenderId: "983536140625",
+    appId: "1:983536140625:web:084c07906ea2d9bfced370",
+    measurementId: "G-VDHG39ZRR1"
+  };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const input = document.getElementById("coinInput");
+    const sendBtn = document.getElementById("sendCoins");
+
+    sendBtn.addEventListener("click", async () => {
+      const val = Number(input.value) || 0;
+      const ts = Date.now();
+
+      if (val <= 0) {
+        alert("Введите положительное число!");
+        return;
+      }
+
+      // Обновляем уведомление
+      await set(ref(db, "coinsSet"), { value: val, time: ts });
+
+      // Прибавляем к общей сумме
+      const coinsRef = ref(db, "coinsSum");
+      await runTransaction(coinsRef, (currentVal) => (currentVal || 0) + val);
+
+      // Добавляем запись в список начислений
+      await push(ref(db, "coinsList"), { value: val, time: ts });
+
+      input.value = "";
+    });
+  </script>
+</body>
+</html>

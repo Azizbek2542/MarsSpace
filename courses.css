@@ -1,0 +1,133 @@
+.courses-cont {
+    font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+.course-item {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 10px;
+    background-color: #fff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 16px;
+    border: .6px solid #ebeef1;
+    position: relative;
+}
+
+.course-item__image{
+    width: 72px;
+    height: 72px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    -o-object-fit: cover;
+    object-fit: cover;
+    background: #f5f7fa;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -moz-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.el-image__error {
+    align-items: center;
+    color: #a8abb2;
+    display: flex;
+    font-size: 14px;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+.course-item__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #393333;
+}
+
+.course-item__description {
+    font-size: 12px;
+    color: #393333;
+}
+
+#button-one {
+    color: #009bf5;
+    font-size: 16px;
+    font-weight: 400;
+    cursor: pointer;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    gap: 4px;
+}
+
+.courses-cont {
+    width: -webkit-calc(100% - 280px);
+    width: -moz-calc(100% - 280px);
+    width: calc(100% - 280px);
+    padding: 16px;
+    margin: 0 auto;
+    margin-left: 280px;
+    max-width: 1200px;
+}
+
+.el-tag--small {
+    height: 20px;
+    padding: 0 7px;
+    font-size: 12px;
+    background-color: #67c23a;
+    color: white;
+    border-radius: 4px;
+    align-items: center;
+    border-style: solid;
+    border-width: 1px;
+    box-sizing: border-box;
+    display: inline-flex;
+    height: 24px;
+    justify-content: center;
+    line-height: 1;
+    padding: 0 9px;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+@media(max-width:768px) {
+    .courses-cont {
+        width: -webkit-calc(100% - 24px);
+        width: -moz-calc(100% - 24px);
+        width: calc(100% - 24px);
+        margin: 0 auto;
+        margin-bottom: 68px;
+        padding: 16px 0;
+    }
+}
+
+.el-image__inner {
+    border-radius: 50%;
+}

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARS SPACE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./imgs/logo--circle.svg" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+    <section class="container">
+        <header>
+            <div class="navbar">
+                <a href="./main-page.html">
+                <div class="logo">
+                    <img width="158px" height="34px" src="./imgs/logo.png" alt="">
+                </div>
+                </a>
+                <div class="navbar-right">
+                    <div class="streak-modal">
+                        <img width="24px" height="24px" src="./imgs/strike.svg" alt="">
+                        <span>365</span>
+                    </div>
+                    <div class="streak-content">
+                        <span class="streak-content__arrow"></span>
+                        <div class="streak-first-text">
+                        <h2>Streak</h2>
+                        <p>Spacedan har kuni muntazam foydalanib boring</p>
+                        </div>
+                        <div class="streak-content-prnt">
+                            <div class="streak-content-card">
+                                <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                                <span>Dush</span>
+                            </div>
+                            <div class="streak-content-card">
+                                <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                                <span>Sesh</span>
+                            </div>
+                            <div class="streak-content-card">
+                                <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                                <span>Chor</span>
+                            </div>
+                            <div class="streak-content-card">
+                                <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                                <span>Pay</span>
+                            </div>
+                            <div class="streak-content-card">
+                                <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                                <span>Jum</span>
+                            </div>
+                            <div class="streak-content-card">
+                                <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                                <span>Shan</span>
+                            </div>
+                            <div class="streak-content-card">
+                                <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                                <span>Yak</span>
+                            </div>
+                           </div>
+                           <div class="Beydjik-content-prnt">
+                            <img width="57px" height="64px" src="./imgs/Beydjik.png" alt="Beydjik">
+                            <div class="Beydjik-text">
+                                <h3>Beydjik qo'lga kiriting!</h3>
+                                <p>Spacedan har kuni muntazam ravishda foydalanib streaklar yig'ing va beydjiklarni qo'lga kiriting!</p>
+                           </div>
+                           </div>
+                        </div>
+                    <div class="amount-card coin">
+                        <img width="20px" height="20px" src="./imgs/Coin.svg" alt="">
+                        <div id="coinsSumDisplay"><svg width="20" height="20" stroke="#fc6736" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_V8m1{transform-origin:center;animation:spinner_zKoa 2s linear infinite}.spinner_V8m1 circle{stroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite}@keyframes spinner_zKoa{100%{transform:rotate(360deg)}}@keyframes spinner_YpZS{0%{stroke-dasharray:0 150;stroke-dashoffset:0}47.5%{stroke-dasharray:42 150;stroke-dashoffset:-16}95%,100%{stroke-dasharray:42 150;stroke-dashoffset:-59}}</style><g class="spinner_V8m1"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="3"></circle></g></svg></div>
+                    </div>
+                    <div class="CoinModal">
+                        <span class="Coin__arrow"></span>
+                        <div class="coinModalContent">
+                    <div class="month-name-prnt">
+                    <button onclick="prevMonth()" class="prev"><i class="fa-solid fa-chevron-left"></i></button>
+                    <h2 id="month-name">September 2025</h2>
+                    <button onclick="nextMonth()" class="next"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+                    <div class="coin-list"></div> 
+                    </div>
+                    </div>
+                    <div class="amount-card flash">
+                        <img width="12px" height="12px" src="./imgs/flash.png" alt="">
+                        <span>3000</span>
+                    </div>
+                    <button class="subscribe-btn">Obuna bo'ling <span class="shine"></span></button>
+                    <i class="fa-regular fa-bell text notification-bell"></i>
+                    <div class="profile modal content">
+                        <img src="./imgs/image.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="default-notification-of-coin">
+            <div class="df-coin-hdr">
+            <button class="close-df-coin-btn cursor-pointer"><i class="fa-solid fa-xmark close-df-coin"></i></button>
+            </div>
+            <div class="df-coin-body">
+                <img width="80" src="./imgs/Coin.svg" alt="">
+                <div class="flex items-center mt-5"><p class="font-bold text-center text-titleBlue">Siz coin oldingiz: <div id="coinsValueDisplay" class="ml-2 font-bold text-center"><svg class="spinner" width="26" height="26" stroke="rgb(14 13 93)" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_V8m1{transform-origin:center;animation:spinner_zKoa 2s linear infinite}.spinner_V8m1 circle{stroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite}@keyframes spinner_zKoa{100%{transform:rotate(360deg)}}@keyframes spinner_YpZS{0%{stroke-dasharray:0 150;stroke-dashoffset:0}47.5%{stroke-dasharray:42 150;stroke-dashoffset:-16}95%,100%{stroke-dasharray:42 150;stroke-dashoffset:-59}}</style><g class="spinner_V8m1"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="3"></circle></g></svg></div></p></div>
+            </div>
+            <div class="df-coin-footer">
+                <button class="py-2 mt-5 w-full font-bold text-center text-white rounded-md close-df-coin-btn-2">Tushunarli</button>
+            </div>
+        </div>
+        <div class="Premium-modal">
+            <div class="premium-hdr-title">
+            <h2>Space Premium</h2>
+            <button class="close-prem-btn"><i class="fa-solid fa-xmark close-premium"></i></button>
+            </div>
+            <div class="premium-chracter-prnt">
+            <div class="sparkle-wrapper"><img class="premium-character" src="./imgs/Premium-character.png" alt=""></div>
+            </div>
+            <div class="features-container">
+                <div class="feature-item">
+                    <div class="feature-icon-container">
+                        <i data-v-765cdd04="" class="fas fa-user-check feature-icon"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Davomat uchun 4 coin</h4>
+                        <p>Davomat uchun 2 karra ko'proq coin olish imkoniyat</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-container">
+                        <i data-v-765cdd04="" class="fas fa-code feature-icon"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Unlimited MarsCode</h4>
+                        <p>Masalalarni yechib 60 coingacha qo'lga kirita olasiz</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-container">
+                        <i data-v-765cdd04="" class="fa-solid fa-clapperboard feature-icon"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Eduverse</h4>
+                        <p>Har bir online kursni o'qib 80 coingacha qo'lga kirita olasiz</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-container">
+                        <i data-v-765cdd04="" class="fa-solid fa-wand-magic-sparkles feature-icon"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Marsiana</h4>
+                        <p>Vazifalarni AI assistentingiz bilan qiziqarliroq bajarish</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-container">
+                        <i data-v-765cdd04="" class="fa-solid fa-circle-check feature-icon"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Premium nishoni</h4>
+                        <p>Premiumga obuna bo'lganingizni ko'rsatuvchi ismingiz yonidagi ekskluziv belgi</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-container">
+                        <i data-v-765cdd04="" class="fa-solid fa-shirt feature-icon"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Exclusive Skin</h4>
+                        <p>Ekslyuziv skinlar, faqat premium foydalanuvchilari uchun</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-container">
+                        <i data-v-765cdd04="" class="fa-solid fa-keyboard feature-icon"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Unlimited SpaceTyping</h4>
+                        <p>Typing tezligingizni oshirish uchun ko'proq imkoniyat</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon-container">
+                        <i data-v-765cdd04="" class="fa-solid fa-newspaper feature-icon"></i>
+                    </div>
+                    <div class="feature-content">
+                        <h4>Unlimited SpaceBlog</h4>
+                        <p>Do'stlaringiz bilan qiziqarli postlar ulashish imkoniyati</p>
+                    </div>
+                </div>
+            </div>
+            <div class="premium-footer">
+            <button class="get-premium-btn">Oyiga 299 <img width="20px" src="./imgs/Coin.svg" alt="">evasiga obuna bo'lish<span class="shine"></span></button>
+            </div>
+        </div>
+        <div class="overlay"></div>
+        <div class="notifications-modal">
+            <span class="Notifications__arrow"></span>
+            <div class="noti-text">
+            <h2>Bildirishnomalar</h2>
+            </div>
+            <div class="notifications-prnt-of-item">
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            <div class="notification-item">
+                <img width="35px" height="35px" src="./imgs/Coin.svg" alt="">
+                <div class="notification-content">
+                    <h4>Siz coin oldingiz: 2</h4>
+                    <p>07-Oct-2025 17:35</p>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div class="profile-modal">
+            <span class="profile__arrow"></span>
+            <a href="./student-profile.html">
+            <div class="User-name-prnt">
+                <div class="profile">
+                    <img src="./imgs/image.png" alt="">
+                </div>
+                <h2 class="User-name">Azizbek Ubaydullayev</h2>
+            </div>
+            </a>
+            <div class="attendance"><img width="22" src="./imgs/attendance.svg" alt=""> Davomat</div>
+            <div class="select-language"><img width="22" src="./imgs/lang-icon.svg" alt=""> O'zbekcha</div>
+            <div class="logOut"><img width="22" src="./imgs/logout-icon.svg" alt=""> Platformadan chiqish</div>
+            <div class="streak-modal">
+                <img width="24px" height="24px" src="./imgs/strike.svg" alt="">
+                <span>365</span>
+            </div>
+            <div class="streak-content">
+                <span class="streak-content__arrow"></span>
+                <div class="streak-first-text">
+                <h2>Streak</h2>
+                <p>Spacedan har kuni muntazam foydalanib boring</p>
+                </div>
+                <div class="streak-content-prnt">
+                    <div class="streak-content-card">
+                        <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                        <span>Dush</span>
+                    </div>
+                    <div class="streak-content-card">
+                        <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                        <span>Sesh</span>
+                    </div>
+                    <div class="streak-content-card">
+                        <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                        <span>Chor</span>
+                    </div>
+                    <div class="streak-content-card">
+                        <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                        <span>Pay</span>
+                    </div>
+                    <div class="streak-content-card">
+                        <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                        <span>Jum</span>
+                    </div>
+                    <div class="streak-content-card">
+                        <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                        <span>Shan</span>
+                    </div>
+                    <div class="streak-content-card">
+                        <img width="32px" height="32px" src="./imgs/strike.svg" alt="">
+                        <span>Yak</span>
+                    </div>
+                   </div>
+                   <div class="Beydjik-content-prnt">
+                    <img width="57px" height="64px" src="./imgs/Beydjik.png" alt="Beydjik">
+                    <div class="Beydjik-text">
+                        <h3>Beydjik qo'lga kiriting!</h3>
+                        <p>Spacedan har kuni muntazam ravishda foydalanib streaklar yig'ing va beydjiklarni qo'lga kiriting!</p>
+                   </div>
+                   </div>
+                </div>
+            <div class="amount-card coin">
+                <img width="20px" height="20px" src="./imgs/Coin.svg" alt="">
+                <div id="coinsSumDisplay"><svg width="20" height="20" stroke="#fc6736" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_V8m1{transform-origin:center;animation:spinner_zKoa 2s linear infinite}.spinner_V8m1 circle{stroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite}@keyframes spinner_zKoa{100%{transform:rotate(360deg)}}@keyframes spinner_YpZS{0%{stroke-dasharray:0 150;stroke-dashoffset:0}47.5%{stroke-dasharray:42 150;stroke-dashoffset:-16}95%,100%{stroke-dasharray:42 150;stroke-dashoffset:-59}}</style><g class="spinner_V8m1"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="3"></circle></g></svg></div>
+            </div>
+            <div class="CoinModal">
+                <span class="Coin__arrow"></span>
+                <div class="coinModalContent">
+            <div class="month-name-prnt">
+            <button onclick="prevMonth()" class="prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <h2 id="month-name">September 2025</h2>
+            <button onclick="nextMonth()" class="next"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <div class="coin-list"></div> 
+            </div>
+            </div>
+            <div class="amount-card flash">
+                <img width="12px" height="12px" src="./imgs/flash.png" alt="">
+                <span>3000</span>
+            </div>
+        </div>
+        <div class="language-selection-container-modal">
+            <div class="lang-slc-hdr">
+                <h2>Sozlamalar</h2>
+            <button class="close-lang-slc-btn"><i class="fa-solid fa-xmark close-lang"></i></button>
+            </div>
+            <div class="lang-slc-main">
+                <button class="change-lang__btn">
+                    <div class="lang">
+                        <img src="./imgs/uzb.svg" alt="">
+                        <p>O'zbekcha</p>
+                    </div>
+                    <label for="uzb">
+                    <input type="radio" name="lang" id="uzb" checked>
+                    </label>
+                </button>
+                <button class="change-lang__btn">
+                    <div class="lang">
+                        <img src="./imgs/rus.svg" alt="">
+                        <p>Русский</p>
+                    </div>
+                    <label for="rus">
+                    <input type="radio" name="lang" id="rus">
+                    </label>
+                </button>
+            </div>
+            <div class="lang-slc-foot">
+                <button class="change-lang__confirm-btn"><p>Tasdiqlash</p></button>
+            </div>
+        </div>
+        <div class="sidebar">
+            <div class="sidebar-nav">
+                <ul>
+                    <li><a aria-current="page" href="./main-page.html" class="sidebar-link"><i class="fa-solid fa-house"></i><span class="hidden md:block">Asosiy</span></a></li>
+                    <li><a href="./my-courses.html" class="sidebar-link"><i class="fa-solid fa-book"></i><span class="hidden md:block">Kurslarim</span></a></li>
+                    <li class="hidden md:block"><a href="./eduverse.html" class="sidebar-link"><i class="fa-solid fa-video"></i><span>Eduverse</span></a></li>
+                    <li class="hidden md:block"><a href="./mars-code.html" class="sidebar-link"><i class="fa-brands fa-python"></i><span>&lt;MarsCode/&gt;</span></a></li>
+                    <li><a style="background-color: #fc6736; color: #fff;" href="./blog-page.html" class="sidebar-link"><i class="fa-solid fa-newspaper"></i><span class="hidden md:block">Blog</span></a></li>
+                    <li><a href="./shop-page.html" class="sidebar-link"><i class="fa-solid fa-shop"></i><span class="hidden md:block">Space shop</span></a></li>
+                </ul>
+            </div>
+            <div class="student-hero-wrapper">
+                <div class="profile-hero sidebar-hero">
+                    <div class="front"></div>
+                    <div class="hero-head">
+                        <img src="./imgs/Head.png" alt="head">
+                    </div>
+                    <div class="hero-body">
+                        <img src="./imgs/DefaultBody.png" alt="body">
+                    </div>
+                    <div class="hero-feet">
+                        <img src="./imgs/DefaultPants.png" alt="feet">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <li><button class="marsiana-circle-btn hidden md:block"><img src="./imgs/marsiana_btn.svg" alt="Marsiana"></button></li>
+        <div class="marsiana-chat-modal fixed z-[99999] min-h-[485px] p-0.5 pointer-events-auto bg-gradient-to-br from-[#0599F5] via-[#0599F5] to-[#D104FF] rounded-2xl flex md:items-stretch justify-center bottom-4 w-[95%] md:bottom-8 md:w-[409px] shadow-[0_0_30px_rgba(0,0,0,0.3)] md:shadow-none left-1/2 translate-x-[-50%] md:translate-x-0 md:right-8 md:left-auto"><div class="marsiana-chat-modal-inner relative bg-white rounded-2xl w-full min-h-[485px] flex flex-col justify-between overflow-hidden md:backdrop-blur-none backdrop-blur-md"><div class="flex justify-end pt-4 pr-4 marsiana-chat-header"><button class="close-marsiana-btn flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f9ff] text-[#393333] text-2xl transition-colors duration-200 hover:bg-[#f0f0f0] border-none"> × </button></div><div class="marsiana-chat-body flex-1 px-4 overflow-y-auto max-h-[409px] flex flex-col gap-2"><div class="my-2"><div class="flex justify-end"><span class="inline-block bg-[#E6EDFB] rounded-lg px-3 py-2 text-[#393333] max-w-[80%] whitespace-pre-line text-left border border-[#D7E1F3] text-base">hello</span></div></div><div class="my-2"><div class="flex justify-start"><span class="inline-block px-3 py-2 text-[#393333] max-w-[95%] whitespace-pre-line text-left text-base"><span>Error: Could not get response.</span></span></div></div><!----></div><div class="px-4 pb-4 marsiana-chat-input-wrapper"><form class="input-container flex items-center gap-2.5 bg-white rounded-full border border-[#b3c0da] px-4 py-1 shadow-none"><i class="fa-solid fa-magnifying-glass" style="color: rgb(178, 192, 218);"></i><input type="text" placeholder="How can I help" class="flex-1 py-2 text-base bg-transparent border-none outline-none chat-input placeholder-custom"><button class="send-btn flex items-center justify-center w-10 absolute right-6 h-10 rounded-full bg-[#f6f9ff] transition-colors duration-200 hover:bg-[#e1e1e1] border-none" disabled="" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="url(#paint0_linear)"></path><defs><linearGradient id="paint0_linear" x1="2" y1="3" x2="23" y2="21" gradientUnits="userSpaceOnUse"><stop stop-color="#0599F5"></stop><stop offset="1" stop-color="#D104FF"></stop></linearGradient></defs></svg></button></form></div></div></div>
+
+    </section>
+
+
+    <div class="confetti-container" id="confettiBox"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+    // Firebase config
+    const firebaseConfig = {
+    apiKey: "AIzaSyCvPqWuVmL3x7lGfkUV-ma1UHmz7rx__Rs",
+    authDomain: "marsspace-48b62.firebaseapp.com",
+    databaseURL: "https://marsspace-48b62-default-rtdb.firebaseio.com",
+    projectId: "marsspace-48b62",
+    storageBucket: "marsspace-48b62.firebasestorage.app",
+    messagingSenderId: "983536140625",
+    appId: "1:983536140625:web:084c07906ea2d9bfced370",
+    measurementId: "G-VDHG39ZRR1"
+  };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const modal = document.querySelector(".default-notification-of-coin");
+    const divSum = document.getElementById("coinsSumDisplay");
+    const divValue = document.getElementById("coinsValueDisplay");
+    const overlay = document.querySelector('.overlay');
+
+
+    // 🔊 Настройка звука
+    const ding = new Howl({
+      src: ["./coin.mp3"],
+      volume: 1.0,
+      html5: true
+    });
+
+    // Разблокировка звука при первом тапе
+    document.addEventListener("click", () => {
+      if (Howler.ctx.state === "suspended") Howler.ctx.resume();
+    }, { once: true });
+
+    // 🕒 Последнее время, когда ученик видел уведомление
+    let lastSeenTime = Number(localStorage.getItem("lastSeenTime") || 0);
+
+    // Слушаем общую сумму коинов
+    onValue(ref(db, "coinsSum"), (snap) => {
+      divSum.textContent = + (snap.val() ?? 0);
+    });
+
+    // Слушаем список начислений
+    onValue(ref(db, "coinsList"), (snap) => {
+      const data = snap.val();
+      if (!data) return;
+
+      // Сортируем по времени
+      const entries = Object.values(data).sort((a, b) => a.time - b.time);
+      let newCoins = 0;
+
+      for (const item of entries) {
+        if (item.time > lastSeenTime) {
+          newCoins += item.value;
+          lastSeenTime = item.time;
+        }
+      }
+
+      // если были новые начисления — показываем уведомление
+      if (newCoins > 0) {
+        modal.style.display = 'flex';
+        const Confcontainer = document.getElementById('confettiBox');
+        Confcontainer.style.display = 'block';
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        ding.play();
+
+        shootConfetti();
+
+        localStorage.setItem("lastSeenTime", lastSeenTime);
+      }
+
+      // показываем последнее значение коинов
+      const lastItem = entries.at(-1);
+      if (lastItem) divValue.textContent = + lastItem.value;
+    });
+  </script>
+
+
+    <script src="eduverse.js"></script>
+</body>
+</html>
