@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MARS SPACE</title>
+  <link rel="shortcut icon" href="./imgs/logo--circle.svg" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <a style="font-size: 30px; color: #3e3e3e;" href="./main-page.html">Main-Page</a>
+
+  <section class="container">
+    <div class="navbar">
+        <div class="logo">
+            <img width="158px" height="34px" src="./imgs/logo.png" alt="">
+        </div>
+          <div class="flex gap-2 items-center cursor-pointer hover:opacity-80"><img src="./imgs/lang-icon..svg" alt="mars-logo"><p>O'zb</p></div>
+    </div>
+
+    <main class="login-body">
+      <div class="login-body-cont mx-auto">
+        <div class="login-body-wrapper">
+          <div class="flex justify-between items-center">
+            <img src="./imgs/logo.png" alt="mars-logo" width="100"><a href="https://lab.marsit.uz/media/term_and_conditions/Offerta%20v1.3/MarsITSchool_oferta_v1.3.pdf" target="_blank" download="" class="text-lightBlue hover:underline text-[#00A9F1]"><i class="fa-regular fa-file"></i> Offerta</a>
+          </div>
+          <h1 class="my-10 text-2xl font-bold text-center">Spacega xush kelibsiz</h1>
+          <div class="select-role">
+            <button tabindex="-1" class="Student-btn">Student</button>
+            <button tabindex="-1" class="Parents-btn" style="cursor: not-allowed !important;">Ota-ona</button>
+          </div>
+          <form class="login-body-form">
+            <input type="password" name="" id="" placeholder="Modme ID">
+            <input type="password" name="" id="" placeholder="Parol">
+            <button class="login-btn" type="submit" disabled=""><!----> Kirish</button>
+          </form>
+          <div class="mt-10 login-body-footer">
+            <div class="flex gap-2 justify-center items-center">
+              <p>Akkauntga ega emasmisiz?</p>
+              <a href="./main-page.html" class="hover:underline sign-up">Ro'yhatdan o'tish</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </section>
+
 </body>
 </html>

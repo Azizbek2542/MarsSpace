@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MARS SPACE</title>
-    <link rel="shortcut icon" href="./imgs/logo--circle.svg" type="image/x-icon">
-    <link rel="stylesheet" href="typing.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="./imgs/logo--circle.svg" type="image/x-icon">
+    <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
     <section class="container">
-    <header>
+        <header>
             <div class="navbar">
                 <a href="./main-page.html">
                 <div class="logo">
@@ -199,14 +199,13 @@
             </div>
         </div>
         <div class="overlay"></div>
-        <div class="limit-overlay"></div>
         <div class="notifications-modal">
           <span class="Notifications__arrow"></span>
           <div class="noti-text">
             <h2>Bildirishnomalar</h2>
           </div>
           <div class="notifications-prnt-of-item" id="notificationsContainer">
-            <!-- Сюда будут добавляться уведомления из Firebase -->
+            Hali hech qanday ma’lumot yo‘q
           </div>
         </div>
         <div class="profile-modal">
@@ -221,7 +220,7 @@
             </a>
             <div class="attendance"><img width="22" src="./imgs/attendance.svg" alt=""> Davomat</div>
             <div class="select-language"><img width="22" src="./imgs/lang-icon.svg" alt=""> O'zbekcha</div>
-            <div class="logOut"><img width="22" src="./imgs/logout-icon.svg" alt=""> Platformadan chiqish</div>
+            <a href="./index.html"><div class="logOut"><img width="22" src="./imgs/logout-icon.svg" alt=""> Platformadan chiqish</div></a>
             <div class="streak-modal">
                 <img width="24px" height="24px" src="./imgs/strike.svg" alt="">
                 <span>365</span>
@@ -319,65 +318,42 @@
                 <button class="change-lang__confirm-btn"><p>Tasdiqlash</p></button>
             </div>
         </div>
-
-        <li><button class="marsiana-circle-btn hidden md:block"><img src="./imgs/marsiana_btn.svg" alt="Marsiana"></button></li>
-        <div class="marsiana-chat-modal fixed z-[99999] min-h-[485px] p-0.5 pointer-events-auto bg-gradient-to-br from-[#0599F5] via-[#0599F5] to-[#D104FF] rounded-2xl flex md:items-stretch justify-center bottom-4 w-[95%] md:bottom-8 md:w-[409px] shadow-[0_0_30px_rgba(0,0,0,0.3)] md:shadow-none left-1/2 translate-x-[-50%] md:translate-x-0 md:right-8 md:left-auto"><div class="marsiana-chat-modal-inner relative bg-white rounded-2xl w-full min-h-[485px] flex flex-col justify-between overflow-hidden md:backdrop-blur-none backdrop-blur-md"><div class="flex justify-end pt-4 pr-4 marsiana-chat-header"><button class="close-marsiana-btn flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f9ff] text-[#393333] text-2xl transition-colors duration-200 hover:bg-[#f0f0f0] border-none"> × </button></div><div class="marsiana-chat-body flex-1 px-4 overflow-y-auto max-h-[409px] flex flex-col gap-2"><div class="my-2"><div class="flex justify-end"><span class="inline-block bg-[#E6EDFB] rounded-lg px-3 py-2 text-[#393333] max-w-[80%] whitespace-pre-line text-left border border-[#D7E1F3] text-base">hello</span></div></div><div class="my-2"><div class="flex justify-start"><span class="inline-block px-3 py-2 text-[#393333] max-w-[95%] whitespace-pre-line text-left text-base"><span>Error: Could not get response.</span></span></div></div><!----></div><div class="px-4 pb-4 marsiana-chat-input-wrapper"><form class="input-container flex items-center gap-2.5 bg-white rounded-full border border-[#b3c0da] px-4 py-1 shadow-none"><i class="fa-solid fa-magnifying-glass" style="color: rgb(178, 192, 218);"></i><input type="text" placeholder="How can I help" class="flex-1 py-2 text-base bg-transparent border-none outline-none chat-input placeholder-custom"><button class="send-btn flex items-center justify-center w-10 absolute right-6 h-10 rounded-full bg-[#f6f9ff] transition-colors duration-200 hover:bg-[#e1e1e1] border-none" disabled="" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="url(#paint0_linear)"></path><defs><linearGradient id="paint0_linear" x1="2" y1="3" x2="23" y2="21" gradientUnits="userSpaceOnUse"><stop stop-color="#0599F5"></stop><stop offset="1" stop-color="#D104FF"></stop></linearGradient></defs></svg></button></form></div></div></div>
-
-
-        <main>
-            <div class="typing-container md:h-[822px] h-[270px] flex md:-mt-6 mt-4">
-                <div class="typing-header hidden md:block">
-                    <div class="max-w-[954px] mx-auto md:pt-[138px] md:block hidden"><p class="max-w-[609px] text-[60px] text-[#393333] font-[700] leading-[87.5px]"> Typingni boshlash uchun <span class="text-[#FF6D00]">“ENTER”</span>ni bosing </p><p class="text-2xl text-[#B3C0DA] font-[500] flex items-center gap-1"> Chiqish uchun <span class="border border-solid border-[#B3C0DA] px-2 py-1 rounded-md text-[#393333] font-[500] text-xs">Q</span> tugmasini bosing </p></div>
-                </div>
+        <div class="sidebar">
+            <div class="sidebar-nav">
+                <ul>
+                    <li><a aria-current="page" href="./main-page.html" class="sidebar-link MainPage"><i class="fa-solid fa-house"></i><span class="hidden md:block">Asosiy</span></a></li>
+                    <li><a href="./my-courses.html" class="sidebar-link courses"><i class="fa-solid fa-book"></i><span class="hidden md:block">Kurslarim</span></a></li>
+                    <li class="hidden md:block"><a href="./eduverse.html" class="sidebar-link edu"><i class="fa-solid fa-video"></i><span>Eduverse</span></a></li>
+                    <li class="hidden md:block"><a href="./mars-code.html" class="sidebar-link MarsCode"><i class="fa-brands fa-python"></i><span>&lt;MarsCode/&gt;</span></a></li>
+                    <li><a href="./blog-page.html" class="sidebar-link Blog"><i class="fa-solid fa-newspaper"></i><span class="hidden md:block">Blog</span></a></li>
+                    <li><a href="./shop-page.html" class="sidebar-link SpaceShop"><i class="fa-solid fa-shop"></i><span class="hidden md:block">Space shop</span></a></li>
+                </ul>
             </div>
-            <div class="tp-info-cont" style="margin-left: calc(52% - 50vw); width: 100vw;">
-            <div style="justify-self: center;" class="max-w-[954px] w-[95%] mr-3 md:mx-auto bg-white rounded-[24px] md:px-6 md:py-4 px-3 py-2 -mt-[300px]">
-                <div class="flex justify-between items-center">
-                    <div class="flex gap-4 items-center md:gap-6">
-                        <div class="rounded-full profile-img relative flex items-center justify-center w-[90px] h-[90px]"><img src="./imgs/image.png" alt="avatar" class="w-full h-full rounded-full object-contain user-img"><!----></div>
-                        <div><a href="./student-profile.html" class="md:text-2xl text-xl text-black capitalize font-[700] hover:underline flex items-center gap-1">Ubaydullaev Azizbek <!----></a><p>Reytingda  - O’rin</p></div>
+            <div class="student-hero-wrapper">
+                <div class="profile-hero sidebar-hero">
+                    <div class="front"></div>
+                    <div class="hero-head">
+                        <img src="./imgs/Head.png" alt="head">
                     </div>
-                    <div class="text-center"><p class="text-xs font-[400] text-[#B3C0DA]">Rekord tezlik</p><p class="md:text-4xl text-2xl font-[500] text-black"></p><p class="text-xs font-[400]">WPM</p></div>
-                </div>
-            </div>
-            <div class="md:static md:-left-[0px] justify-self-center relative -left-[7px] max-w-[940px] w-[94.5%] mx-auto bg-white rounded-[24px] md:px-6 md:py-4 md:mt-6 px-3 py-2 mt-3">
-                <div class="flex flex-col justify-between items-start md:flex-row">
-                    <div>
-                        <p class="text-2xl text-black capitalize font-[500]">TOP-10 Reyting</p>
-                        <p class="font-[400]">Barcha o'quvchilar orasida</p>
+                    <div class="hero-body">
+                        <img src="./imgs/DefaultBody.png" alt="body">
                     </div>
-                    <p class="text-[#B3C0DA] text-xs font-[700]">Reyting har 6 daqiqada yangilanadi. Ohirgi yangilanish: <!----></p>
+                    <div class="hero-feet">
+                        <img src="./imgs/DefaultPants.png" alt="feet">
+                    </div>
                 </div>
-                <div class="md:mt-6 mt-2 min-h-[300px]">
-                <svg class="spinner" width="36" height="36" stroke="#fc6736" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_V8m1{transform-origin:center;animation:spinner_zKoa 2s linear infinite}.spinner_V8m1 circle{stroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite}@keyframes spinner_zKoa{100%{transform:rotate(360deg)}}@keyframes spinner_YpZS{0%{stroke-dasharray:0 150;stroke-dashoffset:0}47.5%{stroke-dasharray:42 150;stroke-dashoffset:-16}95%,100%{stroke-dasharray:42 150;stroke-dashoffset:-59}}</style><g class="spinner_V8m1"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="1.5"></circle></g></svg>
-                </div>
-            </div>
-            </div>
-            
-        <div class="limit-modal">
-            <div class="lmt-hdr">
-                <span role="heading" aria-level="2" class="lmt-hdr-title"></span>
-                <button aria-label="lmt-hdr.close" class="lmt-hdr__headerbtn" type="button"><i class="fa-solid fa-xmark close-lmt"></i></button>
-            </div>
-            <div class="lmt-body">
-                <div data-v-a91a5366="" class="daily-limit-content"><div data-v-a91a5366="" class="icon-wrapper"><i data-v-a91a5366="" class="fa-solid fa-clock"></i></div><h3 data-v-a91a5366="">Limitga yetdingiz. Davom ettirish uchun Premiumga ulaning</h3></div>
-            </div>
-            <div class="lmt-footer">
-                <button data-v-a91a5366="" aria-disabled="false" type="button" class="el-button el-button--primary py-4 w-full h-12 text-[20px] rounded-xl"><!--v-if--><span class=""><i data-v-a91a5366="" class="mr-2 text-yellow-400 fas fa-crown"></i> Premiumga qo'shiling</span></button>
-                <div data-v-a91a5366="" class="marsiana-btn-typing flex justify-center mt-4"><button class="flex items-center gap-1"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M25.4201 17.7185C17.104 19.0861 15.6256 20.8232 14.5168 30.9504C14.4798 31.283 13.9994 31.283 13.9624 30.9504C12.8536 20.8232 11.3752 19.123 3.05905 17.7185C2.72641 17.6816 2.72641 17.2011 3.05905 17.1641C11.3752 15.7966 12.8536 14.0964 13.9624 3.96921C13.9994 3.63657 14.4798 3.63657 14.5168 3.96921C15.6256 14.0964 17.104 15.7596 25.4201 17.1641C25.7158 17.2011 25.7158 17.6446 25.4201 17.7185Z" fill="url(#paint0_linear_6199_54881)"/><path d="M28.9685 6.03895C26.3812 6.5564 25.642 7.40649 25.1985 10.4373C25.1615 10.7699 24.681 10.7699 24.6441 10.4373C24.2005 7.40649 23.4613 6.5564 20.8741 6.00199C20.5784 5.92807 20.5784 5.52151 20.8741 5.44759C23.4244 4.93014 24.2005 4.08005 24.6441 1.04929C24.681 0.716644 25.1615 0.716644 25.1985 1.04929C25.642 4.08005 26.3812 4.93014 28.9685 5.48455C29.2641 5.55847 29.2641 6.00199 28.9685 6.03895Z" fill="url(#paint1_linear_6199_54881)"/><defs><linearGradient id="paint0_linear_6199_54881" x1="10" y1="8.5" x2="17" y2="25.5" gradientUnits="userSpaceOnUse"><stop stop-color="#0499F5"/><stop offset="1" stop-color="#D103FF"/></linearGradient><linearGradient id="paint1_linear_6199_54881" x1="23.5" y1="3.5" x2="26.5" y2="9.5" gradientUnits="userSpaceOnUse"><stop stop-color="#0599F5"/><stop offset="1" stop-color="#D104FF"/></linearGradient></defs></svg><p class="text-[#33B4FF] text-base">Marsianadan so'rang</p></button></div>
             </div>
         </div>
-        </main>
+
+        <li><button class="marsiana-circle-btn hidden md:block"><img src="./imgs/marsiana_btn.svg" alt="Marsiana"></button></li>
+        <div class="marsiana-chat-modal fixed z-[99999] min-h-[485px] p-0.5 pointer-events-auto bg-gradient-to-br from-[#0599F5] via-[#0599F5] to-[#D104FF] rounded-2xl flex md:items-stretch justify-center bottom-4 w-[95%] md:bottom-8 md:w-[409px] shadow-[0_0_30px_rgba(0,0,0,0.3)] md:shadow-none left-1/2 translate-x-[-50%] md:translate-x-0 md:right-8 md:left-auto"><div class="marsiana-chat-modal-inner relative bg-white rounded-2xl w-full min-h-[485px] flex flex-col justify-between overflow-hidden md:backdrop-blur-none backdrop-blur-md"><div class="flex justify-end pt-4 pr-4 marsiana-chat-header"><button class="close-marsiana-btn flex items-center justify-center w-8 h-8 rounded-full bg-[#f6f9ff] text-[#393333] text-2xl transition-colors duration-200 hover:bg-[#f0f0f0] border-none"> × </button></div><div class="marsiana-chat-body flex-1 px-4 overflow-y-auto max-h-[409px] flex flex-col gap-2"><div class="my-2"><div class="flex justify-end"><span class="inline-block bg-[#E6EDFB] rounded-lg px-3 py-2 text-[#393333] max-w-[80%] whitespace-pre-line text-left border border-[#D7E1F3] text-base">hello</span></div></div><div class="my-2"><div class="flex justify-start"><span class="inline-block px-3 py-2 text-[#393333] max-w-[95%] whitespace-pre-line text-left text-base"><span>Error: Could not get response.</span></span></div></div></div><div class="px-4 pb-4 marsiana-chat-input-wrapper"><form class="input-container flex items-center gap-2.5 bg-white rounded-full border border-[#b3c0da] px-4 py-1 shadow-none"><i class="fa-solid fa-magnifying-glass" style="color: rgb(178, 192, 218);"></i><input type="text" placeholder="How can I help" class="flex-1 py-2 text-base bg-transparent border-none outline-none chat-input placeholder-custom"><button class="send-btn flex items-center justify-center w-10 absolute right-6 h-10 rounded-full bg-[#f6f9ff] transition-colors duration-200 hover:bg-[#e1e1e1] border-none" disabled="" type="submit"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 21L23 12L2 3V10L17 12L2 14V21Z" fill="url(#paint0_linear)"></path><defs><linearGradient id="paint0_linear" x1="2" y1="3" x2="23" y2="21" gradientUnits="userSpaceOnUse"><stop stop-color="#0599F5"></stop><stop offset="1" stop-color="#D104FF"></stop></linearGradient></defs></svg></button></form></div></div></div>
     </section>
+
 
     <div class="confetti-container" id="confettiBox"></div>
 
-    
-  
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script type="module" src="firebase.js"></script>
-    <script src="typing.js"></script>
+    <script src="default.js"></script>
 </body>
 </html>
