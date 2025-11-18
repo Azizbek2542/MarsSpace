@@ -5,121 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MARS SPACE</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="st-profile.css">
-    <link rel="stylesheet" href="blog.css">
     <link rel="shortcut icon" href="./imgs/logo--circle.svg" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+    <link rel="stylesheet" href="blog.css">
 </head>
 <body>
     <div id="nav-placeholder"></div>
 
-    <div class="Student-overlay"></div>
-    <div class="edit-profile-modal">
-        <div class="edit-hdr">
-        <h2>Rasmni o'zgartirish</h2>
-        <button class="close-edit-mdl-btn"><i class="fa-solid fa-xmark close-premium"></i></button>
-        </div>
-        <div class="edit-body">
-            <div class="tab-cont">
-                <h2 class="Choice-of-img" style="color: #fc6736;">Rasm tanlash</h2>
-                <h2 class="Avatars">Avatarlar</h2>
-                <div class="tab-prnt">
-                    <div class="el_tab"></div>
-                </div>
-            </div>
-            <div class="Changing-values">
-            <label class="Student-custom-file">
-              <input type="file" id="StudentfileInput" accept="image/*" hidden="">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M544 864V672h128L512 480 352 672h128v192H320v-1.6c-5.376.32-10.496 1.6-16 1.6A240 240 0 0 1 64 624c0-123.136 93.12-223.488 212.608-237.248A239.808 239.808 0 0 1 512 192a239.872 239.872 0 0 1 235.456 194.752c119.488 13.76 212.48 114.112 212.48 237.248a240 240 0 0 1-240 240c-5.376 0-10.56-1.28-16-1.6v1.6z"></path></svg>
-              <span id="StudentfileText">Rasmni yuklash uchun bosing</span>
-            </label>
-            <button type="button" class="ChangimgBtn">Rasmni o'zgartirish</button>
-            </div>
-        </div>
-    </div>
-    <div class="student-container">
-        <div>
-            <div data-v-16e5327e="" class="w-full !h-[209px] p-4 profile-header" style="border-top-left-radius: 8px; border-top-right-radius: 8px; background-image: url(&quot;./imgs/hero-bg.webp&quot;);">
-                <div data-v-16e5327e="" class="flex gap-5 justify-end">
-                    <div data-v-16e5327e="" class="flex gap-[2px] items-center text-[16px] text-[#B3C0DA] hover:underline cursor-pointer to-hero-page">
-                        <img data-v-16e5327e="" src="data:image/webp;base64,UklGRogDAABXRUJQVlA4WAoAAAAQAAAARwAARwAAQUxQSE8CAAABoFXbdhxJuhAehAfBEAQhGKQYlBnIDMIMZAYuBoJgCA+CINwPa7Jc1cNfREwA/q+WP8Uv0z/DlzR9h6yn5Xyd/iaJ6WB6g4TM6gmokQt2rvMtxvohcJnkF5KzzLZk1jfgF4sOnttkaqzmD/Bl2YCcZa6TVVPoxbrHRjeVYzUJFmNjgjJOdVZ24CezWWA2FcsrENj5wUmZyBWyg0T2fj9GnehzM4VeHOom8iSTAFscu0z0ITP+iEpy8957afKfJ3QUjGVtUdqoZY2Whm0TxUyS2zDJAxzTkMiiG4Z1wMo4IrIs45D6Ev2AyPKFB+XqUVL6Iqv7E8DWERnRHVk1fQaaWwJNuyKrpnjaGn5Ij97Iqike1TMlMqWUzhhPMqE3smqKZyO7Q0dk1RTPynpaD0NTZNUUEy6HtTE0RFZNMVzXaJm09HUAvDUxVCKrphjtElstKCQ3MRQ0V0wx+mSvKayN4YYlF0wx3LrokDoYboF3U0y0wGr7eWMAAnllmuLBs0+QKwYcN4ZAXrJciif3rgxhC44byUvwtO/6DdeGo5AVj0uXx96B40b/HFKPwnpw3LYJXEeEWj2VcJBcJkBqUwz1u8OMmls2iLZKZdq14QKMrXk2bBVTBLa72bAVTPHDzn06bCSTQHMpV/J80LQC8Cxeolagm6+cCocAaoX9Jcr7hbvaLb/E3y4pQI0k3TsSSVNUl9v+CiVJReNKMr/Ck1zRvJN0b1DnFrSLc07e8If0p5lZ6hAzsystM0li0TqU5TCPZD7DaxpovQNalXn+FwUAVlA4IBIBAACQCQCdASpIAEgAPmEqj0WkIqEdaYwAQAYEsYMUAIP/fp7bbvOKH6AfwD8AP0Ap/0wx98UQ8QR/tAxUl+x+qtOpVicANoTsWKCiTedlr/vExSs9Ce7QAP78+GfXAPhei0JnzYWE7F29ML21nm0OSiD32soFt4Oq4HLVlxz0k6ngRTB8lJeRHE37+eeeb/zuT//Do//w2V//4YnilV3vEDZP1G8OC3rY5AwIIw7wCoPpDr7dDLsn1Zh/odcs09+GQz/9VjIPnyWS8y/s5FmrZY+7rY79j7KW32Ug34u509XExr/q/M+YHhjlPSei+sSCX96fpkWrxT4pKvwluCZstjDL3hr//1vflaX1VFvHCSX4AAAA" alt="" class="object-contain w-5 h-5"> Heroga o'tish <i data-v-16e5327e="" class="fa-solid fa-arrow-right"></i>
-                    </div>
-                    <button data-v-16e5327e="" class="text-[#B3C0DA] text-[16px] hover:underline cursor-pointer edit-profile"><i data-v-16e5327e="" class="fa-solid fa-pen-to-square"></i> Tahrirlash</button>
-                </div>
-                <div data-v-16e5327e="" class="profile-hero for-profile">
-                    <div class="front"></div>
-                    <div class="hero-head"><img alt="head" src="https://lab.marsit.uz/media/hero_dashboard/None/Head.png"></div>
-                    <div class="hero-body"><img alt="body" src="https://lab.marsit.uz/media/hero_dashboard/None/DefaultBody.png"></div>
-                    <div class="hero-feet"><img alt="feet" src="https://lab.marsit.uz/media/hero_dashboard/None/DefaultPants.png"></div><!----><!---->
-                </div>
-            </div>
-            <div data-v-16e5327e="" class="p-4 bg-white rounded-b-lg">
-                <div data-v-16e5327e="" class="-mt-[61px]">
-                    <div data-v-16e5327e="" class="relative">
-                        <div class="rounded-full profile-img relative flex items-center justify-center w-[90px] h-[90px]">
-                            <img src="https://lab.marsit.uz/media//profile_images/16862/IMG_20250204_000547_314.jpg_2025-10-01-11-31-00" alt="avatar" class="w-full h-full rounded-full object-contain user-img"><!---->
-                        </div>
-                            <div class="el-overlay" style="z-index: 2121; display: none;">
-                                <div role="dialog" aria-modal="true" aria-label="Rasmni o'zgartirish" aria-describedby="el-id-9134-211" class="el-overlay-dialog" style="display: flex;"></div>
-                            </div>
-                            <p data-v-16e5327e="" class="absolute bottom-0 left-10 text-[18px] font-sans text-white px-[5px] rounded bg-[#33B4FF]">5 lvl </p>
-                        </div>
-                            <div data-v-16e5327e="" class="flex gap-2 justify-between items-center">
-                                <p data-v-16e5327e="" class="mt-3 text-2xl font-bold capitalize" style="color: rgb(57 51 51 );">Ubaydullaev Azizbek <!----></p>
-                                <div data-v-16e5327e="" class="hidden gap-4 items-center md:flex">
-                                    <a data-v-16e5327e="" href="./coin-rating-page.html" class="flex gap-1 items-center hover:underline underline-word">
-                                    <img data-v-16e5327e="" src="./imgs/Coin.svg" alt="coin" class="object-contain w-4 h-4" loading="lazy">
-                                    <div id="coinsSumDisplay" style="color: rgb(252 103 54);" class="text-xl"><svg width="20" height="20" stroke="#fc6736" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_V8m1{transform-origin:center;animation:spinner_zKoa 2s linear infinite}.spinner_V8m1 circle{stroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite}@keyframes spinner_zKoa{100%{transform:rotate(360deg)}}@keyframes spinner_YpZS{0%{stroke-dasharray:0 150;stroke-dashoffset:0}47.5%{stroke-dasharray:42 150;stroke-dashoffset:-16}95%,100%{stroke-dasharray:42 150;stroke-dashoffset:-59}}</style><g class="spinner_V8m1"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="3"></circle></g></svg></div>      
-                                </a>
-                                <span data-v-16e5327e="" style="color: rgb(179 192 218); font-weight: 900;">|</span>
-                                <a data-v-16e5327e="" href="./xp-rating-page.html" class="flex gap-1 items-center hover:underline underline-word">
-                                    <img data-v-16e5327e="" src="data:image/webp;base64,UklGRh4DAABXRUJQVlA4WAoAAAAQAAAAHAAAOQAAQUxQSC0BAAABkFZbb9hIH4RCEIRCMBRDCIOawQyCNYQw2EAoBEMIA70fSSQNg4iYAIXbz/5dJ7fre/xYyEjP0J6zSCM9FT0e/MkiDcC5OrgzFd0jOA4WMQDn0WEqOi9RxyIGHmMoOskuC61UV7STXQp/M95Db7JL4ZlqISPpU+EOHnG32ErwT+EGTtTbu92bpJmJnpJOip0pdcqXSUddl4xi55DUwUs4TdJBrbNJMmqdJUkdvALscrhT6Axdnatn+Oq2f8b4fD5ji51299xjm7JH6FDWeHaWpXoAutJHZCptBJfl+pPTlP/vDwzljXtnqbD7jXNaxcFjV6Hx+KvKfuOsV8l+A6bS0282lTZup2on4KxX0QI4TbXGdVNxvwxV78BX5QuWlb2At8obbKrfGPrDMfSHAFZQOCDKAQAAkA0AnQEqHQA6AD5hKI9FpCKhm/wGAEAGBLYAWI9CPVvdvMntH9A+DnnF5J80TlX/HdIDbteYDdAP2A6wD0AP2O9Kz9sPgf/br0Zv/rmoFFqB4bFA8Gieaf6U7NsyzlX4wCyj9LXjWzc/STIuPGgw9NQzIKUgAP71xj+OGQnZP1O2LsK4QTB8IFWlixj/9N8o2FTX7nhX/ni/dXQD87fD0IKX6rbf4Si/ZldTUs4Bh/UWWC8kfQV0qdd4AeVLPk6awK5pGHBzva8tTd00h/Ba2SRbase8HQ0MIh1CqiKLYQJnhDI3omNylf8+fHr97NOFSy8oNf5yB/hvt8k8ThBDHNTFaVhcxdrXEPpnjin1LR34/rXKXUMddIxZWf+P/oUa+E/8jOkG1/FaQkTTj1rz0t0Jbi+f/k5FjrZ3NVDRXfgEmdja0FdKRL2Alv62NER0FwHZkpjrPrnzovR/sxp7O+iiOkUMpkptczf/wTem5mg6vMwgv/UGP++y7/tffPG4HhTw/f/d0YZQzbshgG4ZvdpJpYznn//3h0W8u4foZ40wu8bYND9uIRlQmId+ESv/BCslTEMM/jvCulXmNK0Hfya+AwRIU1xAAAA=" alt="coin" class="object-contain w-4 h-4" loading="lazy">
-                                    <p style="color: rgb(252 103 54);" data-v-16e5327e="" class="text-xl">3,160</p>
-                                </a>
-                            </div>
-                        </div>
-                        <a style="color: rgb(179 192 218);" data-v-16e5327e="" href="./student-ranks.html" class="hover:underline">Rank topilmadi</a>
-                    </div>
-                </div>
-
-                <div data-v-16e5327e="" class="block p-4 mt-4 bg-white rounded-lg md:hidden">
-                    <div data-v-16e5327e="" class="flex justify-around items-center">
-                        <a data-v-16e5327e="" href="./coin-rating-page.html" class="flex gap-1 items-center hover:underline underline-word">
-                            <img data-v-16e5327e="" src="./imgs/Coin.svg" alt="coin" class="object-contain w-4 h-4" loading="lazy">
-                            <div id="coinsSumDisplay" style="color: rgb(252 103 54);" class="text-xl"><svg width="20" height="20" stroke="#fc6736" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_V8m1{transform-origin:center;animation:spinner_zKoa 2s linear infinite}.spinner_V8m1 circle{stroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite}@keyframes spinner_zKoa{100%{transform:rotate(360deg)}}@keyframes spinner_YpZS{0%{stroke-dasharray:0 150;stroke-dashoffset:0}47.5%{stroke-dasharray:42 150;stroke-dashoffset:-16}95%,100%{stroke-dasharray:42 150;stroke-dashoffset:-59}}</style><g class="spinner_V8m1"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="3"></circle></g></svg></div>      
-                        </a>
-                        <span data-v-16e5327e="" style="color: rgb(179 192 218); font-weight: 900;">|</span>
-                        <a data-v-16e5327e="" href="./xp-rating-page.html" class="flex gap-1 items-center hover:underline underline-word">
-                            <img data-v-16e5327e="" src="data:image/webp;base64,UklGRh4DAABXRUJQVlA4WAoAAAAQAAAAHAAAOQAAQUxQSC0BAAABkFZbb9hIH4RCEIRCMBRDCIOawQyCNYQw2EAoBEMIA70fSSQNg4iYAIXbz/5dJ7fre/xYyEjP0J6zSCM9FT0e/MkiDcC5OrgzFd0jOA4WMQDn0WEqOi9RxyIGHmMoOskuC61UV7STXQp/M95Db7JL4ZlqISPpU+EOHnG32ErwT+EGTtTbu92bpJmJnpJOip0pdcqXSUddl4xi55DUwUs4TdJBrbNJMmqdJUkdvALscrhT6Axdnatn+Oq2f8b4fD5ji51299xjm7JH6FDWeHaWpXoAutJHZCptBJfl+pPTlP/vDwzljXtnqbD7jXNaxcFjV6Hx+KvKfuOsV8l+A6bS0282lTZup2on4KxX0QI4TbXGdVNxvwxV78BX5QuWlb2At8obbKrfGPrDMfSHAFZQOCDKAQAAkA0AnQEqHQA6AD5hKI9FpCKhm/wGAEAGBLYAWI9CPVvdvMntH9A+DnnF5J80TlX/HdIDbteYDdAP2A6wD0AP2O9Kz9sPgf/br0Zv/rmoFFqB4bFA8Gieaf6U7NsyzlX4wCyj9LXjWzc/STIuPGgw9NQzIKUgAP71xj+OGQnZP1O2LsK4QTB8IFWlixj/9N8o2FTX7nhX/ni/dXQD87fD0IKX6rbf4Si/ZldTUs4Bh/UWWC8kfQV0qdd4AeVLPk6awK5pGHBzva8tTd00h/Ba2SRbase8HQ0MIh1CqiKLYQJnhDI3omNylf8+fHr97NOFSy8oNf5yB/hvt8k8ThBDHNTFaVhcxdrXEPpnjin1LR34/rXKXUMddIxZWf+P/oUa+E/8jOkG1/FaQkTTj1rz0t0Jbi+f/k5FjrZ3NVDRXfgEmdja0FdKRL2Alv62NER0FwHZkpjrPrnzovR/sxp7O+iiOkUMpkptczf/wTem5mg6vMwgv/UGP++y7/tffPG4HhTw/f/d0YZQzbshgG4ZvdpJpYznn//3h0W8u4foZ40wu8bYND9uIRlQmId+ESv/BCslTEMM/jvCulXmNK0Hfya+AwRIU1xAAAA=" alt="coin" class="object-contain w-5 h-5" loading="lazy">
-                            <p style="color: rgb(252 103 54);" data-v-16e5327e="" class="text-xl">3,160</p>
-                        </a>
-                    </div>
-                </div>
-
-                <div data-v-16e5327e="" class="grid grid-cols-1 gap-4 mt-4 xl:grid-cols-2">
-                    <div data-v-16e5327e="" class="monthly-report">
-                        <div class="bg-white rounded-lg p-4">
-                            <div class="flex items-center gap-4">
-                                <div class="w-[72px] h-[72px] bg-[#F6F9FF] rounded-full flex justify-center items-center">
-                                    <img src="data:image/webp;base64,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" alt="" class="w-12 h-12">
-                                </div>
-                                <div class="flex-1 flex items-center gap-1 justify-between">
-                                    <div>
-                                        <p class="text-xl">Oktabr oyi</p>
-                                        <p class="text-mainDark line-clamp-1">Erishgan yutiqlaringiz</p>
-                                        <button id="button-one" class="mt-2 cursor-pointer hover:underline" style="color: #009bf5;">Ko'rish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
-                                    </div>
-                                    <button class="w-9 h-9 bg-[#F6F9FF] rounded-full flex items-center justify-center hover:bg-[#009bf5] cursor-pointer hover:text-white text-[#009bf5] transition-all duration-300"><i class="fa-solid fa-play"></i></button>
-                                </div>
-                            </div>
-                        </div><!---->
-                    </div>
-                </div>
-                <div class="mt-4 rounded-lg p-4 bg-white">
-                    <h1 class="text-2xl font-bold">Postlar</h1>
-                    <div id="posts-container" class="mt-4" style="flex-direction: row; max-width: 100% !important; overflow-x: auto;"></div>
-                    <div class="value-modal"></div>
+    <div class="value-modal"></div>
     <div class="likes-modal">
       <div class="likes-mdl-hdr">
         <h2>Likes</h2>
@@ -142,6 +36,21 @@
       </div>
     </div>
     <main>
+      <div class="blog-container mx-auto pt-4">
+<div class="el-breadcrumb" aria-label="Breadcrumb" role="navigation">
+    <span class="el-breadcrumb__item">
+        <span class="el-breadcrumb__inner is-link" role="link">Profil</span>
+        <span class="el-breadcrumb__separator" role="presentation">/</span>
+    </span>
+    <span class="el-breadcrumb__item" aria-current="page">
+        <span class="el-breadcrumb__inner" role="link">
+            <span class="text-[#fc6736]">Postlar</span>
+        </span>
+    </span>
+</div>
+<h1 style="max-width: 512px; width: 100%; margin-bottom: 16px; font-weight: 900; color: #000000;" class="text-2xl">Barcha postlar</h1>
+          <div id="posts-container"></div>
+        </div>
           <div class="post-modal">
             <div class="post-mdl-hdr">
             <h2>Post qo'shish</h2>
@@ -180,25 +89,21 @@
           <div class="post-double-overlay"></div>
           <div class="post-overlay"></div>
     </main>
-    <div class="justify-center flex"><a href="./student-posts.html"><button id="button-one" class="mt-2 cursor-pointer hover:underline" style="color: #009bf5;">Mening barcha postlarim<i class="fa-solid fa-chevron-right text-[11px]"></i></button></a></div>
-                </div>
-        </div>
-    </div>
 
 
-
+    <script>
+        const toProfile = document.querySelector('.el-breadcrumb__inner.is-link');
+        toProfile.addEventListener('click', () => {
+            window.location.href = './student-profile.html'
+        });
+    </script>
 
     <script>
 function waitForNavbar() {
   const navbar = document.querySelector('.navbar');
-  const StudentCont = document.querySelector('.student-container');
   if (navbar) {
-    if (window.innerWidth < 768) {
-      StudentCont.style.paddingTop = navbar.offsetHeight + 'px';
-      StudentCont.style.paddingBottom = navbar.offsetHeight + 'px';
-    } else {
-      StudentCont.style.paddingTop = navbar.offsetHeight + 'px';
-    }
+    const coursesCont = document.querySelector('.blog-container');
+    coursesCont.style.paddingTop = navbar.offsetHeight + 'px';
   } else {
     // пробуем снова через 100мс
     setTimeout(waitForNavbar, 100);
@@ -206,82 +111,8 @@ function waitForNavbar() {
 }
 
 document.addEventListener('DOMContentLoaded', waitForNavbar);
-window.addEventListener('resize', waitForNavbar);
     </script>
 
-<script>
-    const ToHeroPageBtn = document.querySelector('.to-hero-page');
-    const EditProfileBtn = document.querySelector('.edit-profile');
-    const EditModal = document.querySelector('.edit-profile-modal');
-    const AvatarsBtn = document.querySelector('.Avatars');
-    const ChoiceOfimgBtn = document.querySelector('.Choice-of-img');
-    const ElTab = document.querySelector('.el_tab');
-    const StudentOverlay = document.querySelector('.Student-overlay');
-    const CloseEditModal = document.querySelector('.close-edit-mdl-btn');
-
-    EditProfileBtn.addEventListener('click', () => {
-        EditModal.classList.add('active');
-        StudentOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-
-    StudentOverlay.addEventListener('click', () => {
-        EditModal.classList.remove('active');
-        StudentOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-
-    CloseEditModal.addEventListener('click', () => {
-        EditModal.classList.remove('active');
-        StudentOverlay.classList.remove('active');
-        document.body.style.overflow = '';
-    });
-
-    ToHeroPageBtn.addEventListener('click', () => {
-        PremiumModal.classList.add('active');
-        overlay.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    });
-
-    let currentMode = null;      // 'active' или 'activeBack'
-let currentButton = null;    // нажатая кнопка
-
-function moveElTabUnder(button, mode) {
-    currentMode = mode;
-    currentButton = button;
-
-    const rect = button.getBoundingClientRect();
-    const parentRect = ElTab.parentElement.getBoundingClientRect();
-
-    const x = rect.left - parentRect.left;
-
-    ElTab.style.transform = `translateX(${x}px)`;
-
-    ElTab.classList.remove('active', 'activeBack');
-    void ElTab.offsetWidth;
-    ElTab.classList.add(mode);
-}
-
-AvatarsBtn.addEventListener('click', () => {
-    moveElTabUnder(AvatarsBtn, 'active');
-    AvatarsBtn.style.color = '#fc6736';
-    ChoiceOfimgBtn.style.color = '#303133';
-});
-
-ChoiceOfimgBtn.addEventListener('click', () => {
-    moveElTabUnder(ChoiceOfimgBtn, 'activeBack');
-    AvatarsBtn.style.color = '#303133';
-    ChoiceOfimgBtn.style.color = '#fc6736';
-});
-
-// 🔥 ВОТ ГЛАВНОЕ — обработка ресайза:
-window.addEventListener('resize', () => {
-    if (currentButton && currentMode) {
-        moveElTabUnder(currentButton, currentMode);
-    }
-});
-
-</script>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";

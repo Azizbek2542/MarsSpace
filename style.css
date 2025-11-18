@@ -149,7 +149,8 @@ html {
 .language-selection-container-modal.active,
 .marsiana-chat-modal.active,
 .double-overlay.active,
-.get-next-lvl-modal.active {
+.get-next-lvl-modal.active,
+.Student-overlay.active {
   pointer-events: auto;
   opacity: 1;
   visibility: visible;

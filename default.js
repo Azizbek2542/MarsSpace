@@ -31,7 +31,9 @@
   const closeMarsianaBtn = document.querySelector('.close-marsiana-btn');
   const MarsianaModal = document.querySelector('.marsiana-chat-modal');
   const marsianaCircleBtn = document.querySelector('.marsiana-circle-btn');
-  const MediaCoinsModalOverlay =document.querySelector('.CoinModals-overlay');
+  const MediaCoinsModalOverlay = document.querySelector('.CoinModals-overlay');
+  const doubleoverlay = document.querySelector('.post-double-overlay') || document.querySelector('.double-overlay');
+
 
   marsianaCircleBtn.addEventListener('click', () => {
     MarsianaModal.classList.add('active');
@@ -374,7 +376,7 @@ SelectLang.addEventListener('click', () => {
 closePremium.addEventListener('click', () => {
   PremiumModal.classList.remove('active');
   overlay.classList.remove('active');
-  doubleoverlay.classList.remove('active');
+  if (doubleoverlay && window.location.pathname.endsWith('main-page.html')) doubleoverlay.classList.remove('active');
   document.body.style.overflow = '';
 });
 

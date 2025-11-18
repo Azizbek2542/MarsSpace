@@ -1,9 +1,9 @@
 const PostModal = document.querySelector('.post-modal');
 const ClosePostModalBtn = document.querySelector('.close-post-mdl-btn');
-const PostModalOpener = document.querySelector('.PostModalOpener');
+const PostModalOpener = document.querySelector('.firstBlogInput');
 const elButton = document.querySelector('.el-button');
-const doubleoverlay = document.querySelector('.post-double-overlay');
 const Postoverlay = document.querySelector('.post-overlay');
+const doubleoverlay2 = document.querySelector('.post-double-overlay');
 
 
 PostModalOpener.addEventListener('click', () => {
@@ -28,11 +28,13 @@ Postoverlay.addEventListener('click', () => {
 elButton.addEventListener('click', () => {
   PremiumModal.classList.add('active');
   PremiumModal.style.zIndex = '100002';
-  doubleoverlay.classList.add('active');
+  if (doubleoverlay2) doubleoverlay2.classList.add('active');
 });
 
-doubleoverlay.addEventListener('click', () => {
-  PremiumModal.classList.remove('active');
-  doubleoverlay.classList.remove('active');
-});
+if (doubleoverlay2) {
+  doubleoverlay2.addEventListener('click', () => {
+    PremiumModal.classList.remove('active');
+    doubleoverlay2.classList.remove('active');
+  });
+}
 
