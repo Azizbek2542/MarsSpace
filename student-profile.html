@@ -13,6 +13,8 @@
 </head>
 <body>
     <div id="nav-placeholder"></div>
+    <div class="value-modal"></div>
+    
 
     <div class="Student-overlay"></div>
     <div class="edit-profile-modal">
@@ -29,12 +31,37 @@
                 </div>
             </div>
             <div class="Changing-values">
-            <label class="Student-custom-file">
-              <input type="file" id="StudentfileInput" accept="image/*" hidden="">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M544 864V672h128L512 480 352 672h128v192H320v-1.6c-5.376.32-10.496 1.6-16 1.6A240 240 0 0 1 64 624c0-123.136 93.12-223.488 212.608-237.248A239.808 239.808 0 0 1 512 192a239.872 239.872 0 0 1 235.456 194.752c119.488 13.76 212.48 114.112 212.48 237.248a240 240 0 0 1-240 240c-5.376 0-10.56-1.28-16-1.6v1.6z"></path></svg>
-              <span id="StudentfileText">Rasmni yuklash uchun bosing</span>
-            </label>
-            <button type="button" class="ChangimgBtn">Rasmni o'zgartirish</button>
+              <div class="Student-custom-file-cont">
+              <label class="Student-custom-file">
+                <input type="file" id="StudentfileInput" accept="image/*" hidden="">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" d="M544 864V672h128L512 480 352 672h128v192H320v-1.6c-5.376.32-10.496 1.6-16 1.6A240 240 0 0 1 64 624c0-123.136 93.12-223.488 212.608-237.248A239.808 239.808 0 0 1 512 192a239.872 239.872 0 0 1 235.456 194.752c119.488 13.76 212.48 114.112 212.48 237.248a240 240 0 0 1-240 240c-5.376 0-10.56-1.28-16-1.6v1.6z"></path></svg>
+                <span id="StudentfileText">Rasmni yuklash uchun bosing</span>
+              </label>
+              </div>
+              <div class="profileImgPreviewContainer hidden relative bg-gray-200 p-2 rounded mb-5">
+    <img alt="Preview" id="profileimgPreview" class="w-[150px] h-[150px] rounded-full object-contain mx-auto" style="background-color: rgb(210, 224, 251);">
+    <button type="button" class="remove-preview-btn">&times;</button>
+</div>
+    <button type="button" class="ChangimgBtn">Rasmni o'zgartirish</button>
+
+            </div>
+
+
+              <div id="pane-avatars" class="el-tab-pane hidden" role="tabpanel" aria-hidden="false" aria-labelledby="tab-avatars">
+              <div class="flex flex-wrap gap-2 mb-5">
+                <img src="https://lab.marsit.uz/media/emojis/1.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(251, 240, 178); border-color: rgb(219, 218, 218);">
+                <img src="https://lab.marsit.uz/media/emojis/2.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(255, 228, 214); border-color: rgb(219, 218, 218);">
+                <img src="https://lab.marsit.uz/media/emojis/3.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(210, 224, 251); border-color: rgb(219, 218, 218);">
+                <img src="https://lab.marsit.uz/media/emojis/4.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(223, 204, 251); border-color: rgb(219, 218, 218);">
+                <img src="https://lab.marsit.uz/media/emojis/5.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(210, 224, 251); border-color: rgb(219, 218, 218);">
+                <img src="https://lab.marsit.uz/media/emojis/6.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(219, 251, 178); border-color: rgb(219, 218, 218);">
+                <img src="https://lab.marsit.uz/media/emojis/7.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(178, 251, 207); border-color: rgb(219, 218, 218);">
+                <img src="https://lab.marsit.uz/media/emojis/8.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(251, 178, 239); border-color: rgb(219, 218, 218);">
+                <img src="https://lab.marsit.uz/media/emojis/9.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(251, 240, 178); border-color: rgb(219, 218, 218);">
+                <img src="https://lab.marsit.uz/media/emojis/10.png" alt="profile-photo" class="w-12 h-12 rounded-full object-contain cursor-pointer border-2 border-solid avatars-profile-photo" style="background-color: rgb(223, 204, 251); border-color: rgb(219, 218, 218);">
+              </div>
+            </div>
+            <button type="button" class="ChangimgBtn2 hidden">Rasmni o'zgartirish</button>
             </div>
         </div>
     </div>
@@ -58,7 +85,7 @@
                 <div data-v-16e5327e="" class="-mt-[61px]">
                     <div data-v-16e5327e="" class="relative">
                         <div class="rounded-full profile-img relative flex items-center justify-center w-[90px] h-[90px]">
-                            <img src="https://lab.marsit.uz/media//profile_images/16862/IMG_20250204_000547_314.jpg_2025-10-01-11-31-00" alt="avatar" class="w-full h-full rounded-full object-contain user-img"><!---->
+                            <img src="./imgs/Spinner.svg" alt="avatar" class="w-full h-full rounded-full object-cover user-img"><!---->
                         </div>
                             <div class="el-overlay" style="z-index: 2121; display: none;">
                                 <div role="dialog" aria-modal="true" aria-label="Rasmni o'zgartirish" aria-describedby="el-id-9134-211" class="el-overlay-dialog" style="display: flex;"></div>
@@ -149,8 +176,8 @@
             </div>
             <div class="post-mdl-body">
             <div class="flex items-center gap-2">
-              <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px]"><img src="./imgs/image.png" alt="avatar" class="w-full h-full rounded-full object-contain user-img"><!----></div>
-            <div class="flex-1 min-w-0"><p class="flex items-center gap-1 font-bold capitalize text-lg" style="color: rgb(14 13 93);">Ubaydullaev Azizbek <!----></p>
+              <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px]"><img src="./imgs/Spinner.svg" alt="avatar" class="w-full h-full rounded-full object-cover user-img"></div>
+            <div class="flex-1 min-w-0"><p class="flex items-center gap-1 font-bold capitalize text-lg" style="color: rgb(14 13 93);">Ubaydullaev Azizbek </p>
               <p class="text-gray-500 postTime"><svg width="20" height="20" stroke="#fc6736" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_V8m1{transform-origin:center;animation:spinner_zKoa 2s linear infinite}.spinner_V8m1 circle{stroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite}@keyframes spinner_zKoa{100%{transform:rotate(360deg)}}@keyframes spinner_YpZS{0%{stroke-dasharray:0 150;stroke-dashoffset:0}47.5%{stroke-dasharray:42 150;stroke-dashoffset:-16}95%,100%{stroke-dasharray:42 150;stroke-dashoffset:-59}}</style><g class="spinner_V8m1"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="3"></circle></g></svg></p> 
             </div>
             </div>
@@ -209,6 +236,297 @@ document.addEventListener('DOMContentLoaded', waitForNavbar);
 window.addEventListener('resize', waitForNavbar);
     </script>
 
+    <script>
+      function setProfileImg(imgElement, firebaseUrl) {
+  const SPINNER = "./imgs/Spinner.svg"; // путь к спиннеру
+  const DEFAULT = "https://lab.marsit.uz/media/avatar/defaults/av-code.png";
+
+  // Сначала ставим спиннер
+  imgElement.src = SPINNER;
+
+  // Имитация получения данных с Firebase (например, get)
+  getUserProfileImgFromFirebase().then(url => {
+    if (url) {
+      // Если картинка есть в Firebase
+      imgElement.src = url;
+    } else {
+      // Если картинки нет
+      imgElement.src = DEFAULT;
+    }
+  }).catch(() => {
+    // На случай ошибки тоже дефолт
+    imgElement.src = DEFAULT;
+  });
+}
+
+// Пример функции, которая возвращает Promise с URL из Firebase
+function getUserProfileImgFromFirebase() {
+  return new Promise((resolve, reject) => {
+    const userProfileRef = dbRef(profiledb, `users-profileImage/${userId}`);
+    onValue(userProfileRef, snapshot => {
+      const data = snapshot.val();
+      if (data?.image) resolve(data.image);        // Base64 или URL
+      else if (data?.photoURL) resolve(data.photoURL); // Avatar URL
+      else resolve(null);
+    }, err => reject(err));
+  });
+}
+
+// Используем на всех img
+document.querySelectorAll(".user-img").forEach(img => {
+  setProfileImg(img);
+});
+
+    </script>
+    
+
+    <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getDatabase, ref as dbRef, set, onValue, update } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+    // 🔥 Удаляем import { getAuth, onAuthStateChanged }
+
+    // Конфигурация
+    const firebaseConfig2 = {
+        apiKey: "AIzaSyA94ReOhz7i6DCChWM2CNAv0vqHuv5Dd6A",
+        authDomain: "marsspace-48b62.firebaseapp.com",
+        databaseURL: "https://marsspace-48b62-default-rtdb.firebaseio.com",
+        projectId: "marsspace-48b62",
+        storageBucket: "marsspace-48b62.appspot.com",
+        messagingSenderId: "198640947214",
+        appId: "1:198640947214:web:e2b13d6b3a4302e8a0d8a0"
+    };
+
+    // 🔥 СТАТИЧЕСКИЙ ТЕСТОВЫЙ ID (ОБЯЗАТЕЛЬНО ОПРЕДЕЛИТЬ!)
+    const userId = "TEST_STATIC_PROFILE_ID"; 
+    
+    // Инициализация Firebase
+    const app2 = initializeApp(firebaseConfig2);
+    const profiledb = getDatabase(app2);
+    const storage = getStorage(app2);
+    
+    // Ссылки на DB, которые используют статический ID
+    // const userProfileRef = dbRef(profiledb, `users-profile-avatar`); 
+    const userProfileRef = dbRef(profiledb, `users-profile/${userId}`);
+
+
+    // -------------------------------------------------------------
+    // Получение DOM-элементов (убедитесь, что они все доступны в этом скрипте)
+    // -------------------------------------------------------------
+  
+    // -------------------------------------------------------------
+
+
+    // 1. 🔥 ЛОГИКА ОТОБРАЖЕНИЯ (Теперь работает сразу, без onAuthStateChanged)
+    // onValue(userProfileRef, (snapshot) => {
+    //     const data = snapshot.val();
+    //     const photoURL = data?.photoURL;
+        
+    //     if (photoURL) {
+    //         // Обновляем ВСЕ элементы с классом .user-img на текущей странице
+    //         profileImages.forEach(img => {
+    //             img.src = photoURL;
+    //         });
+    //     }
+    // }); 
+
+//     onValue(userProfileRef, (snapshot) => {
+//     const data = snapshot.val();
+    
+//     // 1. Получаем Base64, который вы сохраняете через загрузку файла
+//     const imageBase64 = data?.image; 
+    
+//     // 2. Получаем URL аватара, который вы сохраняете через кнопку Avatars
+//     const avatarURL = data?.photoURL; 
+
+//     // 🔥 Определяем финальный источник: приоритет Base64, иначе URL аватара
+//     const finalImageSrc = imageBase64 || avatarURL;
+    
+//     if (finalImageSrc) {
+//         // Обновляем ВСЕ элементы с классом .user-img на текущей странице
+//         profileImages.forEach(img => {
+//             img.src = finalImageSrc;
+//         });
+//     }
+// });
+
+// onValue(userProfileRef, (snapshot) => {
+//     const data = snapshot.val();
+    
+//     const img = data?.image;     // Base64
+//     const url = data?.photoURL;  // аватар
+
+//     const final = img || url;
+
+//     if (final) {
+//         profileImages.forEach(i => i.src = final);
+//     }
+// });
+
+onValue(userProfileRef, (snap) => {
+    const data = snap.val();
+    const finalImg = data?.image || data?.photoURL;
+
+    if (!finalImg) return;
+
+    document.querySelectorAll('.user-img').forEach(img => {
+        img.src = finalImg;
+    });
+});
+    
+    // 2. 🔥 ЛОГИКА ПРЕВЬЮ (обновлена с учетом контейнера)
+    StudentfileInput.addEventListener('change', () => {
+        const file = StudentfileInput.files[0];
+        
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                ProfileimgPreview.src = e.target.result;
+                StudentfileText.textContent = file.name;
+            };
+            reader.readAsDataURL(file);
+
+            // Управление видимостью
+            StudentCustomFileCont.classList.add('hidden');
+            profilePreviewContainer.classList.remove('hidden');
+            ChangimgBtn.style.cursor = 'pointer';
+            ChangimgBtn.style.opacity = '1';
+
+        } else {
+            StudentfileText.textContent = "Rasmni yuklash uchun bosing";
+            ChangimgBtn.style.cursor = 'not-allowed';
+            ChangimgBtn.style.opacity = '.3';
+        }
+    });
+
+    // 3. 🔥 ЛОГИКА УДАЛЕНИЯ ПРЕВЬЮ
+    removePreviewBtn.addEventListener('click', () => {
+        StudentfileInput.value = ''; 
+        ProfileimgPreview.src = '';
+        StudentfileText.textContent = "Rasmni yuklash uchun bosing";
+
+        // Управление видимостью
+        StudentCustomFileCont.classList.remove('hidden');
+        profilePreviewContainer.classList.add('hidden');
+
+        ChangimgBtn.style.cursor = 'not-allowed';
+        ChangimgBtn.style.opacity = '.3';
+    });
+
+
+    // 4. 🔥 ЛОГИКА ЗАГРУЗКИ ФАЙЛА (ChangimgBtn)
+    ChangimgBtn.addEventListener('click', async () => {
+      const newImageBase64 = ProfileimgPreview.src;
+        // const file = StudentfileInput.files[0];
+        // if (!file) {
+        //     alert("Iltimos, rasm tanlang!");
+        //     return;
+        // }
+
+        if (!newImageBase64 || newImageBase64.startsWith('http')) {
+        // Проверяем, что это не пустая строка и не путь по умолчанию
+        ValueModal.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Iltimos, rasm kiriting!`;
+        ValueModal.classList.add('show-value-modal');
+        setTimeout(() => {
+          ValueModal.classList.remove("show-value-modal");
+        }, 2000);
+            return;
+        }
+        
+        // const imageExtension = file.name.split('.').pop();
+        // // Используем статический userId в пути:
+        // const filePath = `profile_pics/${userId}.${imageExtension}`; 
+        // const storageReference = storageRef(storage, filePath);
+
+        
+
+        try {
+
+await update(userProfileRef, {
+    image: newImageBase64,
+    photoURL: null,      // чтобы не мешал прежний аватар
+    timestamp: Date.now(),
+});
+
+            // const downloadURL = await getDownloadURL(storageReference);
+
+            profileImages.forEach(img => {
+                img.src = newImageBase64;
+            });
+
+
+            // Сохраняем URL в Realtime Database
+            // await set(userProfileRef, { 
+            //     photoURL: downloadURL,
+            //     timestamp: Date.now()
+            // });
+
+
+
+            ValueModal.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 1024 1024">
+	<path fill="#76ff76" d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896m-55.808 536.384l-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.27 38.27 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336z" />
+</svg> <p style="color:rgb(51 51 51);">Profil rasmi muvaffaqiyatli o'zgartirildi!</p>`;
+            ValueModal.classList.add('show-value-modal');
+            setTimeout(() => {
+              ValueModal.classList.remove("show-value-modal");
+            }, 4000);
+            removePreviewBtn.click();
+            CloseEditModal.click(); 
+
+        } catch (error) {
+            console.error("Xatolik yuz berdi:", error);
+            ValueModal.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Rasmni yuklashda xatolik yuz berdi!`;
+            ValueModal.classList.add('show-value-modal');
+            setTimeout(() => {
+              ValueModal.classList.remove("show-value-modal");
+            }, 4000);
+        }
+    });
+
+    // 5. 🔥 ЛОГИКА ВЫБОРА АВАТАРА (ChangimgBtn2)
+    ChangimgBtn2.addEventListener('click', async () => {
+        const selectedAvatar = document.querySelector('.avatars-profile-photo.selected');
+        if (!selectedAvatar) {
+            ValueModal.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Iltimos, avatarni tanlang!`;
+            ValueModal.classList.add('show-value-modal');
+            setTimeout(() => {
+              ValueModal.classList.remove("show-value-modal");
+            }, 2000);
+            return;
+        }
+
+        const avatarURL = selectedAvatar.src;
+        
+        try {
+            await set(userProfileRef, { 
+                photoURL: avatarURL,
+                timestamp: Date.now()
+            });
+
+            ValueModal.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 1024 1024">
+	<path fill="#76ff76" d="M512 64a448 448 0 1 1 0 896a448 448 0 0 1 0-896m-55.808 536.384l-99.52-99.584a38.4 38.4 0 1 0-54.336 54.336l126.72 126.72a38.27 38.27 0 0 0 54.336 0l262.4-262.464a38.4 38.4 0 1 0-54.272-54.336z" />
+</svg> <p style="color:rgb(51 51 51);">Avatar muvaffaqiyatli o'rnatildi!</p>`;
+            ValueModal.classList.add('show-value-modal');
+            setTimeout(() => {
+              ValueModal.classList.remove("show-value-modal");
+            }, 4000);
+            ChangimgBtn2.style.cursor = 'not-allowed';
+            ChangimgBtn2.style.opacity = '.3';
+            selectedAvatar.classList.remove('selected');
+            CloseEditModal.click(); 
+
+        } catch (error) {
+            console.error("Xatolik yuz berdi:", error);
+            ValueModal.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> Avatarni o'rnatishda xatolik yuz berdi!`;
+            ValueModal.classList.add('show-value-modal');
+            setTimeout(() => {
+              ValueModal.classList.remove("show-value-modal");
+            }, 4000);
+        }
+    });
+    
+</script>
+
 <script>
     const ToHeroPageBtn = document.querySelector('.to-hero-page');
     const EditProfileBtn = document.querySelector('.edit-profile');
@@ -218,6 +536,19 @@ window.addEventListener('resize', waitForNavbar);
     const ElTab = document.querySelector('.el_tab');
     const StudentOverlay = document.querySelector('.Student-overlay');
     const CloseEditModal = document.querySelector('.close-edit-mdl-btn');
+    const ChangingValues = document.querySelector('.Changing-values');
+    const AvatarsProfilePhoto = document.querySelectorAll('.avatars-profile-photo');
+    const StudentCustomFileCont = document.querySelector('.Student-custom-file-cont');
+    const paneAvatars = document.querySelector('#pane-avatars');
+    const ChangimgBtn2 = document.querySelector('.ChangimgBtn2'); 
+    const ChangimgBtn = document.querySelector('.ChangimgBtn'); 
+    const StudentfileInput = document.getElementById("StudentfileInput");
+    const StudentfileText = document.getElementById("StudentfileText");
+    const profileImages = document.querySelectorAll('.user-img'); 
+    const profilePreviewContainer = document.querySelector('.profileImgPreviewContainer'); 
+    const ProfileimgPreview = document.getElementById("profileimgPreview"); 
+    const removePreviewBtn = document.querySelector('.remove-preview-btn');
+    const ValueModal = document.querySelector('.value-modal');
 
     EditProfileBtn.addEventListener('click', () => {
         EditModal.classList.add('active');
@@ -262,16 +593,61 @@ function moveElTabUnder(button, mode) {
     ElTab.classList.add(mode);
 }
 
-AvatarsBtn.addEventListener('click', () => {
-    moveElTabUnder(AvatarsBtn, 'active');
-    AvatarsBtn.style.color = '#fc6736';
-    ChoiceOfimgBtn.style.color = '#303133';
-});
+// AvatarsBtn.addEventListener('click', () => {
+//     moveElTabUnder(AvatarsBtn, 'active');
+//     AvatarsBtn.style.color = '#fc6736';
+//     ChoiceOfimgBtn.style.color = '#303133';
+//     StudentCustomFileCont.classList.add('hidden');
+//     paneAvatars.classList.remove('hidden');
+//     ChangimgBtn2.classList.remove('hidden');
+//     ChangimgBtn.classList.add('hidden');
+// });
+
+// ChoiceOfimgBtn.addEventListener('click', () => {
+//     moveElTabUnder(ChoiceOfimgBtn, 'activeBack');
+//     AvatarsBtn.style.color = '#303133';
+//     ChoiceOfimgBtn.style.color = '#fc6736';
+//     StudentCustomFileCont.classList.remove('hidden');
+//     paneAvatars.classList.add('hidden');
+//     ChangimgBtn2.classList.add('hidden');
+//     ChangimgBtn.classList.remove('hidden');
+// });
 
 ChoiceOfimgBtn.addEventListener('click', () => {
     moveElTabUnder(ChoiceOfimgBtn, 'activeBack');
     AvatarsBtn.style.color = '#303133';
     ChoiceOfimgBtn.style.color = '#fc6736';
+    
+    // Скрываем вкладку аватаров
+    paneAvatars.classList.add('hidden');
+    ChangimgBtn2.classList.add('hidden');
+    ChangimgBtn.classList.remove('hidden');
+
+    // 🔥 НОВАЯ ЛОГИКА: Решаем, что показать
+    if (StudentfileInput.files.length > 0) {
+        // Если файл уже выбран, показываем превью
+        StudentCustomFileCont.classList.add('hidden');
+        profilePreviewContainer.classList.remove('hidden');
+    } else {
+        // Если файл не выбран, показываем стандартный загрузчик
+        StudentCustomFileCont.classList.remove('hidden');
+        profilePreviewContainer.classList.add('hidden');
+    }
+});
+
+AvatarsBtn.addEventListener('click', () => {
+    moveElTabUnder(AvatarsBtn, 'active');
+    AvatarsBtn.style.color = '#fc6736';
+    ChoiceOfimgBtn.style.color = '#303133';
+    
+    // Скрываем все, что связано с файлом
+    StudentCustomFileCont.classList.add('hidden');
+    profilePreviewContainer.classList.add('hidden'); // 🔥 ДОБАВЛЕНО: Скрываем превью
+    
+    // Показываем вкладку аватаров
+    paneAvatars.classList.remove('hidden');
+    ChangimgBtn2.classList.remove('hidden');
+    ChangimgBtn.classList.add('hidden');
 });
 
 // 🔥 ВОТ ГЛАВНОЕ — обработка ресайза:
@@ -280,6 +656,18 @@ window.addEventListener('resize', () => {
         moveElTabUnder(currentButton, currentMode);
     }
 });
+
+AvatarsProfilePhoto.forEach((profilePhoto) => {
+  profilePhoto.addEventListener('click', () => {
+    ChangimgBtn2.style.cursor = 'pointer';
+    ChangimgBtn2.style.opacity = '1';
+
+    AvatarsProfilePhoto.forEach(p => p.classList.remove('selected'));
+
+    profilePhoto.classList.add('selected');
+  });
+});
+
 
 </script>
 
@@ -708,11 +1096,13 @@ if (PostTime) {
   const div = document.createElement("div");
   div.className = "post-item";
 
+  const userImg = document.querySelector('.user-img');
+
+
   // Шапка поста
   div.innerHTML = `
     <div class="flex items-center gap-2 mb-4">
-      <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px]">
-        <img src="./imgs/image.png" alt="avatar" class="w-full h-full rounded-full object-contain user-img">
+      <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px] img-slot">
       </div>
       <div class="flex-1 min-w-0">
         <p class="flex items-center gap-1 font-bold capitalize text-lg text-[#0E0D5D]">
@@ -725,6 +1115,13 @@ if (PostTime) {
     </div>
     <p class="post-text text-gray-800 leading-relaxed">${msg.text || ""}</p>
   `;
+
+  const slot = div.querySelector('.img-slot');
+
+// клонируем img, чтобы не удалять оригинал
+const cloneImg = userImg.cloneNode(true);
+
+slot.appendChild(cloneImg);
 
   // Если есть изображение, добавляем под текст
   if (msg.imageBase64) {
@@ -832,8 +1229,7 @@ if (PostTime) {
           
           commentsHtml.push(`
             <div class="flex items-center gap-2 mb-4 comment-container" data-comment-id="${commentId}">
-      <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px]">
-        <img src="./imgs/image.png" alt="avatar" class="w-full h-full rounded-full object-contain user-img">
+      <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px] img-slot2">
       </div>
       <div class="flex-1 min-w-0">
         <p class="flex items-center gap-1 font-bold capitalize text-lg text-[#0E0D5D]">
@@ -849,6 +1245,11 @@ if (PostTime) {
         });
 
         commentsBody.innerHTML = `<div class="comments-list">${commentsHtml.join('')}</div>`;
+
+        commentsBody.querySelectorAll('.img-slot2').forEach(slot => {
+          const clone = userImg.cloneNode(true);
+          slot.appendChild(clone);
+        });
         
         // Set up real-time listener for comment deletions
         const commentsRefForDeletion = ref(db, `postsChat/${currentCommentPostId}`);

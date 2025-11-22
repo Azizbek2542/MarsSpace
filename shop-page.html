@@ -108,6 +108,25 @@
             </div>
         </div>
         </div>
+        <div class="product-card space-product">
+          <!---->
+          <!---->
+          <div class="product-card__image-wrapper">
+            <img data-v-9e8d1790="" class="product-card__images" src="./imgs/zone.webp" alt="product" loading="lazy">
+          </div>
+          <div class="product-card__info">
+            <h3 class="product-card__title line-clamp-1">Pixel o'yin maydonchasi</h3>
+            <div class="flex gap-1 items-center">
+              <div class="flex gap-1 items-center">
+                <span class="product-card__price line-clamp-1">Tekin</span>
+              </div>
+                <p class="text-sm text-secondaryDark line-clamp-1 product_quantity"><span class="text-secondaryDark">|</span> 1 ta qoldi</p><!---->
+            </div>
+            <div class="product-card__actions">
+              <button id="button-one" class="">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
+            </div>
+        </div>
+        </div>
 
 
 
@@ -498,6 +517,91 @@
     </div>
 
 
+
+
+     <img class="user-img" src="./imgs/Spinner.svg" alt="">
+        <style>
+            .user-img {
+                display: none;
+            }
+        </style>      
+        
+        <script>
+      function setProfileImg(imgElement, firebaseUrl) {
+  const SPINNER = "./imgs/Spinner.svg"; // путь к спиннеру
+  const DEFAULT = "https://lab.marsit.uz/media/avatar/defaults/av-code.png";
+
+  // Сначала ставим спиннер
+  imgElement.src = SPINNER;
+
+  // Имитация получения данных с Firebase (например, get)
+  getUserProfileImgFromFirebase().then(url => {
+    if (url) {
+      // Если картинка есть в Firebase
+      imgElement.src = url;
+    } else {
+      // Если картинки нет
+      imgElement.src = DEFAULT;
+    }
+  }).catch(() => {
+    // На случай ошибки тоже дефолт
+    imgElement.src = DEFAULT;
+  });
+}
+
+// Пример функции, которая возвращает Promise с URL из Firebase
+function getUserProfileImgFromFirebase() {
+  return new Promise((resolve, reject) => {
+    const userProfileRef = dbRef(profiledb, `users-profileImage/${userId}`);
+    onValue(userProfileRef, snapshot => {
+      const data = snapshot.val();
+      if (data?.image) resolve(data.image);        // Base64 или URL
+      else if (data?.photoURL) resolve(data.photoURL); // Avatar URL
+      else resolve(null);
+    }, err => reject(err));
+  });
+}
+
+// Используем на всех img
+document.querySelectorAll(".user-img").forEach(img => {
+  setProfileImg(img);
+});
+
+    </script>
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+const firebaseConfig2 = {
+    apiKey: "AIzaSyA94ReOhz7i6DCChWM2CNAv0vqHuv5Dd6A",
+    authDomain: "marsspace-48b62.firebaseapp.com",
+    databaseURL: "https://marsspace-48b62-default-rtdb.firebaseio.com",
+    projectId: "marsspace-48b62",
+    storageBucket: "marsspace-48b62.appspot.com",
+    messagingSenderId: "198640947214",
+    appId: "1:198640947214:web:e2b13d6b3a4302e8a0d8a0"
+};
+
+const app2 = initializeApp(firebaseConfig2);
+const profiledb = getDatabase(app2);
+
+const userId = "TEST_STATIC_PROFILE_ID";
+const userProfileRef = dbRef(profiledb, `users-profile/${userId}`);
+
+// 🔥 Обновляем все .user-img на странице
+onValue(userProfileRef, (snap) => {
+    const data = snap.val();
+    const finalImg = data?.image || data?.photoURL;
+
+    if (!finalImg) return;
+
+    document.querySelectorAll('.user-img').forEach(img => {
+        img.src = finalImg;
+    });
+});
+</script>
+
+
     <script>
     function Sidebarcolor() {
   const observer = new MutationObserver(() => {
@@ -540,5 +644,4 @@ window.addEventListener('resize', waitForNavbar);
     <script src="shop.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
 </body>
-
 </html>

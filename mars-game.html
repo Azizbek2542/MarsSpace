@@ -95,7 +95,7 @@
                     <button class="subscribe-btn">Obuna bo'ling <span class="shine"></span></button>
                     <i class="fa-regular fa-bell text notification-bell"></i>
                     <div class="profile modal content">
-                        <img src="./imgs/image.png" alt="">
+                        <img class="user-img" src="./imgs/Spinner.svg" alt="">
                     </div>
                 </div>
             </div>
@@ -214,7 +214,7 @@
             <a href="./student-profile.html">
             <div class="User-name-prnt">
                 <div class="profile">
-                    <img src="./imgs/image.png" alt="">
+                    <img class="user-img" src="./imgs/Spinner.svg" alt="">
                 </div>
                 <h2 class="User-name">Azizbek Ubaydullayev</h2>
             </div>
@@ -334,7 +334,7 @@
             <div style="justify-self: center;" class="max-w-[954px] w-[95%] mr-3 md:mx-auto bg-white rounded-[24px] md:px-6 md:py-4 px-3 py-2 -mt-[300px]">
                 <div class="flex justify-between items-center">
                     <div class="flex gap-4 items-center md:gap-6">
-                        <div class="rounded-full profile-img relative flex items-center justify-center w-[90px] h-[90px]"><img src="./imgs/image.png" alt="avatar" class="w-full h-full rounded-full object-contain user-img"><!----></div>
+                        <div class="rounded-full profile-img relative flex items-center justify-center w-[90px] h-[90px]"><img src="./imgs/Spinner.svg" alt="avatar" class="w-full h-full rounded-full object-cover user-img"></div>
                         <div><a href="./student-profile.html" class="md:text-2xl text-xl text-black capitalize font-[700] hover:underline flex items-center gap-1">Ubaydullaev Azizbek <!----></a><p>Reytingda  - O’rin</p></div>
                     </div>
                     <div class="text-center"><p class="text-xs font-[400] text-[#B3C0DA]">Rekord tezlik</p><p class="md:text-4xl text-2xl font-[500] text-black"></p><p class="text-xs font-[400]">WPM</p></div>
@@ -373,8 +373,81 @@
     <div class="confetti-container" id="confettiBox"></div>
 
     
-  
+    <script>
+      function setProfileImg(imgElement, firebaseUrl) {
+  const SPINNER = "./imgs/Spinner.svg"; // путь к спиннеру
+  const DEFAULT = "https://lab.marsit.uz/media/avatar/defaults/av-code.png";
 
+  // Сначала ставим спиннер
+  imgElement.src = SPINNER;
+
+  // Имитация получения данных с Firebase (например, get)
+  getUserProfileImgFromFirebase().then(url => {
+    if (url) {
+      // Если картинка есть в Firebase
+      imgElement.src = url;
+    } else {
+      // Если картинки нет
+      imgElement.src = DEFAULT;
+    }
+  }).catch(() => {
+    // На случай ошибки тоже дефолт
+    imgElement.src = DEFAULT;
+  });
+}
+
+// Пример функции, которая возвращает Promise с URL из Firebase
+function getUserProfileImgFromFirebase() {
+  return new Promise((resolve, reject) => {
+    const userProfileRef = dbRef(profiledb, `users-profileImage/${userId}`);
+    onValue(userProfileRef, snapshot => {
+      const data = snapshot.val();
+      if (data?.image) resolve(data.image);        // Base64 или URL
+      else if (data?.photoURL) resolve(data.photoURL); // Avatar URL
+      else resolve(null);
+    }, err => reject(err));
+  });
+}
+
+// Используем на всех img
+document.querySelectorAll(".user-img").forEach(img => {
+  setProfileImg(img);
+});
+
+    </script>
+  
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+const firebaseConfig2 = {
+    apiKey: "AIzaSyA94ReOhz7i6DCChWM2CNAv0vqHuv5Dd6A",
+    authDomain: "marsspace-48b62.firebaseapp.com",
+    databaseURL: "https://marsspace-48b62-default-rtdb.firebaseio.com",
+    projectId: "marsspace-48b62",
+    storageBucket: "marsspace-48b62.appspot.com",
+    messagingSenderId: "198640947214",
+    appId: "1:198640947214:web:e2b13d6b3a4302e8a0d8a0"
+};
+
+const app2 = initializeApp(firebaseConfig2);
+const profiledb = getDatabase(app2);
+
+const userId = "TEST_STATIC_PROFILE_ID";
+const userProfileRef = dbRef(profiledb, `users-profile/${userId}`);
+
+// 🔥 Обновляем все .user-img на странице
+onValue(userProfileRef, (snap) => {
+    const data = snap.val();
+    const finalImg = data?.image || data?.photoURL;
+
+    if (!finalImg) return;
+
+    document.querySelectorAll('.user-img').forEach(img => {
+        img.src = finalImg;
+    });
+});
+</script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script type="module" src="firebase.js"></script>

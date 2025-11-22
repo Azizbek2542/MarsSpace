@@ -104,16 +104,21 @@ html {
     justify-content: center;
     height: 48px;
     cursor: pointer;
-    border: 2.5px solid #5b5b5b;
     border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+.user-img {
+    border: 2.5px solid #5b5b5b;
+    background-color: white;
 }
 
 .profile img {
-    width: 100%;
-    height: 100%;
     border-radius: 50%;
     object-fit: cover;
     -webkit-border-radius: 50%;
+    height: 48px;
+    width: 48px;
 }
 
 .amount-card:hover, .streak-modal:hover,
@@ -150,7 +155,8 @@ html {
 .marsiana-chat-modal.active,
 .double-overlay.active,
 .get-next-lvl-modal.active,
-.Student-overlay.active {
+.Student-overlay.active,
+.level-wrapper-overlay.active {
   pointer-events: auto;
   opacity: 1;
   visibility: visible;
@@ -174,6 +180,20 @@ html {
   width: 100%;
   height: 100%;
   justify-self: center;
+}
+
+.level-wrapper-overlay {
+  background-color: #00000063;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  visibility: hidden;
+  position: fixed;
+  z-index: 101;
+  width: 100%;
+  height: 100%;
+  justify-self: center;
+  top: 0;
 }
 
 .streak-first-text h2 {

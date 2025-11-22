@@ -155,18 +155,26 @@ levelNodes.forEach((node, index) => {
 const levelWrapperModal = document.querySelector('.level-wrapper-modal');
 const levelMiniMapButton = document.querySelector('.level-mini-map__button');
 const closeMapModal = document.querySelector('.lvl-modal-close');
+const LevelWrapperOverlay = document.querySelector('.level-wrapper-overlay');
 
 levelMiniMapButton.addEventListener('click', () => {
   levelMiniMapButton.classList.add('active');
-  overlay.classList.add('active');
+  LevelWrapperOverlay.classList.add('active');
   levelWrapperModal.classList.add('active');
   closeMapModal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 });
 
 closeMapModal.addEventListener('click', () => {
-  overlay.classList.remove('active');
+  LevelWrapperOverlay.classList.remove('active');
   levelWrapperModal.classList.remove('active');
+  closeMapModal.style.display = 'none';
+  document.body.style.overflow = '';
+});
+
+LevelWrapperOverlay.addEventListener('click', () => {
+  levelWrapperModal.classList.remove('active');
+  LevelWrapperOverlay.classList.remove('active');
   closeMapModal.style.display = 'none';
   document.body.style.overflow = '';
 });

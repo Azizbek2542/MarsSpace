@@ -432,3 +432,44 @@ onValue(ref(db, "coinsList"), (snapshot) => {
   showNextModal();
   renderTableFromFirebase(Object.values(data));
 });
+
+
+// const ProfilePrnt = document.querySelector('.User-name-prnt');
+// const profileModalContent = document.querySelector('.profile.modal.content');
+// const userImg = document.querySelector('.user-img');
+
+// ProfilePrnt.querySelectorAll('.profile').forEach(slot => {
+//   const clone = userImg.cloneNode(true);
+//   slot.appendChild(clone);
+// });
+
+// profileModalContent.querySelectorAll('.profile-img').forEach(slot => {
+//   const clone = userImg.cloneNode(true);
+//   slot.appendChild(clone);
+// });
+
+function applyAvatar() {
+  const userImg = document.querySelector('.user-img');
+  if (!userImg) return;
+
+  const slots = [
+    ...document.querySelectorAll('.User-name-prnt .profile'),
+    ...document.querySelectorAll('.profile.modal.content .profile-img'),
+    ...document.querySelectorAll('.post-chat-mdl-body .img-slot2')
+  ];
+
+  slots.forEach(slot => {
+    if (!slot.querySelector('img.user-img')) {
+      const clone = userImg.cloneNode(true);
+      slot.appendChild(clone);
+      clone.style.display = 'block';
+    }
+  });
+}
+
+// Пытаемся сразу
+applyAvatar();
+
+// Если динамика, наблюдаем за DOM
+const observer = new MutationObserver(applyAvatar);
+observer.observe(document.body, { childList: true, subtree: true });

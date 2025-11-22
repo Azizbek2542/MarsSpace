@@ -58,7 +58,7 @@
             </div>
             <div class="post-mdl-body">
             <div class="flex items-center gap-2">
-              <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px]"><img src="./imgs/image.png" alt="avatar" class="w-full h-full rounded-full object-contain user-img"><!----></div>
+              <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px]"><img src="./imgs/Spinner.svg" alt="avatar" class="w-full h-full rounded-full object-cover user-img"><!----></div>
             <div class="flex-1 min-w-0"><p class="flex items-center gap-1 font-bold capitalize text-lg" style="color: rgb(14 13 93);">Ubaydullaev Azizbek <!----></p>
               <p class="text-gray-500 postTime"><svg width="20" height="20" stroke="#fc6736" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_V8m1{transform-origin:center;animation:spinner_zKoa 2s linear infinite}.spinner_V8m1 circle{stroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite}@keyframes spinner_zKoa{100%{transform:rotate(360deg)}}@keyframes spinner_YpZS{0%{stroke-dasharray:0 150;stroke-dashoffset:0}47.5%{stroke-dasharray:42 150;stroke-dashoffset:-16}95%,100%{stroke-dasharray:42 150;stroke-dashoffset:-59}}</style><g class="spinner_V8m1"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="3"></circle></g></svg></p> 
             </div>
@@ -89,6 +89,91 @@
           <div class="post-double-overlay"></div>
           <div class="post-overlay"></div>
     </main>
+
+
+     <img class="user-img" src="./imgs/Spinner.svg" alt="">
+        <style>
+            .user-img {
+                display: none;
+            }
+        </style>      
+
+
+<script>
+      function setProfileImg(imgElement, firebaseUrl) {
+  const SPINNER = "./imgs/Spinner.svg"; // путь к спиннеру
+  const DEFAULT = "https://lab.marsit.uz/media/avatar/defaults/av-code.png";
+
+  // Сначала ставим спиннер
+  imgElement.src = SPINNER;
+
+  // Имитация получения данных с Firebase (например, get)
+  getUserProfileImgFromFirebase().then(url => {
+    if (url) {
+      // Если картинка есть в Firebase
+      imgElement.src = url;
+    } else {
+      // Если картинки нет
+      imgElement.src = DEFAULT;
+    }
+  }).catch(() => {
+    // На случай ошибки тоже дефолт
+    imgElement.src = DEFAULT;
+  });
+}
+
+// Пример функции, которая возвращает Promise с URL из Firebase
+function getUserProfileImgFromFirebase() {
+  return new Promise((resolve, reject) => {
+    const userProfileRef = dbRef(profiledb, `users-profileImage/${userId}`);
+    onValue(userProfileRef, snapshot => {
+      const data = snapshot.val();
+      if (data?.image) resolve(data.image);        // Base64 или URL
+      else if (data?.photoURL) resolve(data.photoURL); // Avatar URL
+      else resolve(null);
+    }, err => reject(err));
+  });
+}
+
+// Используем на всех img
+document.querySelectorAll(".user-img").forEach(img => {
+  setProfileImg(img);
+});
+
+    </script>
+        
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+const firebaseConfig2 = {
+    apiKey: "AIzaSyA94ReOhz7i6DCChWM2CNAv0vqHuv5Dd6A",
+    authDomain: "marsspace-48b62.firebaseapp.com",
+    databaseURL: "https://marsspace-48b62-default-rtdb.firebaseio.com",
+    projectId: "marsspace-48b62",
+    storageBucket: "marsspace-48b62.appspot.com",
+    messagingSenderId: "198640947214",
+    appId: "1:198640947214:web:e2b13d6b3a4302e8a0d8a0"
+};
+
+const app2 = initializeApp(firebaseConfig2);
+const profiledb = getDatabase(app2);
+
+const userId = "TEST_STATIC_PROFILE_ID";
+const userProfileRef = dbRef(profiledb, `users-profile/${userId}`);
+
+// 🔥 Обновляем все .user-img на странице
+onValue(userProfileRef, (snap) => {
+    const data = snap.val();
+    const finalImg = data?.image || data?.photoURL;
+
+    if (!finalImg) return;
+
+    document.querySelectorAll('.user-img').forEach(img => {
+        img.src = finalImg;
+    });
+});
+</script>
 
 
     <script>
@@ -539,11 +624,13 @@ if (PostTime) {
   const div = document.createElement("div");
   div.className = "post-item";
 
+  const userImg = document.querySelector('.user-img');
+
+
   // Шапка поста
   div.innerHTML = `
     <div class="flex items-center gap-2 mb-4">
-      <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px]">
-        <img src="./imgs/image.png" alt="avatar" class="w-full h-full rounded-full object-contain user-img">
+      <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px] img-slot">
       </div>
       <div class="flex-1 min-w-0">
         <p class="flex items-center gap-1 font-bold capitalize text-lg text-[#0E0D5D]">
@@ -556,6 +643,13 @@ if (PostTime) {
     </div>
     <p class="post-text text-gray-800 leading-relaxed">${msg.text || ""}</p>
   `;
+
+  const slot = div.querySelector('.img-slot');
+
+// клонируем img, чтобы не удалять оригинал
+const cloneImg = userImg.cloneNode(true);
+
+slot.appendChild(cloneImg);
 
   // Если есть изображение, добавляем под текст
   if (msg.imageBase64) {
@@ -663,8 +757,7 @@ if (PostTime) {
           
           commentsHtml.push(`
             <div class="flex items-center gap-2 mb-4 comment-container" data-comment-id="${commentId}">
-      <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px]">
-        <img src="./imgs/image.png" alt="avatar" class="w-full h-full rounded-full object-contain user-img">
+      <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px] img-slot2">
       </div>
       <div class="flex-1 min-w-0">
         <p class="flex items-center gap-1 font-bold capitalize text-lg text-[#0E0D5D]">
@@ -680,6 +773,11 @@ if (PostTime) {
         });
 
         commentsBody.innerHTML = `<div class="comments-list">${commentsHtml.join('')}</div>`;
+
+        commentsBody.querySelectorAll('.img-slot2').forEach(slot => {
+          const clone = userImg.cloneNode(true);
+          slot.appendChild(clone);
+        });
         
         // Set up real-time listener for comment deletions
         const commentsRefForDeletion = ref(db, `postsChat/${currentCommentPostId}`);

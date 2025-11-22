@@ -93,6 +93,9 @@
     MediaStreakModal.addEventListener('click', () => {
       MediaCoinsModalOverlay.classList.add('active');
     });
+    MediaCoinsModalOverlay.addEventListener('click', () => {
+      MediaCoinsModalOverlay.classList.remove('active');
+    });
   }
   }
 
