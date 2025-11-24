@@ -173,6 +173,7 @@
     padding: 0 10px;
 }
 
-.sign-up {
+.sign-up,
+.sign-in {
     color: #fc6736;
 }
