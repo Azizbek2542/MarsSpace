@@ -1,0 +1,20 @@
+.rank-rating,
+.coin-rating {
+    width: -webkit-calc(100% - 560px);
+    width: -moz-calc(100% - 560px);
+    width: calc(100% - 560px);
+    margin: 0 auto;
+    max-width: 900px;
+    padding-bottom: 16px;
+    padding-right: 32px;
+}
+
+@media(max-width: 768px) {
+    .rank-rating,
+    .coin-rating {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+    }
+}

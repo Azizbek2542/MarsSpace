@@ -12,6 +12,62 @@
 </head>
 <body>
     <div id="nav-placeholder"></div>
+        <div id="confirmError"><i class="fa-solid fa-circle-exclamation"></i> Parol noto'g'ri!</div>
+        <div class="no-quantity-modal">
+          <div class="no-qt-hdr">
+          <button class="close-shop-coin-mdl-btn cursor-pointer"><i class="fa-solid fa-xmark close-shop-coin"></i></button>
+          </div>
+          <div class="no-qt-body mt-10">
+            <img class="mx-auto" src="./imgs/Empty.png" width="150" alt="">
+            <p class="el-result__title mt-4 text-center">Tovar tugagan</p>
+            <div class="el-result__extra w-fit mx-auto"><button aria-disabled="false" type="button" class="el-button el-button--primary"><!--v-if--><span class="">Tushunarli</span></button></div>
+          </div>
+        </div>
+        
+
+
+    <div class="confirm-buy-modal" id="confirmBuyModal">
+      <div class="confirm-hdr">
+          <button class="close-shop-coin-mdl-btn cursor-pointer" id="confirm-cancel"><i class="fa-solid fa-xmark close-shop-coin"></i></button>
+      </div>
+      <div class="confirm-body text-center mt-8">
+        <img id="confirmProductImg" src="" alt="" class="mb-3 mx-auto">
+        <p class="product-name mt-4">-</p>
+        <p class="product-price-prnt"><img width="16" src="./imgs/Coin.svg" alt=""><span class="product-price">-</span></p>
+    
+        <div class="flex items-center justify-center gap-2 mt-4 relative w-[240px] mw-auto mx-auto">
+        <input type="password" id="confirmInput" style="transition: .3s ease;" class="w-full px-4 py-2 border-gray-300 border-[2px] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Parol">
+        <button type="button" class="absolute right-3 text-gray-500 cursor-pointer hover:text-gray-700" style="transition: 0.3s ease;" id="togglePass"><span><i id="toggleIcon" class="fa-solid fa-eye"></i></span></button>
+        </div>
+
+        <button id="confirmOk">Sotib olish</button>
+        <div class="marsiana-btn-confirm flex justify-center mt-4"><button class="flex items-center gap-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M25.4201 17.7185C17.104 19.0861 15.6256 20.8232 14.5168 30.9504C14.4798 31.283 13.9994 31.283 13.9624 30.9504C12.8536 20.8232 11.3752 19.123 3.05905 17.7185C2.72641 17.6816 2.72641 17.2011 3.05905 17.1641C11.3752 15.7966 12.8536 14.0964 13.9624 3.96921C13.9994 3.63657 14.4798 3.63657 14.5168 3.96921C15.6256 14.0964 17.104 15.7596 25.4201 17.1641C25.7158 17.2011 25.7158 17.6446 25.4201 17.7185Z" fill="url(#paint0_linear_6199_54881)"/><path d="M28.9685 6.03895C26.3812 6.5564 25.642 7.40649 25.1985 10.4373C25.1615 10.7699 24.681 10.7699 24.6441 10.4373C24.2005 7.40649 23.4613 6.5564 20.8741 6.00199C20.5784 5.92807 20.5784 5.52151 20.8741 5.44759C23.4244 4.93014 24.2005 4.08005 24.6441 1.04929C24.681 0.716644 25.1615 0.716644 25.1985 1.04929C25.642 4.08005 26.3812 4.93014 28.9685 5.48455C29.2641 5.55847 29.2641 6.00199 28.9685 6.03895Z" fill="url(#paint1_linear_6199_54881)"/><defs><linearGradient id="paint0_linear_6199_54881" x1="10" y1="8.5" x2="17" y2="25.5" gradientUnits="userSpaceOnUse"><stop stop-color="#0499F5"/><stop offset="1" stop-color="#D103FF"/></linearGradient><linearGradient id="paint1_linear_6199_54881" x1="23.5" y1="3.5" x2="26.5" y2="9.5" gradientUnits="userSpaceOnUse"><stop stop-color="#0599F5"/><stop offset="1" stop-color="#D104FF"/></linearGradient></defs></svg><p class="text-[#33B4FF] text-base">Marsianadan so'rang</p></button></div>
+      </div>
+</div>
+
+    <div class="no-enough-coins">
+      <div class="no-enough-hdr">
+          <button class="close-shop-coin-mdl-btn cursor-pointer"><i class="fa-solid fa-xmark close-shop-coin"></i></button>
+      </div>
+      <div class="shop-coin-modal-body text-center">
+        <div class="el-result__icon w-fit mx-auto mt-4"><svg class="text-[#e6a23c]" width="64" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="icon-warning"><path fill="currentColor" d="M512 64a448 448 0 1 1 0 896 448 448 0 0 1 0-896m0 192a58.432 58.432 0 0 0-58.24 63.744l23.36 256.384a35.072 35.072 0 0 0 69.76 0l23.296-256.384A58.432 58.432 0 0 0 512 256m0 512a51.2 51.2 0 1 0 0-102.4 51.2 51.2 0 0 0 0 102.4"></path></svg></div>
+        <div class="el-result__title mt-4"><p>Coin yetarli emas</p></div>
+        <div class="el-result__subtitle text-[#606266] mt-1"><p>Mahsulot sotib olish uchun yetarli coin yo'q</p></div>
+        <div class="el-result__extra"><button aria-disabled="false" type="button" class="el-button el-button--primary"><!--v-if--><span class="">Tushunarli</span></button></div>
+        <div class="marsiana-btn-not-enough flex justify-center mt-4"><button class="flex items-center gap-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M25.4201 17.7185C17.104 19.0861 15.6256 20.8232 14.5168 30.9504C14.4798 31.283 13.9994 31.283 13.9624 30.9504C12.8536 20.8232 11.3752 19.123 3.05905 17.7185C2.72641 17.6816 2.72641 17.2011 3.05905 17.1641C11.3752 15.7966 12.8536 14.0964 13.9624 3.96921C13.9994 3.63657 14.4798 3.63657 14.5168 3.96921C15.6256 14.0964 17.104 15.7596 25.4201 17.1641C25.7158 17.2011 25.7158 17.6446 25.4201 17.7185Z" fill="url(#paint0_linear_6199_54881)"/><path d="M28.9685 6.03895C26.3812 6.5564 25.642 7.40649 25.1985 10.4373C25.1615 10.7699 24.681 10.7699 24.6441 10.4373C24.2005 7.40649 23.4613 6.5564 20.8741 6.00199C20.5784 5.92807 20.5784 5.52151 20.8741 5.44759C23.4244 4.93014 24.2005 4.08005 24.6441 1.04929C24.681 0.716644 25.1615 0.716644 25.1985 1.04929C25.642 4.08005 26.3812 4.93014 28.9685 5.48455C29.2641 5.55847 29.2641 6.00199 28.9685 6.03895Z" fill="url(#paint1_linear_6199_54881)"/><defs><linearGradient id="paint0_linear_6199_54881" x1="10" y1="8.5" x2="17" y2="25.5" gradientUnits="userSpaceOnUse"><stop stop-color="#0499F5"/><stop offset="1" stop-color="#D103FF"/></linearGradient><linearGradient id="paint1_linear_6199_54881" x1="23.5" y1="3.5" x2="26.5" y2="9.5" gradientUnits="userSpaceOnUse"><stop stop-color="#0599F5"/><stop offset="1" stop-color="#D104FF"/></linearGradient></defs></svg><p class="text-[#33B4FF] text-base">Marsianadan so'rang</p></button></div>
+      </div>
+    </div>
+
+    <div class="success-modal">
+      <div class="no-enough-hdr">
+          <button class="close-shop-coin-mdl-btn cursor-pointer"><i class="fa-solid fa-xmark close-shop-coin"></i></button>
+      </div>
+      <div class="shop-coin-modal-body text-center">
+        <div class="el-result__icon w-fit mx-auto mt-4"><i class="fa-solid fa-circle-check text-6xl" style="color: #63E6BE;"></i></div>
+        <div class="el-result__title mt-4"><p>Harid muvaffaqiyatli amalga oshirildi</p></div>
+        <div class="el-result__extra"><button aria-disabled="false" type="button" class="el-button el-button--primary"><!--v-if--><span class="">Tushunarli</span></button></div>
+      </div>
+    </div>
 
     <div class="shop-container">                                                                         
       <div class="mb-4">
@@ -22,7 +78,7 @@
             <button class="shop-tab-btn space_shop"><i class="fa-solid fa-headphones-simple"></i> Space shop </button>
           </div>
           <div class="shop-history-title">
-            <a href="./shop-history-page" class="text-[#fc6736] hover:underline">Xaridlar tarixi <i class="text-xs fa-solid fa-chevron-right"></i></a>
+            <a href="./shop-history-page.html" class="text-[#fc6736] hover:underline">Xaridlar tarixi <i class="text-xs fa-solid fa-chevron-right"></i></a>
           </div>
         </div>
       </div>
@@ -32,7 +88,7 @@
           <!---->
           <!---->
           <div class="product-card__image-wrapper">
-            <img data-v-9e8d1790="" style="transform: scale(1.4);" class="product-card__images" src="./imgs/pen-removebg-preview.png" alt="product" loading="lazy">
+            <img data-v-9e8d1790="" style="transform: scale(1.4);" class="product-card__images" src="./imgs/pen.png" alt="product" loading="lazy">
           </div>
           <div class="product-card__info">
             <h3 class="product-card__title line-clamp-1">Pen</h3>
@@ -41,10 +97,10 @@
                 <span class="product-card__price line-clamp-1">49</span>
                 <img src="./imgs/Coin.svg" alt="coins" class="w-4 h-4">
               </div>
-                <p class="text-sm text-secondaryDark line-clamp-1 product_quantity"><span class="text-secondaryDark">|</span> 2 ta qoldi</p><!---->
+                <p class="text-sm text-secondaryDark product_quantity flex gap-1 items-center"><span class="text-secondaryDark">|</span> <img class="qty-spinner" width="15" src="./imgs/Spinner.svg" alt=""> <span class="qval"></span> ta qoldi</p><!---->
             </div>
             <div class="product-card__actions">
-              <button id="button-one" class="">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
+              <button id="button-one" class="" data-id="Pen" data-price="49" data-img="./imgs/pen.png" data-itemname="Pen" data-quantity="">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
             </div>
         </div>
         </div>
@@ -61,10 +117,10 @@
                 <span class="product-card__price line-clamp-1">49</span>
                 <img src="./imgs/Coin.svg" alt="coins" class="w-4 h-4">
               </div>
-                <p class="text-sm text-secondaryDark line-clamp-1 product_quantity"><span class="text-secondaryDark">|</span> 2 ta qoldi</p><!---->
+                <p class="text-sm text-secondaryDark flex gap-1 items-center product_quantity"><span class="text-secondaryDark">|</span> <img class="qty-spinner" width="15" src="./imgs/Spinner.svg" alt=""> <span class="qval"></span> ta qoldi</p><!---->
             </div>
             <div class="product-card__actions">
-              <button id="button-one" class="">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
+              <button id="button-one" class="" data-id="Strobar" data-quantity="" data-price="49" data-img="https://lab.marsit.uz/media/shop/Strobar/strobar_compressed.png" data-itemname="Strobar">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
             </div>
         </div>
         </div>
@@ -72,7 +128,7 @@
           <!---->
           <!---->
           <div class="product-card__image-wrapper">
-            <img style="transform: scale(1.6);" data-v-9e8d1790="" class="product-card__images" src="./imgs/Barni-removebg-preview.png" alt="product" loading="lazy">
+            <img style="transform: scale(1.6);" data-v-9e8d1790="" class="product-card__images" src="./imgs/Barni.png" alt="product" loading="lazy">
           </div>
           <div class="product-card__info">
             <h3 class="product-card__title line-clamp-1">Barni</h3>
@@ -81,10 +137,10 @@
                 <span class="product-card__price line-clamp-1">49</span>
                 <img src="./imgs/Coin.svg" alt="coins" class="w-4 h-4">
               </div>
-                <p class="text-sm text-secondaryDark line-clamp-1 product_quantity"><span class="text-secondaryDark">|</span> 2 ta qoldi</p><!---->
+                <p class="text-sm text-secondaryDark flex gap-1 items-center product_quantity"><span class="text-secondaryDark">|</span> <img class="qty-spinner" width="15" src="./imgs/Spinner.svg" alt=""> <span class="qval"></span> ta qoldi</p><!---->
             </div>
             <div class="product-card__actions">
-              <button id="button-one" class="">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
+              <button id="button-one" class="" data-id="Barni" data-quantity="" data-price="49" data-img="./imgs/Barni.png" data-itemname="Barni">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
             </div>
         </div>
         </div>
@@ -92,7 +148,7 @@
           <!---->
           <!---->
           <div class="product-card__image-wrapper">
-            <img style="transform: scale(1.4);" data-v-9e8d1790="" class="product-card__images" src="./imgs/balzam-removebg-preview.png" alt="product" loading="lazy">
+            <img style="transform: scale(1.4);" data-v-9e8d1790="" class="product-card__images" src="./imgs/balzam.png" alt="product" loading="lazy">
           </div>
           <div class="product-card__info">
             <h3 class="product-card__title line-clamp-1">Lab balzami</h3>
@@ -101,10 +157,10 @@
                 <span class="product-card__price line-clamp-1">110</span>
                 <img src="./imgs/Coin.svg" alt="coins" class="w-4 h-4">
               </div>
-                <p class="text-sm text-secondaryDark line-clamp-1 product_quantity"><span class="text-secondaryDark">|</span> 2 ta qoldi</p><!---->
+                <p class="text-sm text-secondaryDark flex gap-1 items-center product_quantity"><span class="text-secondaryDark">|</span> <img class="qty-spinner" width="15" src="./imgs/Spinner.svg" alt=""> <span class="qval"></span> ta qoldi</p><!---->
             </div>
             <div class="product-card__actions">
-              <button id="button-one" class="">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
+              <button id="button-one" class="" data-quantity="" data-id="Lab balzami" data-price="110" data-img="./imgs/balzam.png" data-itemname="Lab balzami">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
             </div>
         </div>
         </div>
@@ -118,12 +174,13 @@
             <h3 class="product-card__title line-clamp-1">Pixel o'yin maydonchasi</h3>
             <div class="flex gap-1 items-center">
               <div class="flex gap-1 items-center">
-                <span class="product-card__price line-clamp-1">Tekin</span>
+                <span class="product-card__price line-clamp-1">1</span>
+                <img src="./imgs/Coin.svg" alt="coins" class="w-4 h-4">
               </div>
-                <p class="text-sm text-secondaryDark line-clamp-1 product_quantity"><span class="text-secondaryDark">|</span> 1 ta qoldi</p><!---->
+                <p class="text-sm text-secondaryDark flex gap-1 items-center product_quantity"><span class="text-secondaryDark">|</span> <img class="qty-spinner" width="15" src="./imgs/Spinner.svg" alt=""> <span class="qval"></span> ta qoldi</p><!---->
             </div>
             <div class="product-card__actions">
-              <button id="button-one" class="">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
+              <button id="button-one" class="" data-quantity="" data-id="Pixel Zone" data-price="1" data-img="./imgs/zone.webp" data-itemname="Pixel o'yin maydonchasi">Sotib olish<i class="fa-solid fa-chevron-right text-[11px]"></i></button>
             </div>
         </div>
         </div>
@@ -639,6 +696,26 @@ function waitForNavbar() {
 document.addEventListener('DOMContentLoaded', waitForNavbar);
 window.addEventListener('resize', waitForNavbar);
     </script>
+
+
+<script>
+  const togglePass = document.getElementById('togglePass');
+const toggleIcon = document.getElementById('toggleIcon');
+    togglePass.addEventListener('click', () => {
+  if (confirmInput.type === 'password') {
+    confirmInput.type = 'text';
+    toggleIcon.classList.remove('fa-eye');
+    toggleIcon.classList.add('fa-eye-slash');
+  } else {
+    confirmInput.type = 'password';
+    toggleIcon.classList.remove('fa-eye-slash');
+    toggleIcon.classList.add('fa-eye');
+  }
+
+  // фокус на инпут
+  confirmInput.focus();
+});
+</script>
 
     <script src="components.js"></script>
     <script src="shop.js"></script>

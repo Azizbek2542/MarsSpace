@@ -13,9 +13,16 @@
   <input id="coinInput" type="number" placeholder="Введите количество коинов" />
   <button id="sendCoins">Отправить коины</button>
 
+  <div id="teacherPanel" class="teacher-panel">
+  <h2>O'quvchilar xaridlari</h2>
+
+  <div id="teacherPurchaseList"></div>
+</div>
+
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-    import { getDatabase, ref, set, runTransaction, push } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+    import { getDatabase, ref, set, runTransaction, push, onValue, update, get } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
 
     const firebaseConfig = {
@@ -56,6 +63,140 @@
 
       input.value = "";
     });
+
+const historyRef = ref(db, "SpacePurchaseHistory");
+const teacherList = document.getElementById("teacherPurchaseList");
+
+onValue(historyRef, (snap) => {
+    const purchases = snap.val() || {};
+    teacherList.innerHTML = "";
+
+    for (const id in purchases) {
+        const item = purchases[id];
+
+        const date = new Date(item.time);
+        const formatted = `${date.getDate()} ${date.toLocaleString('en-US',{month:'short'})} ${date.getFullYear()} | ${String(date.getHours()).padStart(2,'0')}:${String(date.getMinutes()).padStart(2,'0')}`;
+
+        const html = `
+            <div class="purchase-item">
+                <p><b>${item.productName}</b> — ${item.price} coins</p>
+                <p>${formatted}</p>
+                <p>Status: <span class="status">${item.status}</span></p>
+
+
+                <div class="acc-rej-prnt">
+                <button class="accept-btn" data-id="${id}">Qabul qilish</button>
+                <button class="reject-btn" data-id="${id}">Bekor qilish</button>
+                </div>
+            </div>
+        `;
+
+        teacherList.insertAdjacentHTML("beforeend", html);
+    }
+
+    setupHistoryButtons();
+});
+
+function setupHistoryButtons() { 
+    document.querySelectorAll(".accept-btn").forEach(btn => {
+        btn.onclick = (event) => changeStatus(event, btn.dataset.id, "accepted");
+    });
+
+    document.querySelectorAll(".reject-btn").forEach(btn => {
+        btn.onclick = (event) => changeStatus(event, btn.dataset.id, "rejected"); 
+    });
+}
+
+async function changeStatus(event, key, newStatus) {
+    const itemRef = ref(db, `SpacePurchaseHistory/${key}`);
+
+    // Получаем товар перед обновлением
+    const snapshot = await get(itemRef);
+    const item = snapshot.val();
+
+    if (!item) return;
+
+    const parent = event.target.closest(".acc-rej-prnt");
+
+    // Если отклонён → вернуть коины
+    if (newStatus === "rejected") {
+        parent.innerHTML = `Bekor qilindi`;
+        await updateCoins(item.price);
+        await restoreProductQuantity(item.productId);
+    }
+
+    if (newStatus === "accepted") {
+        parent.innerHTML = `Qabul qilindi`;
+    }
+
+    // Обновить статус в БД
+    await update(itemRef, { status: newStatus });
+
+    console.log("Status updated:", newStatus);
+}
+
+async function updateCoins(amount) {
+  const coinsRef = ref(db, "coinsSum");
+
+  try {
+    const result = await runTransaction(coinsRef, current => {
+      if (current === null) current = 0;
+      const updated = current + amount;
+      if (updated < 0) return;
+      return updated;
+    });
+
+    return result.committed ? result.snapshot.val() : null;
+  } catch (err) {
+    console.error("updateCoins error:", err);
+    return null;
+  }
+}
+
+async function restoreProductQuantity(productId) {
+    const productRef = ref(db, `SpaceShop-products/${productId}`);
+
+    const snap = await get(productRef);
+    if (!snap.exists()) return;
+
+    const currentQty = Number(snap.val().quantity || 0);
+    const newQty = currentQty + 1;
+
+    // сохраняем новое количество
+    await update(productRef, { quantity: newQty });
+
+    console.log("Кол-во товара восстановлено:", newQty);
+}
   </script>
+
+
+<style>
+  .purchase-item {
+  padding: 12px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.accept-btn {
+  background: #4caf50;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  margin-right: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+.reject-btn {
+  background: #e53935;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+}
+
+</style>
 </body>
 </html>
