@@ -61,6 +61,10 @@
     color: #b3c0da;
 }
 
+.hero-product .product_quantity {
+    display: none !important;
+}
+
 .product-card__actions {
     margin-top: 12px;
     display: -webkit-box;
@@ -334,14 +338,30 @@
 #button-one.visibility {
     opacity: 1;
     pointer-events: auto;
+    user-select: auto;
+}
+
+.hero-product #button-one.visibility {
+    opacity: 1;
+    pointer-events: auto;
+    user-select: auto;
 }
 
 #button-one {
     opacity: .3;
     pointer-events: none;
+    user-select: none;
 }
 
 .hero-product #button-one {
-    opacity: 1;
-    pointer-events: auto;
+    opacity: .3;
+    pointer-events: none;
+    user-select: none;
+}
+#button-one.visibilitywhileloading {
+    display: none !important;
+}
+
+.whileNoPrem {
+    display: none !important;
 }

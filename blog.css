@@ -218,6 +218,15 @@
 }
 
 .el-button {
+    pointer-events: none;
+    opacity: .4;
+    user-select: none;
+}
+
+.el-button.visibility {
+    pointer-events: auto;
+    opacity: 1;
+    user-select: auto;
     cursor: pointer;
 }
 
@@ -558,9 +567,9 @@
   justify-content: center;
 }
 
-/* #sendPostBtn {
+#sendPostBtn {
   display: none;
-} */
+}
 
 .el-breadcrumb {
   width: 100%;

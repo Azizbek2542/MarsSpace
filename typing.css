@@ -51,6 +51,10 @@ main {
     flex-direction: column;
     max-width: 95%;
     z-index: 102;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .lmt-hdr {
@@ -107,12 +111,19 @@ main {
     cursor: pointer;
 }
 
-.limit-modal.active {
+/* .limit-modal.active {
     transform: translate(-50%, -60%);
     transition: 0.3s ease;
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
+} */
+
+.limit-modal.active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%); /* центрируем */
 }
 
 .limit-overlay {
@@ -123,16 +134,37 @@ main {
   width: 100%;
   height: 100%;
   justify-self: center;
-}
-
-.limit-overlay.active {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
+}
+
+.limit-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .spinner {
   position: absolute;
   left: 50%;
   transform: translateY(100px);
+}
+
+.rating-warning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeeba;
+  color: #856404;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 0 auto;
+  width: fit-content;
+  font-size: 16px;
+  align-self: center;
+  text-align: center;
+}
+
+.typing-prem-opener {
+  cursor: pointer;
+  color: #fc6736;
 }

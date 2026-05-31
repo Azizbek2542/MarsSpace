@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARS SPACE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="hero.css">
+    <link rel="shortcut icon" href="./imgs/logo--circle.svg" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>     
+
+    <div class="hero">
+        <div class="relative w-full h-full ">
+            <div class="hero-head"></div>
+            <div class="hero-body"></div>
+            <div class="hero-feet"></div>
+        <div class="hero-tooltips">
+            <button class="hero-action-btn fon el-tooltip__trigger el-tooltip__trigger">
+            <i class="fa-solid fa-image"></i>
+            </button>
+            <button class="hero-action-btn skin el-tooltip__trigger el-tooltip__trigger">
+                <img src="./imgs/character.svg" alt="" class="w-9 h-9">
+            </button>
+                <a href="./shop-page.html" class="hero-action-btn shop el-tooltip__trigger el-tooltip__trigger">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </a>
+                <button to="/shop-page" class="hero-action-btn post el-tooltip__trigger el-tooltip__trigger">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </button>
+                <div class="line">
+                    <div class="name-parent">
+                    <p class="line-clamp-2 capitalize">Ubaydullaev Azizbek</p>
+                    <p id="Student-real-name"></p>
+                    </div>
+                    <div class="line-bg"></div>
+                </div>
+        </div>
+        <div class="change-skin-container">
+            <div class="flex justify-between gap-6">
+                <div></div>
+                <div class="flex gap-[10px]">
+                    <button class="text-[16px] text-white flex gap-1 items-center px-2 py-1 rounded-[4px] opacity-60 transition-all duration-300 bg-[#1616164D] !opacity-100">
+                    <img src="./imgs/heroItems/Face.webp" alt="" class="object-contain w-4 h-4"> Face </button>
+                    <button class="text-[16px] text-white flex gap-1 items-center px-2 py-1 rounded-[4px] opacity-60 transition-all duration-300">
+                        <img src="./imgs/heroItems/Pants.webp" alt="" class="object-contain w-4 h-4"> Pants </button>
+                        <button class="text-[16px] text-white flex gap-1 items-center px-2 py-1 rounded-[4px] opacity-60 transition-all duration-300">
+                            <i class="fa-solid fa-shirt"></i> Clothes 
+                        </button>
+                        </div>
+                        <button class="text-2xl text-white hover:text-white/70 cursor-pointer">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
+                    <div class="flex justify-center mt-3 gap-3">
+                        <div class="skin-images-container">
+                            <div class="skin-images-wrapper">
+                                <div class="skin-image-slide">
+                                    <button class="skin-image-btn">
+                                        <img src="https://lab.marsit.uz/media/hero_details/None/ItemBox.png" alt="Skin Image">
+                                        <div class="absolute flex items-center gap-2 top-2 right-2 status-container">
+                                            <div class="flex items-center justify-center w-4 h-4 bg-white rounded-full">
+                                                <i class="w-full h-full text-green-500 fa-solid fa-circle-check"></i>
+                                            </div><!---->
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="skin-image-slide">
+                                    <button class="skin-image-btn">
+                                        <img src="https://lab.marsit.uz/media/hero_details/1/HeadImage.png" alt="Skin Image">
+                                        <div class="absolute flex items-center gap-2 top-2 right-2 status-container"><!----><!----></div>
+                                    </button>
+                                </div>
+                                <div class="skin-image-slide">
+                                    <button class="skin-image-btn">
+                                        <img src="https://lab.marsit.uz/media/hero_details/None/ItemSunglasses.png" alt="Skin Image">
+                                        <div class="absolute flex items-center gap-2 top-2 right-2 status-container"><!----><!----></div>
+                                    </button>
+                                </div>
+                            </div><!----><!----><!---->
+                        </div>
+                        <div class="add-new-element-link">
+                            <a href="./shop-page.html" class="">
+                                <div class="icon">
+                                    <i class="fa-solid fa-plus"></i>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute md:top-[10%] right-[8%] top-[20%]" isme="true">
+                    <div class="z-10 cursor-pointer">
+                        <img src="./imgs/1_10.36d85d46.png" class="w-14 h-14 rounded-full border-[4px] relative border-lightBlue z-10" alt="levels">
+                        <p class="absolute bottom-0 z-10 right-0 text-[10px] font-designer text-white px-[2px] rounded-sm bg-lightBlue"> LVL </p>
+                        <div class="flex absolute inset-0 z-10 justify-center items-center">
+                            <span class="text-[30px] font-bold text-white leading-none font-designer stroke-text">5</span>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="back-to-main-wrp"><a href="./main-page.html" class="">Asosiyga qaytish <span><i class="fa-solid fa-arrow-right"></i></span></a></div>
+
+    <img class="user-img" src="./imgs/Spinner.svg" alt="">
+
+<script>
+      function setProfileImg(imgElement, firebaseUrl) {
+  const SPINNER = "./imgs/Spinner.svg"; // путь к спиннеру
+  const DEFAULT = "https://lab.marsit.uz/media/avatar/defaults/av-code.png";
+
+  // Сначала ставим спиннер
+  imgElement.src = SPINNER;
+
+  // Имитация получения данных с Firebase (например, get)
+  getUserProfileImgFromFirebase().then(url => {
+    if (url) {
+      // Если картинка есть в Firebase
+      imgElement.src = url;
+    } else {
+      // Если картинки нет
+      imgElement.src = DEFAULT;
+    }
+  }).catch(() => {
+    // На случай ошибки тоже дефолт
+    imgElement.src = DEFAULT;
+  });
+}
+
+// Пример функции, которая возвращает Promise с URL из Firebase
+function getUserProfileImgFromFirebase() {
+  return new Promise((resolve, reject) => {
+    const userProfileRef = dbRef(profiledb, `users-profileImage/${userId}`);
+    onValue(userProfileRef, snapshot => {
+      const data = snapshot.val();
+      if (data?.image) resolve(data.image);        // Base64 или URL
+      else if (data?.photoURL) resolve(data.photoURL); // Avatar URL
+      else resolve(null);
+    }, err => reject(err));
+  });
+}
+
+// Используем на всех img
+document.querySelectorAll(".user-img").forEach(img => {
+  setProfileImg(img);
+});
+
+    </script>
+        
+    <script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getDatabase, ref as dbRef, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+const firebaseConfig2 = {
+    apiKey: "AIzaSyA94ReOhz7i6DCChWM2CNAv0vqHuv5Dd6A",
+    authDomain: "marsspace-48b62.firebaseapp.com",
+    databaseURL: "https://marsspace-48b62-default-rtdb.firebaseio.com",
+    projectId: "marsspace-48b62",
+    storageBucket: "marsspace-48b62.appspot.com",
+    messagingSenderId: "198640947214",
+    appId: "1:198640947214:web:e2b13d6b3a4302e8a0d8a0"
+};
+
+const app2 = initializeApp(firebaseConfig2);
+const profiledb = getDatabase(app2);
+
+const userId = "TEST_STATIC_PROFILE_ID";
+const userProfileRef = dbRef(profiledb, `users-profile/${userId}`);
+
+// 🔥 Обновляем все .user-img на странице
+onValue(userProfileRef, (snap) => {
+    const data = snap.val();
+    const finalImg = data?.image || data?.photoURL;
+
+    if (!finalImg) return;
+
+    document.querySelectorAll('.user-img').forEach(img => {
+        img.src = finalImg;
+    });
+});
+</script>
+
+    <script src="components.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+</body>
+</html>

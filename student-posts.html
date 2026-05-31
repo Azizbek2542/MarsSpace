@@ -59,7 +59,7 @@
             <div class="post-mdl-body">
             <div class="flex items-center gap-2">
               <div class="rounded-full profile-img relative flex items-center justify-center w-[48px] h-[48px]"><img src="./imgs/Spinner.svg" alt="avatar" class="w-full h-full rounded-full object-cover user-img"><!----></div>
-            <div class="flex-1 min-w-0"><p class="flex items-center gap-1 font-bold capitalize text-lg" style="color: rgb(14 13 93);">Ubaydullaev Azizbek <!----></p>
+            <div class="flex-1 min-w-0"><p class="flex items-center gap-1 font-bold capitalize text-lg" style="color: rgb(14 13 93);" id="Student-real-name">Ubaydullaev Azizbek <!----></p>
               <p class="text-gray-500 postTime"><svg width="20" height="20" stroke="#fc6736" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><style>.spinner_V8m1{transform-origin:center;animation:spinner_zKoa 2s linear infinite}.spinner_V8m1 circle{stroke-linecap:round;animation:spinner_YpZS 1.5s ease-in-out infinite}@keyframes spinner_zKoa{100%{transform:rotate(360deg)}}@keyframes spinner_YpZS{0%{stroke-dasharray:0 150;stroke-dashoffset:0}47.5%{stroke-dasharray:42 150;stroke-dashoffset:-16}95%,100%{stroke-dasharray:42 150;stroke-dashoffset:-59}}</style><g class="spinner_V8m1"><circle cx="12" cy="12" r="9.5" fill="none" stroke-width="3"></circle></g></svg></p> 
             </div>
             </div>
@@ -80,7 +80,7 @@
     <!-- 🔹 кнопка отправки -->
     <button id="sendPostBtn"
       class="send mt-4 w-full rounded-xl bg-[#ef400f] text-white text-xl font-bold border-0 h-14 cursor-pointer">
-      Yuborish
+      Joylash
     </button>
               <button aria-disabled="false" type="button" class="el-button el-button--large mt-4 w-full rounded-xl bg-[#F4F4F4] text-[#0C2C57] text-xl font-bold border-0 h-14"><!--v-if--><span class=""><i class="mr-2 text-yellow-400 fas fa-crown"></i> Premiumga qo'shiling</span></button>
             </div>
@@ -183,7 +183,7 @@ onValue(userProfileRef, (snap) => {
         });
     </script>
 
-    <script>
+    <!-- <script>
 function waitForNavbar() {
   const navbar = document.querySelector('.navbar');
   if (navbar) {
@@ -196,7 +196,7 @@ function waitForNavbar() {
 }
 
 document.addEventListener('DOMContentLoaded', waitForNavbar);
-    </script>
+    </script> -->
 
 
 <script type="module">
@@ -634,7 +634,7 @@ if (PostTime) {
       </div>
       <div class="flex-1 min-w-0">
         <p class="flex items-center gap-1 font-bold capitalize text-lg text-[#0E0D5D]">
-          <a href="./student-profile.html" style="color: inherit; text-decoration: none; cursor: pointer; transition: text-decoration 0.2s;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
+          <a href="./student-profile.html" id="Student-real-name" style="color: inherit; text-decoration: none; cursor: pointer; transition: text-decoration 0.2s;" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">
             ${msg.user}
           </a>
         </p>

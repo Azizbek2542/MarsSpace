@@ -40,6 +40,9 @@ function setActiveTab(isHero) {
          spaceBtn.style.color = '#fff';
       }
    }
+
+   // Сохраняем выбор в localStorage
+   localStorage.setItem('shopActiveTab', isHero ? 'hero' : 'space');
 }
 
 // Навешиваем обработчики на кнопки
@@ -53,6 +56,7 @@ tabButtons.forEach((btn) => {
    });
 });
 
-// Инициализация: определяем, какая вкладка должна быть открыта по умолчанию
-// (если хотите, можно поставить true чтобы по умолчанию был Hero)
-setActiveTab(false);
+// Инициализация: восстанавливаем последнюю открытую вкладку из localStorage
+const savedTab = localStorage.getItem('shopActiveTab');
+const isHero = savedTab === 'hero'; // если ничего не сохранено, будет false (space)
+setActiveTab(isHero);

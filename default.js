@@ -33,6 +33,10 @@
   const marsianaCircleBtn = document.querySelector('.marsiana-circle-btn');
   const MediaCoinsModalOverlay = document.querySelector('.CoinModals-overlay');
   const doubleoverlay = document.querySelector('.post-double-overlay') || document.querySelector('.double-overlay');
+  const premiumInfoModal = document.querySelector('.premium-info-modal');
+  const premiumInfoArrow = document.querySelector('.premium-info-modal__arrow');
+  const SpacePremiumBtn = document.querySelector('.SpacePremium-btn');
+  const PremiumFeaturesOpener = document.querySelector('.premium-features-opener');
 
 
   marsianaCircleBtn.addEventListener('click', () => {
@@ -43,14 +47,105 @@
     MarsianaModal.classList.remove('active');
   });
 
-  window.addEventListener("DOMContentLoaded", () => {
+  function formatLocalDateKey(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
 
+  function domReady(callback) {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', callback);
+    } else {
+      callback();
+    }
+  }
+
+  domReady(() => {
     if (navbar && main) {
       const navHeight = navbar.offsetHeight;
       main.style.paddingTop = navHeight + "px";
     }
+
+    updateStreakUI();
   });
 
+  function computeStreak() {
+    const today = new Date();
+    const todayKey = formatLocalDateKey(today);
+    const lastKey = localStorage.getItem('lastStreakDate');
+    let streak = Number(localStorage.getItem('streakCount') || 0);
+
+    if (lastKey === todayKey) {
+      return streak;
+    }
+
+    if (lastKey) {
+      const [year, month, day] = lastKey.split('-').map(Number);
+      const lastDate = new Date(year, month - 1, day);
+      const diffDays = Math.round((new Date(today.getFullYear(), today.getMonth(), today.getDate()) - lastDate) / (1000 * 60 * 60 * 24));
+
+      // если был разрыв хотя бы на один день — сбросаем streak на 1
+      if (diffDays === 1) {
+        streak += 1;
+      } else {
+        streak = 1;
+      }
+    } else {
+      streak = 1;
+    }
+
+    localStorage.setItem('streakCount', String(streak));
+    localStorage.setItem('lastStreakDate', todayKey);
+    return streak;
+  }
+
+  function updateStreakUI() {
+    const streak = computeStreak();
+    const displayCount = Math.min(streak, 365);
+
+    document.querySelectorAll('.streak-modal span').forEach((badge) => {
+      badge.textContent = String(displayCount);
+    });
+
+    document.querySelectorAll('.streak-content-prnt').forEach((container) => {
+      const cards = Array.from(container.querySelectorAll('.streak-content-card'));
+      if (!cards.length) return;
+
+      const jsDay = new Date().getDay();
+      const todayIndex = jsDay === 0 ? 6 : jsDay - 1;
+      const activeCount = Math.min(streak, cards.length);
+      const activeIndexes = new Set();
+
+      for (let i = 0; i < activeCount; i += 1) {
+        activeIndexes.add((todayIndex - i + cards.length) % cards.length);
+      }
+
+      cards.forEach((card, index) => {
+        const label = card.querySelector('span')?.textContent || '';
+        card.innerHTML = '';
+
+        if (activeIndexes.has(index)) {
+          const img = document.createElement('img');
+          img.width = 48;
+          img.height = 48;
+          img.src = './imgs/strike.svg';
+          img.alt = 'streak';
+          card.appendChild(img);
+        } else {
+          const dot = document.createElement('div');
+          dot.className = 'w-6 h-6 rounded-full md:w-12 md:h-12';
+          dot.style.backgroundColor = '#EEEEEE';
+          card.appendChild(dot);
+        }
+
+        const text = document.createElement('span');
+        text.textContent = label;
+        card.appendChild(text);
+      });
+    });
+  }
 
   function positionStreakContent() {
     if (!streakModal || !streakContent || !streakArrow || !MediaStreakModal || !MediastreakContent ||!MediaStreakArrow) return;
@@ -209,6 +304,48 @@
     contentWidth - profile.offsetWidth / 2 - arrowWidth / 2 + "px";
 }
 
+function positionPremiumInfoModal() {
+  if (!premiumInfoModal || !SpacePremiumBtn || !premiumInfoArrow) return;
+
+  const btnRect = SpacePremiumBtn.getBoundingClientRect();
+  const modalWidth = premiumInfoModal.offsetWidth;
+  const arrowWidth = premiumInfoArrow.offsetWidth;
+  const btnWidth = btnRect.width;
+
+  const screenHeight = window.innerHeight;
+  const screenWidth = window.innerWidth;
+
+  // 📱 Маленький экран (ниже 530px) - центр только по горизонтали
+  if (screenWidth < 550) {
+    const centerX = (screenWidth - modalWidth) / 2;
+
+    premiumInfoModal.style.removeProperty('inset');
+    premiumInfoModal.style.position = "fixed";
+    premiumInfoModal.style.top = btnRect.bottom + 10 + "px";
+    premiumInfoModal.style.left = centerX + "px";
+    premiumInfoModal.style.right = "auto";
+    premiumInfoModal.style.bottom = "auto";
+
+    // Стрелка указывает на центр кнопки
+    const btnCenterX = btnRect.left + btnWidth / 2;
+    premiumInfoArrow.style.left =
+      (btnCenterX - centerX) - arrowWidth / 2 + "px";
+
+    return;
+  }
+
+  // 🖥 Обычный режим (на больших экранах)
+  premiumInfoModal.style.removeProperty('inset');
+  premiumInfoModal.style.position = "fixed";
+  premiumInfoModal.style.top = btnRect.bottom + 10 + "px";
+  premiumInfoModal.style.left = btnRect.left + btnWidth - modalWidth + "px";
+  premiumInfoModal.style.right = "auto";
+  premiumInfoModal.style.bottom = "auto";
+
+  premiumInfoArrow.style.left =
+    modalWidth - btnWidth / 2 - arrowWidth / 2 + "px";
+}
+
 
   notificationBell.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -217,6 +354,7 @@
     profileModal.classList.remove('active');
     MediastreakContent.classList.remove('active');
     MediaCoinModal.classList.remove('active');
+    premiumInfoModal.classList.remove('active');
     notificationsModal.classList.toggle('active');
     if (notificationsModal.classList.contains('active')) {
       positionNotifications();
@@ -228,9 +366,32 @@
     CoinModal.classList.remove('active');
     streakContent.classList.remove('active');
     notificationsModal.classList.remove('active');
+    premiumInfoModal.classList.remove('active');
     profileModal.classList.toggle('active');
     if (profileModal.classList.contains('active')) {
       positionProfile();
+    }
+  });
+
+  subscribeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    CoinModal.classList.remove('active');
+    streakContent.classList.remove('active');
+    notificationsModal.classList.remove('active');
+    profileModal.classList.remove('active');
+  });
+
+  SpacePremiumBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    CoinModal.classList.remove('active');
+    streakContent.classList.remove('active');
+    notificationsModal.classList.remove('active');
+    profileModal.classList.remove('active');
+    MediastreakContent.classList.remove('active');
+    MediaCoinModal.classList.remove('active');
+    premiumInfoModal.classList.toggle('active');
+    if (premiumInfoModal.classList.contains('active')) {
+      positionPremiumInfoModal();
     }
   });
 
@@ -239,6 +400,7 @@
     CoinModal.classList.remove('active');
     notificationsModal.classList.remove('active');
     profileModal.classList.remove('active');
+    premiumInfoModal.classList.remove('active');
     streakContent.classList.toggle('active');
     if (streakContent.classList.contains('active')) {
       positionStreakContent();
@@ -250,6 +412,7 @@
     CoinModal.classList.remove('active');
     notificationsModal.classList.remove('active');
     MediaCoinModal.classList.remove('active');
+    premiumInfoModal.classList.remove('active');
     MediastreakContent.classList.toggle('active');
     if (MediastreakContent.classList.contains('active')) {
       positionStreakContent();
@@ -288,13 +451,22 @@
   }
 });
 
-
+window.addEventListener('click', (e) => {
+  if (
+    premiumInfoModal.classList.contains('active') &&
+    !premiumInfoModal.contains(e.target) &&
+    !SpacePremiumBtn.contains(e.target)
+  ) {
+    premiumInfoModal.classList.remove('active');
+  }
+});
 
   amountCardCoin.addEventListener('click', (e) => {
     e.stopPropagation();
     streakContent.classList.remove('active');
     notificationsModal.classList.remove('active');  
     profileModal.classList.remove('active');
+    premiumInfoModal.classList.remove('active');
     CoinModal.classList.toggle('active');
     if (CoinModal.classList.contains('active')) {
       positionAmountContent();
@@ -306,6 +478,7 @@
     streakContent.classList.remove('active');
     notificationsModal.classList.remove('active');  
     MediastreakContent.classList.remove('active');
+    premiumInfoModal.classList.remove('active');
     MediaCoinModal.classList.toggle('active');
     if (MediaCoinModal.classList.contains('active')) {
       positionAmountContent();
@@ -350,6 +523,8 @@
   window.addEventListener('load', positionNotifications);
   window.addEventListener('resize', positionProfile);
   window.addEventListener('load', positionProfile);
+  window.addEventListener('resize', positionPremiumInfoModal);
+  window.addEventListener('load', positionPremiumInfoModal);
 
   amountCardFlash.forEach((flash) => {
   flash.addEventListener('click', () => {
@@ -357,6 +532,11 @@
   });
 });
 
+PremiumFeaturesOpener.addEventListener('click', () => {
+  PremiumModal.classList.add('active');
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+});
 
 subscribeBtn.addEventListener('click', () => {
   PremiumModal.classList.add('active');
@@ -368,7 +548,7 @@ StudentHeroWrapper.addEventListener('click', () => {
   PremiumModal.classList.add('active');
   overlay.classList.add('active');
   document.body.style.overflow = 'hidden';
-});
+}); 
 
 SelectLang.addEventListener('click', () => {
   LangModal.classList.add('active');
@@ -379,6 +559,10 @@ SelectLang.addEventListener('click', () => {
 closePremium.addEventListener('click', () => {
   PremiumModal.classList.remove('active');
   overlay.classList.remove('active');
+  if (window.location.pathname.endsWith('blog-page.html')) {
+  const doubleoverlay = document.querySelector('.post-double-overlay');
+  if (doubleoverlay) doubleoverlay.classList.remove('active');
+  }
   if (doubleoverlay && window.location.pathname.endsWith('main-page.html')) doubleoverlay.classList.remove('active');
   document.body.style.overflow = '';
 });
@@ -390,7 +574,6 @@ closeLangModal.addEventListener('click', () => {
 });
 
 overlay.addEventListener('click', () => {
-  dfCoinBtnModal.style.display = 'none';
   PremiumModal.classList.remove('active');
   overlay.classList.remove('active');
   LangModal.classList.remove('active');
@@ -430,24 +613,25 @@ setInterval(createSparkle, 100);
 
 
 const dfCoinBtnModal = document.querySelector('.default-notification-of-coin');
+const dfCoinBtnModalOverlay = document.querySelector('.dfCoinBtnModalOverlay');
 const ClosedfCoinBtn = document.querySelector('.close-df-coin-btn');
 const ClosedfCoinBtn2 = document.querySelector('.close-df-coin-btn-2');
 
 
 ClosedfCoinBtn.addEventListener('click', () => {
   dfCoinBtnModal.style.display = 'none';
-  overlay.classList.remove('active');
+  dfCoinBtnModalOverlay.classList.remove('active');
   document.body.style.overflow = 'auto';
 });
 
 ClosedfCoinBtn2.addEventListener('click', () => {
   dfCoinBtnModal.style.display = 'none';
-  overlay.classList.remove('active');
+  dfCoinBtnModalOverlay.classList.remove('active');
   document.body.style.overflow = 'auto';
 });
 
 if (getComputedStyle(dfCoinBtnModal).display === 'flex') {
-  overlay.classList.add('active');
+  dfCoinBtnModalOverlay.classList.add('active');
 }
 
 const container = document.getElementById('confettiBox');

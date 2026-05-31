@@ -11,6 +11,26 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 <body>
+    <div class="double-overlay"></div>
+    <div class="Premium-no-enough-coins-modal">
+      <div class="Premium-no-enough-coins-hdr">
+      </div>
+      <div class="Premium-no-enough-coins-body text-center">
+        <div class="el-result__icon w-fit mx-auto mt-4"><i class="text-[110px] text-red-500 fa-solid fa-circle-xmark"></i></div>
+        <div class="el-result__title mt-4"><p>Hisobingizda yetarlicha coin mavjud emas</p></div>
+        <div class="el-result__extra"><button aria-disabled="false" type="button" class="el-button--primary-premium py-4 rounded-lg"><!--v-if--><span class="">Tushunarli</span></button></div>
+        <div class="marsiana-btn-premium-not-enough flex justify-center mt-4"><button class="flex items-center gap-1 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 32 32" fill="none"><path d="M25.4201 17.7185C17.104 19.0861 15.6256 20.8232 14.5168 30.9504C14.4798 31.283 13.9994 31.283 13.9624 30.9504C12.8536 20.8232 11.3752 19.123 3.05905 17.7185C2.72641 17.6816 2.72641 17.2011 3.05905 17.1641C11.3752 15.7966 12.8536 14.0964 13.9624 3.96921C13.9994 3.63657 14.4798 3.63657 14.5168 3.96921C15.6256 14.0964 17.104 15.7596 25.4201 17.1641C25.7158 17.2011 25.7158 17.6446 25.4201 17.7185Z" fill="url(#paint0_linear_6199_54881)"/><path d="M28.9685 6.03895C26.3812 6.5564 25.642 7.40649 25.1985 10.4373C25.1615 10.7699 24.681 10.7699 24.6441 10.4373C24.2005 7.40649 23.4613 6.5564 20.8741 6.00199C20.5784 5.92807 20.5784 5.52151 20.8741 5.44759C23.4244 4.93014 24.2005 4.08005 24.6441 1.04929C24.681 0.716644 25.1615 0.716644 25.1985 1.04929C25.642 4.08005 26.3812 4.93014 28.9685 5.48455C29.2641 5.55847 29.2641 6.00199 28.9685 6.03895Z" fill="url(#paint1_linear_6199_54881)"/><defs><linearGradient id="paint0_linear_6199_54881" x1="10" y1="8.5" x2="17" y2="25.5" gradientUnits="userSpaceOnUse"><stop stop-color="#0499F5"/><stop offset="1" stop-color="#D103FF"/></linearGradient><linearGradient id="paint1_linear_6199_54881" x1="23.5" y1="3.5" x2="26.5" y2="9.5" gradientUnits="userSpaceOnUse"><stop stop-color="#0599F5"/><stop offset="1" stop-color="#D104FF"/></linearGradient></defs></svg><p class="text-[#33B4FF] text-base">Marsianadan so'rang</p></button></div>
+      </div>
+    </div>
+    <div class="fixed left-0 top-0 w-full h-screen bg-black z-[9999] flex justify-center items-center premium-reward-modal">
+        <div class="relative w-screen h-screen overflow-hidden">
+            <button class="close-premium-reward-btn absolute z-50 flex items-center justify-center w-10 h-10 text-white border-none rounded-full cursor-pointer top-4 right-4 bg-black/50 hover:bg-black/70"><i class="text-2xl fa-solid fa-xmark"></i></button>
+            <img src="https://space.marsit.uz/img/PremiumReward.51eb0999.jpeg" alt="Premium Reward" class="absolute top-0 left-0 z-0 object-cover w-full h-full">
+            <div class="absolute z-10 w-full top-[60px]">
+                <p class="p-4 md:text-3xl text-xl font-[600] text-center text-white"> Tabriklaymiz, siz <span class="text-[#ffd700]"><i class="fas fa-crown"></i> Space Premium </span> foydalanuvchiga aylandingiz </p>
+            </div>
+        </div>
+    </div>
     <section class="container">
         <header>
             <div class="navbar">
@@ -93,6 +113,9 @@
                         <span>3160</span>
                     </div>
                     <button class="subscribe-btn">Obuna bo'ling <span class="shine"></span></button>
+                    <button class="flex items-center justify-center gap-2 px-4 py-3 text-black text-[20px] font-sans font-[600] el-tooltip__trigger el-tooltip__trigger cursor-pointer SpacePremium-btn">
+                    <i class="text-goldIcon fa-solid fa-crown" style="color: rgb(255 215 0);"></i> Premium
+                    </button>
                     <i class="fa-regular fa-bell text notification-bell"></i>
                     <div class="profile modal content">
                         <div class="profile-img"></div>
@@ -195,10 +218,33 @@
                 </div>
             </div>
             <div class="premium-footer">
-            <button class="get-premium-btn">Oyiga 299 <img width="20px" src="./imgs/Coin.svg" alt="">evasiga obuna bo'lish<span class="shine"></span></button>
+            <button class="get-premium-btn">Oyiga 299 <img width="20px" src="./imgs/Coin.svg" alt="">evaziga obuna bo'lish<span class="shine"></span></button>
+            </div>
+        </div>
+        <div class="el-popper is-light el-popover premium-info-modal" tabindex="-1" aria-hidden="false" role="tooltip" id="el-id-781-5" data-popper-reference-hidden="false" data-popper-escaped="false" data-popper-placement="bottom"><!--v-if-->
+          <span class="premium-info-modal__arrow"></span>
+            <div class="max-w-lg p-1 text-sm">
+                <div class="flex items-center gap-3">
+                    <div class="relative w-12 h-12">
+                        <svg viewBox="0 0 36 36" class="w-full h-full transform -rotate-90"><circle cx="18" cy="18" r="16" fill="none" stroke="#e5e7eb" stroke-width="2"></circle><circle cx="18" cy="18" r="16" fill="none" stroke="#10b981" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="26.66666666666667" stroke-linecap="round"></circle></svg>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <i class="text-[#FFD700] text-[18px] fa-solid fa-crown"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="font-sans text-[18px] font-bold text-black">Space Premium</p>
+                        <p class="font-sans text-xs text-gray-500"><span> Obuna tugashiga 22 kun qoldi </span></p>
+                    </div>
+                </div>
+                <button class="relative overflow-hidden py-2 mt-2 w-full text-white bg-yellow-400 bg-custom-gradient text-[18px] rounded-md premium-features-opener">
+                    <span>Premium ustunliklar</span>
+                    <span class="shine"></span>
+                    <span class="absolute top-0 left-[-75%] w-1/2 h-full bg-white opacity-30 transform skew-x-[-20deg] animate-shine pointer-events-none"></span>
+                </button>
             </div>
         </div>
         <div class="overlay"></div>
+        <div class="dfCoinBtnModalOverlay"></div>
         <div class="notifications-modal">
           <span class="Notifications__arrow"></span>
           <div class="noti-text">
@@ -214,7 +260,7 @@
             <div class="User-name-prnt">
                 <div class="profile">
                 </div>
-                <h2 class="User-name">Azizbek Ubaydullayev</h2>
+                <h2 class="User-name" id="Student-real-name">Azizbek Ubaydullaev</h2>
             </div>
             </a>
             <div class="attendance"><img width="22" src="./imgs/attendance.svg" alt=""> Davomat</div>
@@ -332,13 +378,13 @@
                 <div class="profile-hero sidebar-hero">
                     <div class="front"></div>
                     <div class="hero-head">
-                        <img src="./imgs/Head.png" alt="head">
+                        <img src="./imgs/heroItems/Head.png" alt="head">
                     </div>
                     <div class="hero-body">
-                        <img src="./imgs/DefaultBody.png" alt="body">
+                        <img src="./imgs/heroItems/DefaultBody.png" alt="body">
                     </div>
                     <div class="hero-feet">
-                        <img src="./imgs/DefaultPants.png" alt="feet">
+                        <img src="./imgs/heroItems/DefaultPants.png" alt="feet">
                     </div>
                 </div>
             </div>
@@ -350,7 +396,28 @@
 
 
     <div class="confetti-container" id="confettiBox"></div>
+    <div class="confetti-container2" id="confettiBox2"></div>
 
+    <div class="calendar">
+        <p class="mb-6 text-2xl text-[#0d0c5e] font-bold attendance-text">Davomat</p>
+    <div class="calendar-header">
+        <button id="prevMonth" class="nav-btn"><i class="fa-solid fa-chevron-left"></i></button>
+        <h2 id="monthName"></h2>
+        <button id="nextMonth" class="nav-btn"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <div class="weekdays">
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+        <div class="sun">Sun</div>
+    </div>
+
+    <div id="calendarDays" class="days"></div>
+</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <script type="module" src="firebase.js"></script>

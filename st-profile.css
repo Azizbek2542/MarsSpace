@@ -39,7 +39,7 @@
 }
 
 .for-profile {
-    top: 0;
+    top: -3%;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 165px !important;
@@ -301,4 +301,16 @@
   pointer-events: auto;
   visibility: visible;
   transform: translate(-50%, -50%);
+}
+
+.to-hero-page {
+    pointer-events: none;
+    opacity: .4;
+    user-select: none;
+}
+
+.to-hero-page.visibility {
+    pointer-events: auto;
+    opacity: 1;
+    user-select: auto;
 }

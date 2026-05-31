@@ -180,18 +180,36 @@ LevelWrapperOverlay.addEventListener('click', () => {
 });
 
 
-function waitForNavbar() {
-  const navbar = document.querySelector('.navbar');
-  if (navbar) {
-    const coursesCont = document.querySelector('.main-page-main-cont');
-    coursesCont.style.paddingTop = navbar.offsetHeight + 'px';
-  } else {
-    // пробуем снова через 100мс
-    setTimeout(waitForNavbar, 100);
-  }
-}
+// function applyNavbarPadding() {
+//   const navbar = document.querySelector('.navbar');
+//   const target = document.querySelector('main') || document.querySelector('.main-page-main-cont');
 
-document.addEventListener('DOMContentLoaded', waitForNavbar);
+//   if (!navbar || !target) {
+//     return false;
+//   }
+
+//   target.style.paddingTop = navbar.offsetHeight + 'px';
+//   return true;
+// }
+
+// function waitForNavbar() {
+//   if (applyNavbarPadding()) {
+//     return;
+//   }
+
+//   const maxAttempts = 50;
+//   let attempt = 0;
+
+//   const intervalId = setInterval(() => {
+//     attempt += 1;
+//     if (applyNavbarPadding() || attempt >= maxAttempts) {
+//       clearInterval(intervalId);
+//     }
+//   }, 100);
+// }
+
+// document.addEventListener('DOMContentLoaded', waitForNavbar);
+// window.addEventListener('resize', applyNavbarPadding);
 
 function Sidebarcolor() {
   const observer = new MutationObserver(() => {

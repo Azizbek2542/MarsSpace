@@ -4,20 +4,65 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Учитель</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h2>Учитель: добавить коины</h2>
 
   <a href="./main-page.html">stu</a>
+  <p class="attendances">Davomat</p>
 
   <input id="coinInput" type="number" placeholder="Введите количество коинов" />
   <button id="sendCoins">Отправить коины</button>
 
-  <div id="teacherPanel" class="teacher-panel">
+  <div id="teacherPanel" class="teacher-panel"> 
   <h2>O'quvchilar xaridlari</h2>
 
   <div id="teacherPurchaseList"></div>
 </div>
+
+<div class="calendar" style="visibility: visible; opacity: 1; pointer-events: auto;">
+        <p class="mb-6 text-2xl text-[#0d0c5e] font-bold attendance-text">Davomat</p>
+    <div class="calendar-header">
+        <button id="prevMonth" class="nav-btn"><i class="fa-solid fa-chevron-left"></i></button>
+        <h2 id="monthName"></h2>
+        <button id="nextMonth" class="nav-btn"><i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <div class="weekdays">
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+        <div class="sun">Sun</div>
+    </div>
+
+    <div id="calendarDays" class="days"></div>
+
+    <div id="statusPopup" style="
+  display: none;
+  position: absolute;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  padding: 12px 16px;
+  z-index: 1000;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  min-width: 140px;
+">
+  <p style="margin: 0 0 8px 0; font-weight: bold; text-align:center;" id="popupTitle"></p>
+  <div style="display:flex; gap: 8px; justify-content:center;">
+    <button style="background:#4CAF50; color:white; border:none; border-radius:4px; padding:6px 10px; cursor:pointer;" onclick="setStatus('present')">Присутствовал</button>
+    <button style="background:#F44336; color:white; border:none; border-radius:4px; padding:6px 10px; cursor:pointer;" onclick="setStatus('absent')">Не пришёл</button>
+  </div>
+</div>
+
+</div>
+
 
 
   <script type="module">
@@ -167,9 +212,234 @@ async function restoreProductQuantity(productId) {
 
     console.log("Кол-во товара восстановлено:", newQty);
 }
+
+// --- Переменные ---
+const monthNameEl = document.getElementById("monthName");
+const daysEl = document.getElementById("calendarDays");
+let currentDate = new Date();
+const studentId = "student1"; // только один ученик
+let selectedDate = null;
+
+// --- Функции popup ---
+function openStatusPopup(el, date) {
+  selectedDate = date;
+  const popup = document.getElementById("statusPopup");
+  const popupTitle = document.getElementById("popupTitle");
+  popupTitle.textContent = `Выберите статус на ${date}`;
+  popup.style.display = "block";
+  popup.style.top = el.getBoundingClientRect().bottom + window.scrollY + "px";
+  popup.style.left = el.getBoundingClientRect().left + "px";
+}
+
+// function setStatus(status) {
+//   if (!selectedDate) return;
+
+//   // Сохраняем в Firebase
+//   set(ref(db, `attendance/${studentId}/${selectedDate}`), status)
+//     .then(() => updateDayStatus(selectedDate, status))
+//     .catch(err => console.error(err));
+
+//   document.getElementById("statusPopup").style.display = "none";
+// }
+
+async function setStatus(status) {
+  if (!selectedDate) return;
+
+  // 1. Сохраняем статус посещаемости
+  try {
+    await set(ref(db, `attendance/${studentId}/${selectedDate}`), status);
+    updateDayStatus(selectedDate, status);
+  } catch (err) {
+    console.error(err);
+  }
+
+  // === 🟡 COINS LOGIC — начисляем +2 если "present" ===
+  // if (status === "present") {
+  //   const timeNow = Date.now();
+
+  //   // --- обновляем coinsSum ---
+  //   const coinsSumRef = ref(db, "coinsSum");
+  //   const sumSnap = await get(coinsSumRef);
+  //   const currentSum = sumSnap.exists() ? sumSnap.val() : 0;
+  //   await set(coinsSumRef, currentSum + 2);
+
+  //   // --- добавляем запись в coinsList ---
+  //   const coinsListRef = ref(db, `coinsList/${timeNow}`);
+  //   await set(coinsListRef, {
+  //     value: 2,
+  //     time: timeNow
+  //   });
+  // }
+
+  if (status === "present") {
+    const timeNow = Date.now();
+
+    // 1) читаем премиум-дату
+    const premiumRef = ref(db, `premium/${studentId}`);
+    const premiumSnap = await get(premiumRef);
+
+    let coinsToAdd = 2; // по умолчанию
+    if (premiumSnap.exists()) {
+        const data = premiumSnap.val();
+        const premiumUntil = Number(data.premiumUntil);
+        
+        if (data.isPremium === true && premiumUntil > Date.now()) {
+            coinsToAdd = 4; // премиум активен
+        }   
+    }
+
+    // --- обновляем coinsSum ---
+    const coinsSumRef = ref(db, "coinsSum");
+    const sumSnap = await get(coinsSumRef);
+    const currentSum = sumSnap.exists() ? sumSnap.val() : 0;
+    await set(coinsSumRef, currentSum + coinsToAdd);
+
+    // --- добавляем запись в coinsList ---
+    const coinsListRef = ref(db, `coinsList/${timeNow}`);
+    await set(coinsListRef, {
+      value: coinsToAdd,
+      time: timeNow
+    });
+}
+
+
+  // Закрываем popup
+  document.getElementById("statusPopup").style.display = "none";
+  selectedDate = null;
+}
+
+
+// --- Обновление цвета и текста в ячейке ---
+function updateDayStatus(date, status) {
+  const dayDiv = Array.from(daysEl.children).find(d => d.dataset.date === date);
+  if (!dayDiv) return;
+
+  // Убираем старый текст
+  let existingLabel = dayDiv.querySelector(".status-label");
+  if (existingLabel) existingLabel.remove();
+
+  // Добавляем новый
+  const label = document.createElement("li");
+  label.classList.add("status-label");
+
+  if (status === "present") {
+    label.textContent = "Bor edi";
+    label.style.color = "rgb(0, 188, 211)";
+  } else if (status === "absent") {
+    label.textContent = "Yo'q edi";
+    label.style.color = "#ea1e61";
+  }
+
+  dayDiv.appendChild(label);
+}
+
+// --- Рендер календаря ---
+async function renderCalendar() {
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  const monthRef = ref(db, `attendance/${studentId}`);
+  const snapshot = await get(monthRef);  // ждём данные
+  const attendance = snapshot.exists() ? snapshot.val() : {};
+
+  const start = new Date(year, month, 1);
+  const end = new Date(year, month + 1, 0);
+
+  const prevEnd = new Date(year, month, 0).getDate();
+  const firstDayIndex = (start.getDay() + 6) % 7;
+  const daysInMonth = end.getDate();
+  const totalCells = 35;
+
+  monthNameEl.textContent = currentDate.toLocaleString("en-US", {
+    month: "long",
+    year: "numeric"
+  });
+
+  daysEl.innerHTML = "";
+
+  // --- Дни прошлого месяца ---
+  for (let i = firstDayIndex; i > 0; i--) {
+    const day = prevEnd - i + 1;
+    const date = new Date(year, month - 1, day);
+    const el = document.createElement("div");
+    el.textContent = day;
+    el.classList.add("other-month");
+    if (date.getDay() === 0) el.classList.add("sunday");
+
+    const strDate = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    el.dataset.date = strDate;
+    el.onclick = () => openStatusPopup(el, strDate);
+
+    daysEl.appendChild(el);
+
+    const status = attendance[strDate];
+    if (status) updateDayStatus(strDate, status);
+  }
+
+  // --- Дни текущего месяца ---
+  for (let i = 1; i <= daysInMonth; i++) {
+    const date = new Date(year, month, i);
+    const el = document.createElement("div");
+    el.textContent = i;
+    if (date.getDay() === 0) el.classList.add("sunday");
+
+    const strDate = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    el.dataset.date = strDate;
+    el.onclick = () => openStatusPopup(el, strDate);
+
+    daysEl.appendChild(el);
+
+    const status = attendance[strDate];
+    if (status) updateDayStatus(strDate, status);
+  }
+
+  // --- Дни следующего месяца ---
+  const usedCells = daysEl.children.length;
+  const nextDaysNeeded = totalCells - usedCells;
+  for (let i = 1; i <= nextDaysNeeded; i++) {
+    const date = new Date(year, month + 1, i);
+    const el = document.createElement("div");
+    el.textContent = i;
+    el.classList.add("other-month");
+    if (date.getDay() === 0) el.classList.add("sunday");
+
+    const strDate = `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    el.dataset.date = strDate;
+    el.onclick = () => openStatusPopup(el, strDate);
+
+    daysEl.appendChild(el);
+
+    const status = attendance[strDate];
+    if (status) updateDayStatus(strDate, status);
+  }
+}
+
+// --- Навигация ---
+document.getElementById("prevMonth").onclick = () => {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  renderCalendar();
+};
+document.getElementById("nextMonth").onclick = () => {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  renderCalendar();
+};
+
+window.setStatus = setStatus;
+window.openStatusPopup = openStatusPopup; // если нужен доступ из HTML
+
+
+renderCalendar();
   </script>
 
+<script>
+  const attendanceOpener = document.querySelector('.attendances');
+const attendanceModal = document.querySelector('.calendar');
 
+attendanceOpener.addEventListener('click', () => {
+  attendanceModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+});
+</script>
 <style>
   .purchase-item {
   padding: 12px;
@@ -196,7 +466,18 @@ async function restoreProductQuantity(productId) {
   cursor: pointer;
   border: none;
 }
-
+.calendar {
+  display: none;
+}
+.calendar.active {
+  display: block;
+}
+.attendances {
+  cursor: pointer;
+  width: fit-content;
+  font-size: 20px;
+}
 </style>
+
 </body>
 </html>
