@@ -105,6 +105,8 @@ document.addEventListener("click", () => {
 const storedSeenCoinTimes = localStorage.getItem("seenCoinTimes");
 const seenCoinTimes = storedSeenCoinTimes ? new Set(JSON.parse(storedSeenCoinTimes)) : new Set();
 let isFirstCoinVisit = storedSeenCoinTimes === null;
+let seenLoaded = !!storedSeenCoinTimes; // true if we already have local data
+let pendingCoinsData = null;
 
 function saveSeenCoinTimes() {
   localStorage.setItem("seenCoinTimes", JSON.stringify(Array.from(seenCoinTimes)));
@@ -117,15 +119,21 @@ function saveSeenCoinTimes() {
 
 function loadSeenCoinTimesFromFirebase() {
   if (!currentUserId) return;
-  
-  onValue(ref(db, `users/${currentUserId}/seenCoinNotifications`), (snapshot) => {
+
+  const userSeenRef = ref(db, `users/${currentUserId}/seenCoinNotifications`);
+  // Real-time sync: merge remote seen times into local set
+  onValue(userSeenRef, (snapshot) => {
     const data = snapshot.val();
     if (data && Array.isArray(data)) {
-      seenCoinTimes.clear();
-      data.forEach(time => seenCoinTimes.add(time));
-      localStorage.setItem("seenCoinTimes", JSON.stringify(data));
+      data.forEach(t => seenCoinTimes.add(Number(t)));
+      localStorage.setItem("seenCoinTimes", JSON.stringify(Array.from(seenCoinTimes)));
     }
-  }, { onlyOnce: true });
+    seenLoaded = true;
+    if (pendingCoinsData) {
+      processCoinsListData(pendingCoinsData);
+      pendingCoinsData = null;
+    }
+  });
 }
 
 onValue(ref(db, "coinsSum"), (snap) => {
@@ -237,8 +245,8 @@ window.nextMonth = function() {
 };
 
 // === История уведомлений ===
-onValue(ref(db, "coinsList"), (snapshot) => {
-  const data = snapshot.val();
+
+function processCoinsListData(data) {
   if (!data) {
     notificationsContainer.innerHTML = "<p style='text-align:center;color:gray;'>Hali hech qanday bildirishnomalar yo'q</p>";
     renderTableFromFirebase([]);
@@ -275,10 +283,16 @@ onValue(ref(db, "coinsList"), (snapshot) => {
 
   const entriesAsc = [...entriesDesc].sort((a, b) => a.time - b.time);
 
+  // If we are using Firebase-backed seen list and it's not yet loaded, defer processing
+  if (currentUserId && !seenLoaded) {
+    pendingCoinsData = data;
+    return;
+  }
+
   if (isFirstCoinVisit) {
     entriesAsc.forEach(item => {
       if (Number(item.value) > 0) {
-        seenCoinTimes.add(item.time);
+        seenCoinTimes.add(Number(item.time));
       }
     });
     if (seenCoinTimes.size > 0) {
@@ -287,8 +301,8 @@ onValue(ref(db, "coinsList"), (snapshot) => {
     isFirstCoinVisit = false;
   } else {
     entriesAsc.forEach(item => {
-      if (Number(item.value) > 0 && !seenCoinTimes.has(item.time)) {
-        seenCoinTimes.add(item.time);
+      if (Number(item.value) > 0 && !seenCoinTimes.has(Number(item.time))) {
+        seenCoinTimes.add(Number(item.time));
         modalQueue.push(item);
       }
     });
@@ -300,6 +314,11 @@ onValue(ref(db, "coinsList"), (snapshot) => {
 
   showNextModal();
   renderTableFromFirebase(Object.values(data));
+}
+
+onValue(ref(db, "coinsList"), (snapshot) => {
+  const data = snapshot.val();
+  processCoinsListData(data);
 });
 
 // === 🟢 Очередь модалок при новых коинах ===
