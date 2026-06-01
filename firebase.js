@@ -92,7 +92,9 @@ document.addEventListener("click", () => {
   if (Howler.ctx.state === "suspended") Howler.ctx.resume();
 }, { once: true });
 
-const seenCoinTimes = new Set(JSON.parse(localStorage.getItem("seenCoinTimes") || "[]"));
+const storedSeenCoinTimes = localStorage.getItem("seenCoinTimes");
+const seenCoinTimes = storedSeenCoinTimes ? new Set(JSON.parse(storedSeenCoinTimes)) : new Set();
+let isFirstCoinVisit = storedSeenCoinTimes === null;
 
 function saveSeenCoinTimes() {
   localStorage.setItem("seenCoinTimes", JSON.stringify(Array.from(seenCoinTimes)));
@@ -244,15 +246,28 @@ onValue(ref(db, "coinsList"), (snapshot) => {
   });
 
   const entriesAsc = [...entriesDesc].sort((a, b) => a.time - b.time);
-  entriesAsc.forEach(item => {
-    if (Number(item.value) > 0 && !seenCoinTimes.has(item.time)) {
-      seenCoinTimes.add(item.time);
-      modalQueue.push(item);
-    }
-  });
 
-  if (modalQueue.length > 0) {
-    saveSeenCoinTimes();
+  if (isFirstCoinVisit) {
+    entriesAsc.forEach(item => {
+      if (Number(item.value) > 0) {
+        seenCoinTimes.add(item.time);
+      }
+    });
+    if (seenCoinTimes.size > 0) {
+      saveSeenCoinTimes();
+    }
+    isFirstCoinVisit = false;
+  } else {
+    entriesAsc.forEach(item => {
+      if (Number(item.value) > 0 && !seenCoinTimes.has(item.time)) {
+        seenCoinTimes.add(item.time);
+        modalQueue.push(item);
+      }
+    });
+
+    if (modalQueue.length > 0) {
+      saveSeenCoinTimes();
+    }
   }
 
   showNextModal();
