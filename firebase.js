@@ -1,5 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
 // Firebase config
 const firebaseConfig = {
@@ -15,6 +16,15 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
+
+let currentUserId = null;
+onAuthStateChanged(auth, (user) => {
+  currentUserId = user?.uid || null;
+  if (currentUserId) {
+    loadSeenCoinTimesFromFirebase();
+  }
+});
 
 const modal = document.querySelector(".default-notification-of-coin");
 const divSums = document.querySelectorAll("#coinsSumDisplay");
@@ -98,6 +108,24 @@ let isFirstCoinVisit = storedSeenCoinTimes === null;
 
 function saveSeenCoinTimes() {
   localStorage.setItem("seenCoinTimes", JSON.stringify(Array.from(seenCoinTimes)));
+  
+  if (currentUserId) {
+    set(ref(db, `users/${currentUserId}/seenCoinNotifications`), Array.from(seenCoinTimes))
+      .catch(err => console.error("Error saving seen coins to Firebase:", err));
+  }
+}
+
+function loadSeenCoinTimesFromFirebase() {
+  if (!currentUserId) return;
+  
+  onValue(ref(db, `users/${currentUserId}/seenCoinNotifications`), (snapshot) => {
+    const data = snapshot.val();
+    if (data && Array.isArray(data)) {
+      seenCoinTimes.clear();
+      data.forEach(time => seenCoinTimes.add(time));
+      localStorage.setItem("seenCoinTimes", JSON.stringify(data));
+    }
+  }, { onlyOnce: true });
 }
 
 onValue(ref(db, "coinsSum"), (snap) => {
@@ -363,7 +391,7 @@ applyAvatar();
 const observer = new MutationObserver(applyAvatar);
 observer.observe(document.body, { childList: true, subtree: true });
 
-import { runTransaction, push, set, get, update } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+import { runTransaction, push, get, update } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
 const noEnoughCoinsModal = document.querySelector('.no-enough-coins');
 const closeShopCoinMdlBtn = document.querySelectorAll('.close-shop-coin-mdl-btn');
