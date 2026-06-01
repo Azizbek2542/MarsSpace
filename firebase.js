@@ -92,7 +92,11 @@ document.addEventListener("click", () => {
   if (Howler.ctx.state === "suspended") Howler.ctx.resume();
 }, { once: true });
 
-let lastSeenTime = Number(localStorage.getItem("lastSeenTime") || 0);
+const seenCoinTimes = new Set(JSON.parse(localStorage.getItem("seenCoinTimes") || "[]"));
+
+function saveSeenCoinTimes() {
+  localStorage.setItem("seenCoinTimes", JSON.stringify(Array.from(seenCoinTimes)));
+}
 
 onValue(ref(db, "coinsSum"), (snap) => {
   const total = +(snap.val() ?? 0);
@@ -207,13 +211,14 @@ onValue(ref(db, "coinsList"), (snapshot) => {
   const data = snapshot.val();
   if (!data) {
     notificationsContainer.innerHTML = "<p style='text-align:center;color:gray;'>Hali hech qanday bildirishnomalar yo'q</p>";
+    renderTableFromFirebase([]);
     return;
   }
 
-  const entries = Object.values(data).sort((a, b) => b.time - a.time);
+  const entriesDesc = Object.values(data).sort((a, b) => b.time - a.time);
   notificationsContainer.innerHTML = "";
 
-  entries.forEach(item => {
+  entriesDesc.forEach(item => {
     const date = new Date(item.time);
     const formattedDate = date.toLocaleDateString("en-GB", {
       day: "2-digit",
@@ -223,8 +228,8 @@ onValue(ref(db, "coinsList"), (snapshot) => {
     const formattedTime = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     const actionText = item.value >= 0 
-    ? `Siz coin oldingiz: ${item.value}` 
-    : `Coin sarfladingiz: ${Math.abs(item.value)}`;
+      ? `Siz coin oldingiz: ${item.value}` 
+      : `Coin sarfladingiz: ${Math.abs(item.value)}`;
 
     const div = document.createElement("div");
     div.className = "notification-item";
@@ -238,22 +243,19 @@ onValue(ref(db, "coinsList"), (snapshot) => {
     notificationsContainer.appendChild(div);
   });
 
-  entries.forEach(item => {
-    // Только новые по времени и ещё не виденные
-    if (!lastSeenTimes.has(item.time) && item.time > lastSeenTime) {
-      lastSeenTimes.add(item.time);
-      // Добавляем в очередь ТОЛЬКО положительные начисления
-      if (Number(item.value) > 0) {
-        modalQueue.push(item);
-      }
-      lastSeenTime = item.time;
-      localStorage.setItem("lastSeenTime", lastSeenTime);
+  const entriesAsc = [...entriesDesc].sort((a, b) => a.time - b.time);
+  entriesAsc.forEach(item => {
+    if (Number(item.value) > 0 && !seenCoinTimes.has(item.time)) {
+      seenCoinTimes.add(item.time);
+      modalQueue.push(item);
     }
   });
 
-  // Показать следующую (если есть) — теперь будут только положительные элементы
-  showNextModal();
+  if (modalQueue.length > 0) {
+    saveSeenCoinTimes();
+  }
 
+  showNextModal();
   renderTableFromFirebase(Object.values(data));
 });
 
@@ -265,7 +267,6 @@ const coinsValueDisplay = document.getElementById('coinsValueDisplay');
 
 let modalQueue = [];
 let modalOpen = false;
-let lastSeenTimes = new Set();
 
 function showNextModal() {
   if (modalOpen || modalQueue.length === 0) return;
@@ -304,26 +305,6 @@ ClosedfCoinBtn.addEventListener('click', closeModal);
 ClosedfCoinBtn2.addEventListener('click', closeModal);
 dfCoinBtnModalOverlay.addEventListener('click', (e) => {
   if (e.target === dfCoinBtnModalOverlay) closeModal();
-});
-
-// 🟢 Firebase слушатель новых коинов
-onValue(ref(db, "coinsList"), (snapshot) => {
-  const data = snapshot.val();
-  if (!data) return;
-
-  const entries = Object.values(data).sort((a, b) => a.time - b.time);
-
-  entries.forEach(item => {
-    if (!lastSeenTimes.has(item.time) && item.time > lastSeenTime) {
-      lastSeenTimes.add(item.time);
-      modalQueue.push(item);
-      lastSeenTime = item.time;
-      localStorage.setItem("lastSeenTime", lastSeenTime);
-    }
-  });
-
-  showNextModal();
-  renderTableFromFirebase(Object.values(data));
 });
 
 
@@ -1241,7 +1222,7 @@ GetPremiumBtn.addEventListener('click', async () => {
   const newTotal = await updateCoins(-price);
 
   // --- Сохраняем премиум в БД (10 секунд) ---
-  const durationMs = 20000; // 10 сек (позже поставишь 30*24*60*60*1000)
+  const durationMs = 200000; // 10 сек (позже поставишь 30*24*60*60*1000)
   const untilTimestamp = Date.now() + durationMs;
 
   const saved = await savePremiumToDB(studentId, untilTimestamp);
@@ -1302,3 +1283,219 @@ async function restoreWhilePremUI() {
 }
 
 document.addEventListener('DOMContentLoaded', restoreWhilePremUI);
+
+// === Функции для работы со Streak в Firebase ===
+
+async function getStreakFromDB(studentId) {
+  try {
+    const snap = await get(ref(db, `streak/${studentId}`));
+    if (!snap.exists()) {
+      return { streakCount: 0, lastStreakDate: null };
+    }
+    const data = snap.val();
+    return {
+      streakCount: Number(data.streakCount || 0),
+      lastStreakDate: data.lastStreakDate || null
+    };
+  } catch (err) {
+    console.error("Error getting streak from DB:", err);
+    return { streakCount: 0, lastStreakDate: null };
+  }
+}
+
+async function saveStreakToDB(studentId, streakCount, lastStreakDate) {
+  try {
+    await update(ref(db, `streak/${studentId}`), {
+      streakCount: streakCount,
+      lastStreakDate: lastStreakDate,
+      updatedAt: Date.now()
+    });
+    console.log("Streak saved to DB:", { streakCount, lastStreakDate });
+    return true;
+  } catch (err) {
+    console.error("Error saving streak to DB:", err);
+    return false;
+  }
+}
+
+// Экспортируем функции в window для использования в других скриптах
+window.getStreakFromDB = getStreakFromDB;
+window.saveStreakToDB = saveStreakToDB;
+// Логика расчёта и локального сохранения стрика
+function formatLocalDateKey(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function computeStreak(studentId = 'student1') {
+  const today = new Date();
+  const todayKey = formatLocalDateKey(today);
+
+  const dbData = localStorage.getItem('streakData') ? JSON.parse(localStorage.getItem('streakData')) : { streakCount: 0, lastStreakDate: null };
+  const lastKey = dbData.lastStreakDate;
+  let streak = dbData.streakCount || 0;
+
+  if (lastKey === todayKey) {
+    return streak;
+  }
+
+  if (lastKey) {
+    const [year, month, day] = lastKey.split('-').map(Number);
+    const lastDate = new Date(year, month - 1, day);
+    const diffDays = Math.round((new Date(today.getFullYear(), today.getMonth(), today.getDate()) - lastDate) / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 1) {
+      streak += 1;
+    } else {
+      streak = 1;
+    }
+  } else {
+    streak = 1;
+  }
+
+  localStorage.setItem('streakData', JSON.stringify({ streakCount: streak, lastStreakDate: todayKey }));
+
+  if (typeof window.saveStreakToDB === 'function') {
+    window.saveStreakToDB(studentId, streak, todayKey).catch(e => console.error('Streak save error:', e));
+  }
+  return streak;
+}
+
+window.computeStreak = computeStreak;
+
+// Инициализация синхронизации: сравниваем remote и local и приводим к актуальному
+async function initStreakSync(studentId = 'student1') {
+  try {
+    if (typeof window.getStreakFromDB !== 'function' || typeof window.saveStreakToDB !== 'function') return;
+
+    const local = localStorage.getItem('streakData') ? JSON.parse(localStorage.getItem('streakData')) : null;
+    const remote = await window.getStreakFromDB(studentId);
+
+    if (!local && remote && remote.lastStreakDate) {
+      localStorage.setItem('streakData', JSON.stringify({ streakCount: remote.streakCount || 0, lastStreakDate: remote.lastStreakDate }));
+      window.dispatchEvent(new Event('streak-synced'));
+      return;
+    }
+
+    if (local && remote && remote.lastStreakDate) {
+      const localDate = new Date(local.lastStreakDate);
+      const remoteDate = new Date(remote.lastStreakDate);
+
+      if (remoteDate > localDate || (remoteDate.getTime() === localDate.getTime() && remote.streakCount !== local.streakCount)) {
+        localStorage.setItem('streakData', JSON.stringify({ streakCount: remote.streakCount || 0, lastStreakDate: remote.lastStreakDate }));
+        window.dispatchEvent(new Event('streak-synced'));
+        if (typeof window.updateStreakUI === 'function') window.updateStreakUI();
+      } else if (localDate > remoteDate) {
+        await window.saveStreakToDB(studentId, local.streakCount || 0, local.lastStreakDate || null);
+        window.dispatchEvent(new Event('streak-synced'));
+        if (typeof window.updateStreakUI === 'function') window.updateStreakUI();
+      }
+    } else if (local && (!remote || !remote.lastStreakDate)) {
+      await window.saveStreakToDB(studentId, local.streakCount || 0, local.lastStreakDate || null);
+      window.dispatchEvent(new Event('streak-synced'));
+    }
+  } catch (err) {
+    console.error('Error syncing streak with Firebase (init):', err);
+  }
+}
+
+function listenToStreakChanges(studentId = 'student1') {
+  const streakRef = ref(db, `streak/${studentId}`);
+  onValue(streakRef, (snapshot) => {
+    if (!snapshot.exists()) return;
+
+    const data = snapshot.val();
+    const remoteCount = Number(data.streakCount || 0);
+    const remoteDate = data.lastStreakDate || null;
+    const local = localStorage.getItem('streakData') ? JSON.parse(localStorage.getItem('streakData')) : null;
+
+    const shouldUpdateLocal = !local || local.lastStreakDate !== remoteDate || local.streakCount !== remoteCount;
+    if (shouldUpdateLocal) {
+      localStorage.setItem('streakData', JSON.stringify({ streakCount: remoteCount, lastStreakDate: remoteDate }));
+      window.dispatchEvent(new Event('streak-synced'));
+      if (typeof window.updateStreakUI === 'function') window.updateStreakUI();
+    }
+  }, (err) => {
+    console.error('Realtime streak listener error:', err);
+  });
+}
+
+// UI: обновление отображения стрика и DOM-ready handler
+function domReady(callback) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', callback);
+  } else {
+    callback();
+  }
+}
+
+function updateStreakUI() {
+  const streak = (typeof window.computeStreak === 'function')
+    ? window.computeStreak()
+    : (function() { const local = localStorage.getItem('streakData') ? JSON.parse(localStorage.getItem('streakData')) : { streakCount: 0 }; return local.streakCount || 0; })();
+  const displayCount = Math.min(streak, 365);
+
+  document.querySelectorAll('.streak-modal span').forEach((badge) => {
+    badge.textContent = String(displayCount);
+  });
+
+  document.querySelectorAll('.streak-content-prnt').forEach((container) => {
+    const cards = Array.from(container.querySelectorAll('.streak-content-card'));
+    if (!cards.length) return;
+
+    const jsDay = new Date().getDay();
+    const todayIndex = jsDay === 0 ? 6 : jsDay - 1;
+    const activeCount = Math.min(streak, todayIndex + 1);
+    const activeIndexes = new Set();
+
+    for (let i = 0; i < activeCount; i += 1) {
+      const index = todayIndex - i;
+      if (index < 0) break;
+      activeIndexes.add(index);
+    }
+
+    cards.forEach((card, index) => {
+      const label = card.querySelector('span')?.textContent || '';
+      card.innerHTML = '';
+
+      if (activeIndexes.has(index)) {
+        const img = document.createElement('img');
+        img.width = 48;
+        img.height = 48;
+        img.src = './imgs/strike.svg';
+        img.alt = 'streak';
+        card.appendChild(img);
+      } else {
+        const dot = document.createElement('div');
+        dot.className = 'w-6 h-6 rounded-full md:w-12 md:h-12';
+        dot.style.backgroundColor = '#EEEEEE';
+        card.appendChild(dot);
+      }
+
+      const text = document.createElement('span');
+      text.textContent = label;
+      card.appendChild(text);
+    });
+  });
+}
+
+window.updateStreakUI = updateStreakUI;
+
+// установить отступ для main и обновить UI когда DOM готов
+domReady(() => {
+  const navbar = document.querySelector('.navbar');
+  const main = document.querySelector('main');
+  if (navbar && main) {
+    const navHeight = navbar.offsetHeight;
+    main.style.paddingTop = navHeight + "px";
+  }
+  updateStreakUI();
+});
+
+// Запускаем синхронизацию при загрузке скрипта
+initStreakSync();
+listenToStreakChanges('student1');
+// Сигнализируем, что Firebase-утилиты готовы
+window.dispatchEvent(new Event('firebase-ready'));
