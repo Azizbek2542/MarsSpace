@@ -1,6 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
 // Firebase config
 const firebaseConfig = {
@@ -16,15 +15,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
-const auth = getAuth(app);
-
-let currentUserId = null;
-onAuthStateChanged(auth, (user) => {
-  currentUserId = user?.uid || null;
-  if (currentUserId) {
-    loadSeenCoinTimesFromFirebase();
-  }
-});
 
 const modal = document.querySelector(".default-notification-of-coin");
 const divSums = document.querySelectorAll("#coinsSumDisplay");
@@ -102,38 +92,10 @@ document.addEventListener("click", () => {
   if (Howler.ctx.state === "suspended") Howler.ctx.resume();
 }, { once: true });
 
-const storedSeenCoinTimes = localStorage.getItem("seenCoinTimes");
-const seenCoinTimes = storedSeenCoinTimes ? new Set(JSON.parse(storedSeenCoinTimes)) : new Set();
-let isFirstCoinVisit = storedSeenCoinTimes === null;
-let seenLoaded = !!storedSeenCoinTimes; // true if we already have local data
-let pendingCoinsData = null;
+const seenCoinTimes = new Set(JSON.parse(localStorage.getItem("seenCoinTimes") || "[]"));
 
 function saveSeenCoinTimes() {
   localStorage.setItem("seenCoinTimes", JSON.stringify(Array.from(seenCoinTimes)));
-  
-  if (currentUserId) {
-    set(ref(db, `users/${currentUserId}/seenCoinNotifications`), Array.from(seenCoinTimes))
-      .catch(err => console.error("Error saving seen coins to Firebase:", err));
-  }
-}
-
-function loadSeenCoinTimesFromFirebase() {
-  if (!currentUserId) return;
-
-  const userSeenRef = ref(db, `users/${currentUserId}/seenCoinNotifications`);
-  // Real-time sync: merge remote seen times into local set
-  onValue(userSeenRef, (snapshot) => {
-    const data = snapshot.val();
-    if (data && Array.isArray(data)) {
-      data.forEach(t => seenCoinTimes.add(Number(t)));
-      localStorage.setItem("seenCoinTimes", JSON.stringify(Array.from(seenCoinTimes)));
-    }
-    seenLoaded = true;
-    if (pendingCoinsData) {
-      processCoinsListData(pendingCoinsData);
-      pendingCoinsData = null;
-    }
-  });
 }
 
 onValue(ref(db, "coinsSum"), (snap) => {
@@ -245,8 +207,8 @@ window.nextMonth = function() {
 };
 
 // === История уведомлений ===
-
-function processCoinsListData(data) {
+onValue(ref(db, "coinsList"), (snapshot) => {
+  const data = snapshot.val();
   if (!data) {
     notificationsContainer.innerHTML = "<p style='text-align:center;color:gray;'>Hali hech qanday bildirishnomalar yo'q</p>";
     renderTableFromFirebase([]);
@@ -282,43 +244,19 @@ function processCoinsListData(data) {
   });
 
   const entriesAsc = [...entriesDesc].sort((a, b) => a.time - b.time);
-
-  // If we are using Firebase-backed seen list and it's not yet loaded, defer processing
-  if (currentUserId && !seenLoaded) {
-    pendingCoinsData = data;
-    return;
-  }
-
-  if (isFirstCoinVisit) {
-    entriesAsc.forEach(item => {
-      if (Number(item.value) > 0) {
-        seenCoinTimes.add(Number(item.time));
-      }
-    });
-    if (seenCoinTimes.size > 0) {
-      saveSeenCoinTimes();
+  entriesAsc.forEach(item => {
+    if (Number(item.value) > 0 && !seenCoinTimes.has(item.time)) {
+      seenCoinTimes.add(item.time);
+      modalQueue.push(item);
     }
-    isFirstCoinVisit = false;
-  } else {
-    entriesAsc.forEach(item => {
-      if (Number(item.value) > 0 && !seenCoinTimes.has(Number(item.time))) {
-        seenCoinTimes.add(Number(item.time));
-        modalQueue.push(item);
-      }
-    });
+  });
 
-    if (modalQueue.length > 0) {
-      saveSeenCoinTimes();
-    }
+  if (modalQueue.length > 0) {
+    saveSeenCoinTimes();
   }
 
   showNextModal();
   renderTableFromFirebase(Object.values(data));
-}
-
-onValue(ref(db, "coinsList"), (snapshot) => {
-  const data = snapshot.val();
-  processCoinsListData(data);
 });
 
 // === 🟢 Очередь модалок при новых коинах ===
@@ -410,7 +348,7 @@ applyAvatar();
 const observer = new MutationObserver(applyAvatar);
 observer.observe(document.body, { childList: true, subtree: true });
 
-import { runTransaction, push, get, update } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+import { runTransaction, push, set, get, update } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
 
 const noEnoughCoinsModal = document.querySelector('.no-enough-coins');
 const closeShopCoinMdlBtn = document.querySelectorAll('.close-shop-coin-mdl-btn');
@@ -1284,7 +1222,7 @@ GetPremiumBtn.addEventListener('click', async () => {
   const newTotal = await updateCoins(-price);
 
   // --- Сохраняем премиум в БД (10 секунд) ---
-  const durationMs = 200000; // 10 сек (позже поставишь 30*24*60*60*1000)
+  const durationMs = 20000; // 10 сек (позже поставишь 30*24*60*60*1000)
   const untilTimestamp = Date.now() + durationMs;
 
   const saved = await savePremiumToDB(studentId, untilTimestamp);
