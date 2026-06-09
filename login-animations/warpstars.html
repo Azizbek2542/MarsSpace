@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warp Stars</title>
+    <style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+<script>
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+let W, H, CX, CY, DPR;
+function resize() {
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = cv.width = innerWidth * DPR;
+  H = cv.height = innerHeight * DPR;
+  CX = W / 2; CY = H / 2;
+}
+resize();
+addEventListener('resize', resize);
+
+const N = 600;
+const stars = [];
+function spawn() {
+  return {
+    x: (Math.random() - 0.5) * W,
+    y: (Math.random() - 0.5) * H,
+    z: Math.random() * W,
+    pz: 0
+  };
+}
+for (let i = 0; i < N; i++) { const s = spawn(); s.z = Math.random() * W; stars.push(s); }
+
+let speed = 8;
+const HUES = [200, 220, 280, 320];
+let baseHue = HUES[Math.floor(Math.random() * HUES.length)];
+
+let tx = 0, ty = 0, mx = 0, my = 0;
+addEventListener('mousemove', e => {
+  tx = (e.clientX / innerWidth - 0.5) * 0.6;
+  ty = (e.clientY / innerHeight - 0.5) * 0.6;
+});
+
+function frame() {
+  ctx.fillStyle = 'rgba(0,0,0,0.25)';
+  ctx.fillRect(0, 0, W, H);
+  mx += (tx - mx) * 0.05; my += (ty - my) * 0.05;
+  const ox = mx * W * 0.5, oy = my * H * 0.5;
+  for (const s of stars) {
+    s.pz = s.z;
+    s.z -= speed * DPR;
+    if (s.z < 1) { Object.assign(s, spawn()); s.z = W; s.pz = W; }
+    const sx = (s.x / s.z) * W + CX + ox;
+    const sy = (s.y / s.z) * H + CY + oy;
+    const px = (s.x / s.pz) * W + CX + ox;
+    const py = (s.y / s.pz) * H + CY + oy;
+    const r = (1 - s.z / W) * 2.4 * DPR;
+    const lum = 50 + (1 - s.z / W) * 45;
+    ctx.strokeStyle = 'hsl(' + (baseHue + (s.x % 40)) + ',90%,' + lum + '%)';
+    ctx.lineWidth = Math.max(r, 0.5);
+    ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(sx, sy); ctx.stroke();
+  }
+  requestAnimationFrame(frame);
+}
+frame();
+// gentle warp pulse
+setInterval(() => { speed = 6 + Math.random() * 8; }, 2600);
+</script>
+</body>
+</html>

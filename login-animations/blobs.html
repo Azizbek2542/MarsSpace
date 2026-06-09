@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+ <html lang="uz">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liquid Blobs</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0c0a1e; }
+  .stage { position: fixed; inset: 0; filter: url(#goo); overflow: hidden; }
+  .blob { position: absolute; border-radius: 50%; mix-blend-mode: screen; filter: blur(8px); }
+  .b1 { width: 42vmax; height: 42vmax; background: #ff4d8d; left: -10vmax; top: -8vmax; animation: m1 16s ease-in-out infinite alternate; }
+  .b2 { width: 36vmax; height: 36vmax; background: #4d7dff; right: -8vmax; top: 10vmax; animation: m2 19s ease-in-out infinite alternate; }
+  .b3 { width: 30vmax; height: 30vmax; background: #4dffd2; left: 30vmax; bottom: -10vmax; animation: m3 22s ease-in-out infinite alternate; }
+  .b4 { width: 24vmax; height: 24vmax; background: #c14dff; right: 25vmax; bottom: 4vmax; animation: m4 14s ease-in-out infinite alternate; }
+  @keyframes m1 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(14vw,12vh) scale(1.2); } }
+  @keyframes m2 { 0% { transform: translate(0,0) scale(1.1); } 100% { transform: translate(-16vw,8vh) scale(0.85); } }
+  @keyframes m3 { 0% { transform: translate(0,0) scale(0.9); } 100% { transform: translate(-12vw,-14vh) scale(1.25); } }
+  @keyframes m4 { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(10vw,-10vh) scale(1.15); } }
+  .tint { position: fixed; inset: 0; background: radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(12,10,30,0.6) 100%); }
+</style>
+ </head>
+ <body>
+    <svg width="0" height="0">
+  <filter id="goo">
+    <feGaussianBlur in="SourceGraphic" stdDeviation="14" result="blur" />
+    <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -9" result="goo" />
+    <feBlend in="SourceGraphic" in2="goo" />
+  </filter>
+</svg>
+<div class="stage">
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div class="blob b4"></div>
+</div>
+<div class="tint"></div>
+ </body>
+ </html>

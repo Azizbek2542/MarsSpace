@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constellation</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #0a0a1f; }
+  canvas { display: block; width: 100vw; height: 100vh; }
+</style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+<script>
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+let W, H, DPR;
+function resize() {
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = cv.width = innerWidth * DPR;
+  H = cv.height = innerHeight * DPR;
+}
+resize();
+addEventListener('resize', resize);
+
+const N = Math.round((innerWidth * innerHeight) / 12000) + 40;
+const pts = [];
+for (let i = 0; i < N; i++) {
+  pts.push({
+    x: Math.random() * W, y: Math.random() * H,
+    vx: (Math.random() - 0.5) * 0.4 * DPR,
+    vy: (Math.random() - 0.5) * 0.4 * DPR,
+    r: (Math.random() * 1.6 + 0.6) * DPR
+  });
+}
+const mouse = { x: -9999, y: -9999 };
+addEventListener('mousemove', e => { mouse.x = e.clientX * DPR; mouse.y = e.clientY * DPR; });
+addEventListener('mouseleave', () => { mouse.x = mouse.y = -9999; });
+
+const LINK = 130 * DPR;
+function frame() {
+  ctx.fillStyle = '#0a0a1f';
+  ctx.fillRect(0, 0, W, H);
+  for (const p of pts) {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > W) p.vx *= -1;
+    if (p.y < 0 || p.y > H) p.vy *= -1;
+    const dx = p.x - mouse.x, dy = p.y - mouse.y;
+    const md = Math.hypot(dx, dy);
+    if (md < 160 * DPR) {
+      p.x += (dx / md) * 1.2; p.y += (dy / md) * 1.2;
+    }
+  }
+  for (let i = 0; i < pts.length; i++) {
+    for (let j = i + 1; j < pts.length; j++) {
+      const a = pts[i], b = pts[j];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < LINK) {
+        const o = 1 - d / LINK;
+        ctx.strokeStyle = 'rgba(140,170,255,' + (o * 0.5) + ')';
+        ctx.lineWidth = DPR * 0.8;
+        ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+      }
+    }
+  }
+  for (const p of pts) {
+    // faint halo
+    ctx.globalAlpha = 0.18;
+    ctx.fillStyle = '#7aa2ff';
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 3, 0, 7); ctx.fill();
+    // crisp core
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = '#cfe0ff';
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 7); ctx.fill();
+  }
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(frame);
+}
+frame();
+</script>
+</body>
+</html>

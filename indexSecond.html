@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MARS SPACE</title>
+  <link rel="shortcut icon" href="./imgs/logo--circle.svg" type="image/x-icon">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+  <link rel="stylesheet" href="./indexSecond.css">
+</head>
+<body>
+
+  <section class="container">
+    <div class="navbar">
+        <div class="logo">
+            <img width="158px" height="34px" src="./imgs/logo.png" alt="">
+        </div>
+        <button type="button" class="lang-pill glass-pill el-tooltip__trigger el-tooltip__trigger">
+            <img src="./imgs/lang-icon.svg" alt="lang">
+            <span>O'zb</span>
+        </button>
+        <div class="language-selection-container" tabindex="-1" aria-hidden="false">
+            <span class="langCont__arrow"></span>
+            <div class="lang">
+                <img src="./imgs/uzb.svg" alt="Uzb">
+                <p>O'zbekcha</p>
+            </div>
+            <div class="lang">
+                <img src="./imgs/rus.svg" alt="Uzb">
+                <p>Русский</p>
+            </div>
+        </div>
+    </div>
+
+    <main class="login-body">
+  <div class="login-body-cont mx-auto">
+    <div class="login-body-wrapper">
+      <div class="flex justify-between items-center">
+        <img src="./imgs/logo.png" alt="mars-logo" width="100">
+        <a href="https://lab.marsit.uz/media/term_and_conditions/Offerta%20v1.3/MarsITSchool_oferta_v1.3.pdf" 
+           target="_blank" download="" 
+           class="text-lightBlue hover:underline text-[#00A9F1]">
+          <i class="fa-regular fa-file"></i> Offerta
+        </a>
+      </div>
+
+      <h1 class="my-10 text-2xl font-bold text-center">Spacega xush kelibsiz</h1>
+
+      <form class="login-body-form" onsubmit="return false;">
+
+        <input type="number" id="tg-id" placeholder="Telegram ID">
+        <button type="button" class="login-btn" onclick="sendCodeToTelegram()">Kodni olish</button>
+
+        <input type="number" id="otp" placeholder="Kodni kiriting">
+        <button type="button" class="login-btn" onclick="checkTelegramCode()">Kirish</button>
+
+      </form>
+
+      <p id="status" class="text-center mt-5"></p>
+
+      <div class="mt-10 login-body-footer">
+        <div class="flex gap-2 justify-center items-center">
+          <p>Akkauntga ega emasmisiz?</p>
+          <a href="#sign-up" class="hover:underline sign-up cursor-pointer">Ro'yhatdan o'tish</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+  </section>
+
+
+  <script>
+const botToken = "8545358962:AAHx3Ls2aFDDG2qraqTtPJoAn8hzFZYi_2U";
+let generatedCode = null;
+
+function sendCodeToTelegram() {
+  const tgId = document.getElementById("tg-id").value.trim();
+  const status = document.getElementById("status");
+
+  if (!tgId) {
+    status.textContent = "⚠️ Telegram ID kiriting!";
+    status.style.color = "red";
+    return;
+  }
+
+  // 6-значный код
+  generatedCode = Math.floor(100000 + Math.random() * 900000);
+
+  fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: tgId,
+      text: `🔑 Tasdiqlash kodi: ${generatedCode}`
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.ok) {
+      status.textContent = "📨 Kod Telegram bo'tga yuborildi!";
+      status.style.color = "green";
+    } else {
+      status.textContent = "❌ Xatolik: Telegram ID noto'g'ri kiritilgan ";
+      status.style.color = "red";
+    }
+  })
+  .catch(() => {
+    status.textContent = "❌ Internetda xatolik!";
+    status.style.color = "red";
+  });
+}
+
+function checkTelegramCode() {
+  const otp = document.getElementById("otp").value.trim();
+  const status = document.getElementById("status");
+
+  if (!otp) {
+    status.textContent = "⚠️ Kod kiriting!";
+    status.style.color = "red";
+    return;
+  }
+
+  if (otp === String(generatedCode)) {
+    status.textContent = "✅ Kirish muvaffaqiyatli!";
+    status.style.color = "green";
+
+    setTimeout(() => {
+      window.location.href = "./main-page.html";
+    }, 1000);
+
+  } else {
+    status.textContent = "❌ Kod noto‘g‘ri!";
+    status.style.color = "red";
+  }
+}
+</script>
+
+<script>
+  const LoginBodyWrapper = document.querySelector('.login-body-wrapper');
+
+  document.addEventListener("click", (e) => {
+
+  if (e.target.closest(".sign-up")) {
+    LoginBodyWrapper.innerHTML = `<div class="flex flex-col gap-3 items-center justify-between"><svg xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 48 48">
+	<path fill="none" stroke="#fc6736" stroke-linecap="round" stroke-linejoin="round" d="M24 2.5c-1.367.015-2.73.16-4.07.434a4.288 4.288 0 0 1-4.187 5.205h0a4.29 4.29 0 0 1-3.594-2.014a21.5 21.5 0 0 0-6.024 6.024c1.24.776 2 2.13 2.014 3.593a4.29 4.29 0 0 1-4.29 4.288h0a4.3 4.3 0 0 1-.904-.145A21.5 21.5 0 0 0 2.5 24a21.6 21.6 0 0 0 .445 4.115a4.3 4.3 0 0 1 .904-.145a4.29 4.29 0 0 1 4.29 4.287v0a4.29 4.29 0 0 1-2.014 3.594a21.5 21.5 0 0 0 6.024 6.025a4.29 4.29 0 0 1 3.593-2.015a4.29 4.29 0 0 1 4.288 4.29v0a4.3 4.3 0 0 1-.145.904c1.354.28 2.732.43 4.115.445a21.5 21.5 0 0 0 4.115-.445a4.3 4.3 0 0 1-.145-.904a4.29 4.29 0 0 1 4.287-4.29h0a4.29 4.29 0 0 1 3.594 2.015a21.5 21.5 0 0 0 6.025-6.025a4.29 4.29 0 0 1-2.015-3.593a4.29 4.29 0 0 1 4.29-4.288h0q.46.024.904.145c.28-1.354.43-2.732.445-4.115a21.5 21.5 0 0 0-.405-4.12a4.3 4.3 0 0 1-.944.15a4.29 4.29 0 0 1-4.29-4.287v0a4.29 4.29 0 0 1 2.057-3.616a21.5 21.5 0 0 0-6.044-6.045a4.29 4.29 0 0 1-3.616 2.057a4.29 4.29 0 0 1-4.288-4.29v0a4.3 4.3 0 0 1 .15-.944A21.5 21.5 0 0 0 24 2.5" stroke-width="1" />
+	<path fill="none" stroke="#fc6736" stroke-linecap="round" stroke-linejoin="round" d="m34.253 15.908l-4.298 4.298a.724.724 0 0 1-1.026 0l-1.142-1.142a.724.724 0 0 1 0-1.026l4.284-4.284a6.58 6.58 0 0 0-8.077.94a6.58 6.58 0 0 0-1.551 6.82l-8.81 8.81c-1.136 1.136-1.151 2.951-.033 4.07c1.118 1.117 2.933 1.102 4.07-.035l8.808-8.808A6.58 6.58 0 0 0 33.3 24a6.58 6.58 0 0 0 .954-8.092" stroke-width="1" />
+</svg> <h1 class="text-red-500 text-2xl text-center">Afsuski, ushbu bet ta'mirlanmoqda.</h1></div>
+<p class="text-center relative top-3 w-full mt-10"> Akkauntingiz bormi? <a href="#sign-in" class="hover:underline sign-in cursor-pointer">Kirish</a></p>`;
+  };
+
+  if (e.target.closest(".sign-in")) {
+    LoginBodyWrapper.innerHTML = `<div class="flex justify-between items-center">
+        <img src="./imgs/logo.png" alt="mars-logo" width="100">
+        <a href="https://lab.marsit.uz/media/term_and_conditions/Offerta%20v1.3/MarsITSchool_oferta_v1.3.pdf" 
+           target="_blank" download="" 
+           class="text-lightBlue hover:underline text-[#00A9F1]">
+          <i class="fa-regular fa-file"></i> Offerta
+        </a>
+      </div>
+
+      <h1 class="my-10 text-2xl font-bold text-center">Spacega xush kelibsiz</h1>
+
+      <form class="login-body-form" onsubmit="return false;">
+
+        <input type="number" id="tg-id" placeholder="Telegram ID">
+        <button type="button" class="login-btn" onclick="sendCodeToTelegram()">Kodni olish</button>
+
+        <input type="number" id="otp" placeholder="Kodni kiriting">
+        <button type="button" class="login-btn" onclick="checkTelegramCode()">Kirish</button>
+
+      </form>
+
+      <p id="status" class="text-center mt-5"></p>
+
+      <div class="mt-10 login-body-footer">
+        <div class="flex gap-2 justify-center items-center">
+          <p>Akkauntga ega emasmisiz?</p>
+          <a href="#sign-up" class="hover:underline sign-up cursor-pointer">Ro'yhatdan o'tish</a>
+        </div>
+      </div>
+    `;
+  };
+});
+</script>
+
+<script>
+        const LanguageSelectionContainer = document.querySelector('.language-selection-container');
+            const LangContArrow = document.querySelector('.langCont__arrow');
+            const LangPill = document.querySelector('.lang-pill');
+        function positionLangCont() {
+  if (!LanguageSelectionContainer || !LangPill || !LangContArrow) return;
+
+  const modalRect = LangPill.getBoundingClientRect();
+  const contentWidth = LanguageSelectionContainer.offsetWidth;
+  const arrowWidth = LangContArrow.offsetWidth;
+
+  LanguageSelectionContainer.style.top = modalRect.bottom + 10 + "px";
+  LanguageSelectionContainer.style.left =
+    modalRect.left + LangPill.offsetWidth - contentWidth + "px";
+
+  LangContArrow.style.left =
+    contentWidth - LangPill.offsetWidth / 2 - arrowWidth / 2 + "px";
+}
+
+LangPill.addEventListener('click', (e) => {
+    e.stopPropagation();
+    LanguageSelectionContainer.classList.toggle('active');
+    if (LanguageSelectionContainer.classList.contains('active')) {
+      positionLangCont();
+    }
+  });
+
+  window.addEventListener('click', (e) => {
+  if (
+    LanguageSelectionContainer.classList.contains('active') &&
+    !LanguageSelectionContainer.contains(e.target) &&
+    !LangPill.contains(e.target)
+  ) {
+    LanguageSelectionContainer.classList.remove('active');
+  }
+});
+
+  window.addEventListener('resize', positionLangCont);
+  window.addEventListener('load', positionLangCont);
+    </script> 
+
+</body>
+</html>

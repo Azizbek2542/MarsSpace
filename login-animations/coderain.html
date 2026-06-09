@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Rain</title>
+    <style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #000; }
+  canvas { display: block; }
+</style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+<script>
+const cv = document.getElementById('c');
+const ctx = cv.getContext('2d');
+let W, H, DPR, cols, drops, fontSize;
+const GLYPHS = 'アイウエオカキクケコｱｲｳ01<>{}[]()/=+*#&%MARS01'.split('');
+function resize() {
+  DPR = Math.min(window.devicePixelRatio || 1, 2);
+  W = cv.width = innerWidth * DPR;
+  H = cv.height = innerHeight * DPR;
+  fontSize = 16 * DPR;
+  cols = Math.floor(W / fontSize);
+  drops = new Array(cols).fill(0).map(() => Math.random() * -H / fontSize);
+}
+resize();
+addEventListener('resize', resize);
+
+const PALETTES = [
+  { head: '#d6ffe9', tail: '0,255,140' },
+  { head: '#d6ecff', tail: '60,160,255' },
+  { head: '#ffe0f0', tail: '255,90,180' }
+];
+const P = PALETTES[Math.floor(Math.random() * PALETTES.length)];
+
+let last = 0;
+function frame(t) {
+  if (t - last > 45) {
+    last = t;
+    ctx.fillStyle = 'rgba(2,8,6,0.12)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.font = fontSize + "px 'Courier New', monospace";
+    for (let i = 0; i < cols; i++) {
+      const ch = GLYPHS[(Math.random() * GLYPHS.length) | 0];
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+      ctx.fillStyle = 'rgba(' + P.tail + ',0.85)';
+      ctx.fillText(ch, x, y);
+      ctx.fillStyle = P.head;
+      ctx.fillText(GLYPHS[(Math.random() * GLYPHS.length) | 0], x, y - fontSize);
+      if (y > H && Math.random() > 0.975) drops[i] = 0;
+      drops[i] += 1;
+    }
+  }
+  requestAnimationFrame(frame);
+}
+ctx.fillStyle = '#020806'; ctx.fillRect(0, 0, W, H);
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
