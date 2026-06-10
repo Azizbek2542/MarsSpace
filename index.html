@@ -23,7 +23,7 @@
         </button>
         </div>
         <div class="login-body">
-            <div class="login-stack">
+            <!-- <div class="login-stack">
             <div class="login-body-wrapper-temporary">
       <div class="flex justify-between items-center">
         <img src="./imgs/logo.png" alt="mars-logo" width="100">
@@ -55,12 +55,75 @@
         </div>
       </div>
     </div>
-    </div>
+    </div> -->
+    <div class="login-stack">
+                    <div class="mars-logo-wrap">
+                        <canvas class="mars-logo" aria-label="MARS" width="1400" height="420" style="vertical-align: middle;"></canvas>
+                    </div>
+                <div class="login-body-wrapper glass">
+                    <div class="form-topbar">
+                        <a href="https://lab.marsit.uz/media/term_and_conditions/Offerta%20v1.3/MarsITSchool_oferta_v1.3.pdf" target="_blank" download="" class="form-topbar__offerta"><i class="fa-regular fa-file" style="font-weight: 400;"></i> Offerta</a>
+                        <button type="button" class="lang-pill glass-pill el-tooltip__trigger el-tooltip__trigger">
+                            <img src="./imgs/lang-icon.svg" alt="lang">
+                            <span>O'zb</span>
+                        </button>
+                    </div>
+                    <div class="login-greeting">
+                        <h1 class="login-heading">Spacega xush kelibsiz</h1>
+                        <p class="login-subheading">Bugun nimani o'rganamiz?</p>
+                    </div>
+                    <div class="select-role">
+                        <button class="active">Student</button>
+                        <button disabled>Ota-ona</button>
+                    </div>
+                    <div class="login-body-form">
+                        <form autocomplete="off">
+                            <div class="el-form-item asterisk-left"><!--v-if-->
+                                <div class="el-form-item__content">
+                                <div class="el-input el-input--large"><!-- input --><!-- prepend slot --><!--v-if-->
+                                    <div class="el-input__wrapper" tabindex="-1"><!-- prefix slot --><!--v-if-->
+                                        <input class="el-input__inner" autocapitalize="off" autocorrect="off" spellcheck="false" type="text" autocomplete="off" tabindex="0" placeholder="Mars ID" id="el-id-6014-3"><!-- suffix slot --><!--v-if-->
+                                    </div><!-- append slot --><!--v-if-->
+                                </div>
+                            </div>
+                        </div>
+                        <div class="el-form-item asterisk-left"><!--v-if-->
+                            <div class="el-form-item__content">
+                                <div class="el-input el-input--large"><!-- input --><!-- prepend slot --><!--v-if-->
+                                    <div class="el-input__wrapper" tabindex="-1"><!-- prefix slot --><!--v-if-->
+                                        <input class="el-input__inner" inputmode="text" autocapitalize="off" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" type="text" autocomplete="off" tabindex="0" placeholder="Parol" id="el-id-6014-4"><!-- suffix slot --><!--v-if-->
+                                    </div>
+                                        <!-- append slot --><!--v-if-->
+                                </div>
+                            </div>
+                        </div>
+                            <button type="submit" disabled class="login-btn"><!----> Kirish</button><!---->
+                        </form>
+                    </div><!---->
+                        <div class="login-body-footer">
+                            <div class="flex gap-2 justify-center items-center">
+                                <p>Akkauntga ega emasmisiz?</p>
+                                <a href="#signup" class="login-footer-link">Ro'yhatdan o'tish</a>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="language-selection-container" tabindex="-1" aria-hidden="false">
+                <span class="langCont__arrow"></span>
+                <div class="lang">
+                    <img src="./imgs/uzb.svg" alt="Uzb">
+                    <p>O'zbekcha</p>
+                </div>
+                <div class="lang">
+                    <img src="./imgs/rus.svg" alt="Uzb">
+                    <p>Русский</p>
+                </div>
+            </div>
         </div>
     </div>
 
 
-    <!-- <script>
+    <script>
         function checkInputs() {
   const inputs = document.querySelectorAll('.el-input__inner');
   const button = document.querySelector('.login-btn');
@@ -118,9 +181,9 @@ LangPill.addEventListener('click', (e) => {
 
   window.addEventListener('resize', positionLangCont);
   window.addEventListener('load', positionLangCont);
-    </script> -->
+    </script>
 
-    <script>
+    <!-- <script>
 const botToken = "8545358962:AAHx3Ls2aFDDG2qraqTtPJoAn8hzFZYi_2U";
 let generatedCode = null;
 
@@ -232,7 +295,7 @@ function checkTelegramCode() {
     `;
   };
 });
-</script>
+</script> -->
 
 
 <script>
@@ -307,6 +370,226 @@ loginBgCreditShuffle.addEventListener('click', () => {
 
     loadFrame(selected);
 });
+</script>
+
+<script>
+// ── MARS логотип (canvas над формой) ──────────────────────────────────────
+(function () {
+  const cv = document.querySelector('canvas.mars-logo');
+  if (!cv) return;
+
+  const mouse = { x: -9999, y: -9999 };
+  let ctx, raf, currentStyle;
+  let particles = [], DPR = 1, W = 0, H = 0, startedAt = 0, lineMax = 19;
+  const grid = new Map();
+  const ACCENT = [255, 90, 31];
+
+  const STYLES = {
+    constellation: { text: "MARS", palette: ["#eef3ff"], lines: true,  lineRGB: "190,210,255", lineAlpha: 0.32, dot: "circle", idle: "breathe", spring: 0.045, baseSize: 1.1 },
+    aurora:        { text: "mars", palette: ["#7af0ff","#a98cff","#ff8cd4"], lines: true,  lineRGB: "160,230,255", lineAlpha: 0.22, dot: "circle", idle: "wave",    spring: 0.04,  baseSize: 1.3 },
+    warpstars:     { text: "MARS", palette: ["#dff0ff","#9fd0ff","#ffffff"],  lines: false, dot: "streak", idle: "drift",   spring: 0.06,  baseSize: 1.2 },
+    coderain:      { text: "mars", palette: ["#d6ffe9","#7affb0","#aaffce"],  lines: false, dot: "glyph",  idle: "flicker", spring: 0.05,  baseSize: 1.6, fromTop: true },
+    blobs:         { text: "mars", palette: ["#ff7ab0","#7aa6ff","#7affd2","#c17aff"], lines: false, dot: "blob", idle: "float", spring: 0.034, baseSize: 2.2 },
+  };
+
+  // какой файл → какой вариант логотипа
+  const FILE_TO_VARIANT = {
+    'aurora.html':        'aurora',
+    'blobs.html':         'blobs',
+    'coderain.html':      'coderain',
+    'constellation.html': 'constellation',
+    'warpstars.html':     'warpstars',
+  };
+
+  function variantFromFile(src) {
+    if (!src) return 'constellation';
+    const file = src.split('/').pop().split('?')[0];
+    return FILE_TO_VARIANT[file] || 'constellation';
+  }
+
+  function buildTargets(cssW, cssH) {
+    const off = document.createElement('canvas');
+    off.width = cssW; off.height = cssH;
+    const o = off.getContext('2d');
+    o.fillStyle = '#fff';
+    o.textBaseline = 'middle';
+    const txt = currentStyle.text;
+    const isLower = txt === txt.toLowerCase() && txt !== txt.toUpperCase();
+    let fontSize = Math.floor(cssH * (isLower ? 0.84 : 0.64));
+    const setFont = () => {
+      o.font = `800 ${fontSize}px Inter,"Helvetica Neue",Arial,sans-serif`;
+      try { o.letterSpacing = (fontSize * 0.05) + 'px'; } catch(e) {}
+    };
+    setFont();
+    while (o.measureText(txt).width > cssW * 0.74 && fontSize > 8) { fontSize--; setFont(); }
+    const tw = o.measureText(txt).width;
+    const ringR = fontSize * (isLower ? 0.11 : 0.13);
+    const baseX = (cssW - tw) / 2;
+    const baseY = cssH * 0.5;
+    o.fillText(txt, baseX, baseY);
+    const img = o.getImageData(0, 0, cssW, cssH).data;
+    let step = Math.max(2, Math.round(fontSize / 19));
+    const sample = st => {
+      const out = [];
+      for (let y = 0; y < cssH; y += st)
+        for (let x = 0; x < cssW; x += st)
+          if (img[(y * cssW + x) * 4 + 3] > 130)
+            out.push({ tx: x + (Math.random()-.5)*st*.6, ty: y + (Math.random()-.5)*st*.6 });
+      return out;
+    };
+    let pts = sample(step);
+    while (pts.length > 400) { step++; pts = sample(step); }
+    const ringCx = baseX + tw + fontSize * 0.08 + ringR;
+    const ringCy = baseY - fontSize * (isLower ? 0.26 : 0.42);
+    for (let i = 0; i < 16; i++) {
+      const a = (i/16)*Math.PI*2;
+      pts.push({ tx: ringCx + Math.cos(a)*ringR, ty: ringCy + Math.sin(a)*ringR, accent: true });
+    }
+    return { pts, fontSize, lineMax: Math.max(16, fontSize * 0.16) };
+  }
+
+  function setup(variant) {
+    currentStyle = STYLES[variant] || STYLES.constellation;
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = cv.getBoundingClientRect();
+    W = Math.max(120, rect.width);
+    H = Math.max(40, rect.height);
+    cv.width = W * DPR; cv.height = H * DPR;
+    ctx = cv.getContext('2d');
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    const built = buildTargets(W, H);
+    lineMax = built.lineMax;
+    const sizeScale = Math.max(1, built.fontSize / 64);
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    particles = built.pts.map((t, i) => {
+      let sx, sy;
+      if (currentStyle.fromTop) { sx = t.tx + (Math.random()-.5)*30; sy = -20 - Math.random()*H; }
+      else {
+        const e = Math.random();
+        if      (e < .25) { sx = -20;    sy = Math.random()*H; }
+        else if (e < .5)  { sx = W+20;   sy = Math.random()*H; }
+        else if (e < .75) { sx = Math.random()*W; sy = -20; }
+        else              { sx = Math.random()*W; sy = H+20; }
+      }
+      const col = t.accent ? `rgb(${ACCENT})` : currentStyle.palette[i % currentStyle.palette.length];
+      return {
+        x: reduce ? t.tx : sx, y: reduce ? t.ty : sy,
+        px: t.tx, py: t.ty, vx: 0, vy: 0,
+        tx: t.tx, ty: t.ty, accent: !!t.accent,
+        ph: Math.random()*Math.PI*2,
+        r: ((t.accent ? currentStyle.baseSize+.4 : currentStyle.baseSize) + Math.random()*.5) * sizeScale,
+        col,
+      };
+    });
+    startedAt = performance.now();
+  }
+
+  function frame() {
+    if (!ctx) return;
+    const t = (performance.now() - startedAt) / 1000;
+    const assembled = t > 1.6;
+    ctx.clearRect(0, 0, W, H);
+    const cx = W/2, cy = H/2;
+
+    for (const p of particles) {
+      p.px = p.x; p.py = p.y;
+      p.vx = (p.vx + (p.tx - p.x) * currentStyle.spring) * .86;
+      p.vy = (p.vy + (p.ty - p.y) * currentStyle.spring) * .86;
+      p.x += p.vx; p.y += p.vy;
+      if (assembled) {
+        switch (currentStyle.idle) {
+          case 'wave':    p.x += Math.sin(t*1.8+p.tx*.05)*.5;  p.y += Math.cos(t*1.4+p.tx*.04)*1.1; break;
+          case 'drift': { const dx=p.tx-cx,dy=p.ty-cy,k=1+Math.sin(t*2+p.ph)*.06; p.x+=dx*(k-1)*.12; p.y+=dy*(k-1)*.12; break; }
+          case 'flicker': p.x += Math.sin(t*6+p.ph)*.15; p.y += Math.cos(t*5+p.ph)*.15; break;
+          case 'float':   p.x += Math.sin(t*1.1+p.ph)*.6;  p.y += Math.cos(t*.9+p.ph*1.3)*.6; break;
+          default:        p.x += Math.sin(t*1.6+p.ph)*.18; p.y += Math.cos(t*1.3+p.ph)*.18;
+        }
+        const mdx=p.x-mouse.x, mdy=p.y-mouse.y, md2=mdx*mdx+mdy*mdy;
+        if (md2 < 5200) { const d=Math.sqrt(md2)||1, f=(1-d/72)*6.5; p.x+=(mdx/d)*f; p.y+=(mdy/d)*f; }
+      }
+    }
+
+    if (currentStyle.lines) {
+      ctx.lineWidth = .8;
+      const lm2 = lineMax*lineMax, cell = lineMax;
+      const cols = Math.max(1, Math.ceil(W/cell));
+      grid.clear();
+      for (let i=0; i<particles.length; i++) {
+        const p=particles[i], cxi=Math.min(cols-1,Math.max(0,(p.x/cell)|0)), cyi=Math.max(0,(p.y/cell)|0);
+        const k=cyi*cols+cxi; let b=grid.get(k); if(!b){b=[];grid.set(k,b);} b.push(i);
+      }
+      const NEI=[[0,0],[1,0],[-1,1],[0,1],[1,1]];
+      for (let i=0; i<particles.length; i++) {
+        const a=particles[i], acx=Math.min(cols-1,Math.max(0,(a.x/cell)|0)), acy=Math.max(0,(a.y/cell)|0);
+        for (const [nx,ny] of NEI) {
+          const bkt=grid.get((acy+ny)*cols+(acx+nx)); if(!bkt) continue;
+          for (const j of bkt) {
+            if (j<=i) continue;
+            const b=particles[j], dx=a.x-b.x, dy=a.y-b.y, d2=dx*dx+dy*dy;
+            if (d2<lm2) { const o=1-Math.sqrt(d2)/lineMax; ctx.strokeStyle=`rgba(${currentStyle.lineRGB},${o*currentStyle.lineAlpha})`; ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke(); }
+          }
+        }
+      }
+    }
+
+    const now = performance.now();
+    for (const p of particles) {
+      const core = p.accent ? `rgb(${ACCENT})` : p.col;
+      if (currentStyle.dot === 'blob') {
+        ctx.globalAlpha=.28; ctx.fillStyle=core; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*2.4,0,7); ctx.fill();
+        ctx.globalAlpha=.95; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*1.4,0,7); ctx.fill(); ctx.globalAlpha=1;
+      } else if (currentStyle.dot === 'streak') {
+        ctx.strokeStyle=core; ctx.lineWidth=p.r; ctx.lineCap='round';
+        const vx=p.x-p.px,vy=p.y-p.py,len=Math.min(11,Math.hypot(vx,vy)*2.4+1.6),a=Math.atan2(vy||.001,vx||.001);
+        ctx.beginPath(); ctx.moveTo(p.x-Math.cos(a)*len,p.y-Math.sin(a)*len); ctx.lineTo(p.x,p.y); ctx.stroke();
+      } else if (currentStyle.dot === 'glyph') {
+        ctx.globalAlpha=.7+.3*Math.abs(Math.sin(now*.004+p.ph*7)); ctx.fillStyle=core;
+        const s=p.r*1.5; ctx.fillRect(p.x-s/2,p.y-s/2,s,s); ctx.globalAlpha=1;
+      } else {
+        ctx.globalAlpha=.22; ctx.fillStyle=core; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*2.6,0,7); ctx.fill();
+        ctx.globalAlpha=1; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,7); ctx.fill();
+      }
+    }
+    ctx.globalAlpha=1;
+    raf = requestAnimationFrame(frame);
+  }
+
+  // публичная функция смены варианта
+  window.setLogoVariant = function(variant) {
+    cancelAnimationFrame(raf);
+    setup(variant);
+    frame();
+  };
+
+  // реакция на resize
+  window.addEventListener('resize', () => { cancelAnimationFrame(raf); setup(currentStyle ? Object.keys(STYLES).find(k=>STYLES[k]===currentStyle)||'constellation' : 'constellation'); frame(); });
+
+  // реакция на движение мыши
+  window.addEventListener('mousemove', e => {
+    const r = cv.getBoundingClientRect();
+    mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+  }, { passive: true });
+
+  document.addEventListener('visibilitychange', () => {
+    cancelAnimationFrame(raf);
+    if (!document.hidden) { startedAt = performance.now() - 2000; frame(); }
+  });
+
+  // запуск с вариантом из первого загруженного iframe
+  const firstFrame = document.querySelector('.login-bg__frame');
+  setup(variantFromFile(firstFrame ? firstFrame.src : ''));
+  frame();
+
+  // ── патч функции loadFrame ─────────────────────────────────────────────
+  // Перехватываем оригинальный loadFrame и добавляем смену логотипа
+  const _origLoadFrame = window.loadFrame;
+  if (typeof _origLoadFrame === 'function') {
+    window.loadFrame = function(animation) {
+      _origLoadFrame(animation);
+      window.setLogoVariant(variantFromFile(animation.file));
+    };
+  }
+})();
 </script>
 </body>
 </html>
