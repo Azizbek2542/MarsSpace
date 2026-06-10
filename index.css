@@ -201,9 +201,8 @@
 }
 
 .mars-logo-wrap {
-    width: 700px;
-    height: 210px;
-    margin-bottom: 40px;
+    width: 450px;
+    height: 130px;
     pointer-events: none;
 }
 
@@ -787,7 +786,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Временно!! : */
 
-.login-body-wrapper-temporary {
+/* .login-body-wrapper-temporary {
     max-width: 450px;
     width: 100%;
     padding: 30px;
@@ -901,4 +900,4 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -.02em;
     line-height: 1.18;
     color: #16182e;
-}
+} */
